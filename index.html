@@ -715,6 +715,10 @@ class Component extends DCLogic {
     this.ro = new ResizeObserver(() => this.measure());
     this.observe();
     this.restartTimer();
+    this.onResize = () => this.measure();
+    window.addEventListener("resize", this.onResize);
+    window.addEventListener("load", this.onResize);
+    [300, 1000, 2500].forEach(ms => setTimeout(this.onResize, ms));
     this.onKey = e => { if (e.key === "Escape" && this.state.viewer) this.setState({ viewer: null }); };
     window.addEventListener("keydown", this.onKey);
   }
@@ -772,7 +776,7 @@ class Component extends DCLogic {
     this.observe();
     if (pp.slideSeconds !== this.props.slideSeconds || pp.autoplay !== this.props.autoplay) this.restartTimer();
   }
-  componentWillUnmount() { clearInterval(this.timer); this.ro && this.ro.disconnect(); window.removeEventListener("keydown", this.onKey); }
+  componentWillUnmount() { clearInterval(this.timer); this.ro && this.ro.disconnect(); window.removeEventListener("keydown", this.onKey); window.removeEventListener("resize", this.onResize); }
   observe() {
     [this.stageShRef.current, this.stageAwRef.current, this.stageHaRef.current, this.stageWaRef.current, this.stageH2Ref.current, this.stageDmRef.current, this.stageNwRef.current, this.stageNhRef.current, this.stageGbRef.current].forEach(el => { if (el && !el.__obs) { el.__obs = 1; this.ro.observe(el); } });
     this.measure();
@@ -795,6 +799,11 @@ class Component extends DCLogic {
     const narrow = !!(el && el.parentElement && el.parentElement.clientWidth - el.clientWidth < 60);
     if (narrow !== !!this.state.narrow) this.setState({ narrow });
     if (a !== this.state.wSh || b !== this.state.wAw || c !== this.state.wHa || d !== this.state.wWa) this.setState({ wSh: a, wAw: b, wHa: c, wWa: d });
+    [this.stageHaRef, this.stageWaRef, this.stageH2Ref, this.stageDmRef, this.stageNwRef, this.stageNhRef, this.stageGbRef].forEach(r => {
+      const el = r.current; if (!el) return;
+      const f = el.querySelector("iframe"); if (!f) return;
+      const w = el.clientWidth; if (w > 0) f.style.transform = "scale(" + (w / 1440) + ")";
+    });
   }
   restartTimer() {
     clearInterval(this.timer);
