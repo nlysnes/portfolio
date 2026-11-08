@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<style>html,body{margin:0;background:#0F1517}</style>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<title>Geometria Borealis – Nikolas Lysnes</title>
+<style>
+body{margin:0;background:#0F1517;color:#E9ECEA;font-family:'Jost',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#6FD1BD;text-decoration:underline;text-underline-offset:3px}
+a:hover{color:#E9ECEA}
+img{display:block;max-width:100%}
+html.cover,html.cover body{overflow:hidden;scrollbar-width:none}
+html.cover ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+{{ loader }}
+
+<section data-screen-label="01 Hero" style="position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:#0F1517">
+  <img src="assets/hero-skog.webp" alt="Visualisering av to domer i en høstskog" style="position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 52%">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,21,23,.55) 0%,rgba(15,21,23,.15) 25%,rgba(15,21,23,.6) 55%,rgba(15,21,23,.94) 100%)"></div>
+  <header style="position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:32px clamp(20px,4vw,56px)">
+    <div style="display:flex;align-items:center;gap:16px">
+      <img ref="{{ logoRef }}" src="assets/logo.jpg" alt="Geometria Borealis-logo" style="width:72px;height:72px;filter:invert(1);mix-blend-mode:screen;transform:rotate(90deg);opacity:{{ logoOp }}">
+      <div style="font-weight:500;font-size:15px;letter-spacing:.18em;text-transform:uppercase;line-height:1.2">Geometria<br>Borealis</div>
+    </div>
+    <div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#E9ECEA;text-shadow:0 1px 8px rgba(0,0,0,.5);text-align:right;padding-top:8px">Medgründer · Tromsø · 2021–2025</div>
+  </header>
+  <div style="position: relative; max-width: 1240px; width: 1235px; margin: 0 auto; padding: 0 clamp(20px,4vw,56px) clamp(48px,7vw,88px); box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; height: 739px">
+    
+    <h1 style="margin:0;font-weight:600;font-size:clamp(48px,8vw,112px);line-height:.92;letter-spacing:-.02em;max-width:11ch"><br><br>Geodetiske domer og minihus</h1>
+    <p style="margin: 0; max-width: 56ch; font-size: clamp(17px,1.5vw,20px); line-height: 1.55; color: #D3D9D7; text-wrap: pretty; width: 1034px; height: 166px">Geometria Borealis var en bedrift jeg startet i 2021 med to venner. Vi bygget geodetiske domer og minihus, og tok på oss andre snekkeroppdrag. Etter mange år med PC-arbeid ønsket jeg å gjøre noe helt annet og fant motivasjon i håndtverk. Samtidig så vi en økende trend innen turisme i Nord Norge, i tillegg til at mange brukte mer penger på å utvikle eget hjem i en periode hvor man ikke kunne reise grunnet nedstengning.&nbsp;</p>
+  </div>
+</section>
+
+<section data-screen-label="02 Konsept" style="background:#0F1517">
+  
+<div style="max-width:1240px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,80px);align-items:center">
+    <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:22px">
+      <div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#8E9C9A">01 · Konseptet</div>
+      <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.02;letter-spacing:-.015em">Et bygg av trekanter</h2>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#C4CCCA;text-wrap:pretty">En geodetisk dome er bygget opp av trekanter som fordeler belastningen over hele konstruksjonen. Formen tåler vind og snølast godt, holder på varmen og krever lite materiale i forhold til arealet. Det passer godt i nordnorsk klima.</p>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#C4CCCA;text-wrap:pretty">Vi tilbød tre standardstørrelser, og kunden kunne også få en dome tilpasset egne mål og materialer.</p>
+      <div style="display:flex;flex-direction:column;border-top:1px solid #2A3538;margin-top:10px">
+        <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;padding:16px 0;border-bottom:1px solid #2A3538;align-items:baseline">
+          <span style="font:500 15px 'IBM Plex Mono',monospace;color:#6FD1BD">2v</span><span style="font-size:18px">3,5 m diameter</span><span style="font:400 15px 'IBM Plex Mono',monospace;color:#C4CCCA">7 m²</span>
+        </div>
+        <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;padding:16px 0;border-bottom:1px solid #2A3538;align-items:baseline">
+          <span style="font:500 15px 'IBM Plex Mono',monospace;color:#6FD1BD">3v</span><span style="font-size:18px">5,5 m diameter</span><span style="font:400 15px 'IBM Plex Mono',monospace;color:#C4CCCA">25 m²</span>
+        </div>
+        <div style="display:grid;grid-template-columns:56px 1fr auto;gap:16px;padding:16px 0;border-bottom:1px solid #2A3538;align-items:baseline">
+          <span style="font:500 15px 'IBM Plex Mono',monospace;color:#6FD1BD">4v</span><span style="font-size:18px">7,2 m diameter</span><span style="font:400 15px 'IBM Plex Mono',monospace;color:#C4CCCA">47 m²</span>
+        </div>
+      </div>
+    </div>
+    <figure style="flex:1 1 420px;min-width:0;margin:0;display:flex;flex-direction:column;gap:12px">
+      <img src="assets/arktis.webp" alt="Visualisering av en dome på en vinterlig kyst under nordlys" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px">
+      <figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Visualisering brukt i markedsføringen</figcaption>
+    </figure>
+  </div></section>
+
+<section data-screen-label="03 Prosess" style="background:#EDEFEC;color:#141A1C">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:20px 64px;align-items:end">
+      <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+        <div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#56625F">02 · Prosessen</div>
+        <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.02;letter-spacing:-.015em">Fra stender til ferdig skall</h2>
+      </div>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:1.6;color:#3C4644;text-wrap:pretty">Alle delene ble kappet og vinklet i eget verksted. Rammen ble prøvemontert innendørs, før den ble satt sammen på tomten, kledd og tekket.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/sag.webp" alt="Kapping av stendere på bordsag" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">1 · Kapping i verkstedet</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/gulvramme.webp" alt="Gulvramme i åttekant" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">2 · Gulvramme</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/vindsperre.webp" alt="Vegg kledd med vindsperre" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">3 · Vegger og vindsperre</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/ramme-inne.webp" alt="Domeramme montert innendørs" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">4 · Prøvemontering av rammen</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/paneler-inne.webp" alt="Trekantpaneler monteres i rammen" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">5 · Paneler i rammen</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/hvit-ramme-drill.webp" alt="Montering av hvit domeramme utendørs" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">6 · Montering på tomten</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/kryssfiner.webp" alt="Kledning med kryssfiner" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">7 · Kledning med kryssfiner</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/tetting-tak.webp" alt="Tetting av taket fra toppen av inngangspartiet" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#56625F">8 · Tetting av glasstaket</figcaption></figure></div>
+
+  </div>
+</section>
+
+<section data-screen-label="04 Domene" style="background:#0F1517">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:20px 64px;align-items:end">
+      <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+        <div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#8E9C9A">03 · Domene</div>
+        <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.02;letter-spacing:-.015em">Domene</h2>
+      </div>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:1.6;color:#C4CCCA;text-wrap:pretty">Domene ble benyttet for ulike formål, som drivhus, lysthus, badstue og overnattingssted.&nbsp;</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/glassdome-ferdig.webp" alt="Ferdig dome med glasstak og gevir på døren" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Dome med glasstak</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/glassdome.webp" alt="Dome med glasstak foran snødekte fjell" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Samme dome om vinteren</figcaption></figure></div><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/kveld-inne.jpg" alt="Kveld inne i domen med lykt og saueskinn" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Kveld inne i domen</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/morgen-dome.jpg" alt="Morgen under glasstaket" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Morgen under glasstaket</figcaption></figure></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/badstue-ute.webp" alt="Badstuedome med svart takshingel og grå kledning" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Badstue med takshingel</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/badstue-inne.jpg" alt="Badstuen innvendig med panel i trekanter og ovn" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Badstuen innvendig</figcaption></figure></div>
+  </div>
+</section>
+
+<section data-screen-label="05 Messer" style="background:#16201F;border-top:1px solid #2A3538">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:20px 64px;align-items:end">
+      <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+        <div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#8E9C9A">04 · Boligmessen</div>
+        <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.02;letter-spacing:-.015em">Tromsø og Bærum</h2>
+      </div>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:1.6;color:#C4CCCA;text-wrap:pretty">Vi deltok på Boligmessen i Tromsø og i Bærum. På standen sto en åpen domeramme i full størrelse, så besøkende kunne gå inn i konstruksjonen. Gjennom deltakelsen på Boligmessen fikk vi flere nye oppdrag, men hadde dessverre ikke kapasitet til å omfavne mulighetene som oppsto.</p>
+    </div>
+    <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+      <img src="assets/messe-rollup.webp" alt="Messestand med dome-ramme og rollup" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px">
+      <figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Standen med domerammen i full størrelse</figcaption>
+    </figure>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+      <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+        <img src="assets/messe-folk.webp" alt="Besøkende ved standen" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px">
+        <figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Besøkende på standen</figcaption>
+      </figure>
+      <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+        <img src="assets/rollups.webp" alt="To rollups for Geometria Borealis" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px">
+        <figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Rollups</figcaption>
+      </figure>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+      <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+        <img src="assets/messe-vegg.webp" alt="Veggplakater med visualiseringer" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:62% 50%;border-radius:4px">
+        <figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Veggplakater med visualiseringene</figcaption>
+      </figure>
+      <figure style="margin:0;display:flex;flex-direction:column;gap:10px">
+        <div style="width:100%;aspect-ratio:3/4;border-radius:4px;background:#0B0F10;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <img src="assets/magasin.jpg" alt="Magasinartikkelen «Spektakulær geometri»" style="height:100%;width:auto;object-fit:contain">
+        </div>
+        <figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Omtale i messemagasinet</figcaption>
+      </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="06 Minihus" style="background:#0F1517;border-top:1px solid #2A3538">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+    <div style="display:flex;flex-wrap:wrap;gap:20px 64px;align-items:end">
+      <div style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+        <div style="font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#8E9C9A">05 · Minihus</div>
+        <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.02;letter-spacing:-.015em">To minihus</h2>
+      </div>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:1.6;color:#C4CCCA;text-wrap:pretty">I tillegg til domer begynte vi å bygge minihus, og produserte to stk. På grunn av krigen i Ukraina økte materialprisene radikalt, og marginene ble såpass små at vi valgte å ikke skalere produksjonen videre.&nbsp;</p>
+    </div>
+    <figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-helhet.webp" alt="Minihus på hjul med stående kledning og hems" style="width:100%;aspect-ratio:16/10;object-fit:cover;object-position:50% 55%;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Minihus på hjul</figcaption></figure>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-kjokken.jpg" alt="Kjøkken med bardisk og stige til hemsen" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Kjøkken og stige til hems</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-fasade.webp" alt="Kortveggen med stort vindu" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Kortvegg med panoramavindu</figcaption></figure></div><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-ute.webp" alt="Overbygd terrasse ved inngangen" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Overbygd terrasse</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-trapp.webp" alt="Terrasse med trapp opp til taket" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Trapp og terrasse</figcaption></figure></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px"><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-terrasse.webp" alt="Sittegruppe på terrassen" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Innebygd benk</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-bad2.jpg" alt="Bad med dusj, servant og trepanel i taket" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Bad</figcaption></figure><figure style="margin:0;display:flex;flex-direction:column;gap:10px"><img src="assets/minihus-reisverk.webp" alt="Reisverket til minihuset med hems" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px"><figcaption style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Reisverk med hems</figcaption></figure></div>
+  </div>
+</section>
+
+<footer style="background:#0B0F10;border-top:1px solid #2A3538">
+  <div style="max-width:1240px;margin:0 auto;padding:40px clamp(20px,4vw,56px);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo.jpg" alt="" style="width:28px;height:28px;filter:invert(1);mix-blend-mode:screen;transform:rotate(90deg)">
+      <span style="font-weight:500;font-size:13px;letter-spacing:.18em;text-transform:uppercase">Geometria Borealis</span>
+    </div>
+    <span style="font:400 13px 'IBM Plex Mono',monospace;color:#8E9C9A">Nikolas Lysnes · 2021–2025</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { t: -1, done: false };
+  logoRef = React.createRef();
+  componentDidMount() {
+    const cover = /[?&]cover=1/.test(location.search);
+    if (cover) { document.documentElement.classList.add("cover"); this.setState({ done: true }); return; }
+    this.buildGeom();
+    document.documentElement.style.scrollbarGutter = "stable"; document.documentElement.style.overflow = "hidden";
+    const t0 = performance.now();
+    const tick = now => {
+      const t = (now - t0) / 1000;
+      if (t >= this.END) { document.documentElement.style.overflow = ""; this.setState({ done: true }); return; }
+      if (t >= this.FLY && !this.target) this.measure();
+      this.setState({ t });
+      this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); document.documentElement.style.overflow = ""; }
+  FLY = 2.85; END = 3.75;
+  measure() {
+    const el = this.logoRef.current; if (!el) return;
+    const r = el.getBoundingClientRect();
+    this.target = { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width };
+  }
+  buildGeom() {
+    const D = Math.PI / 180, C = [100, 100];
+    const ang = k => (-90 + 45 * k) * D;
+    const vtx = (R, k) => [C[0] + R * Math.cos(ang(k)), C[1] + R * Math.sin(ang(k))];
+    const sub = (a, b) => [a[0] - b[0], a[1] - b[1]], add = (a, b) => [a[0] + b[0], a[1] + b[1]], mul = (a, s) => [a[0] * s, a[1] * s];
+    const cr = (a, b) => a[0] * b[1] - a[1] * b[0];
+    const hit = (p, d, q, e) => add(p, mul(d, cr(sub(q, p), e) / cr(d, e)));
+    const cut = (k, to, g) => { const u = [Math.cos(ang(k)), Math.sin(ang(k))]; let n = [-u[1], u[0]]; const dir = sub(vtx(1, to), vtx(1, k)); if (n[0] * dir[0] + n[1] * dir[1] < 0) n = mul(n, -1); return [add(C, mul(n, g / 2)), u]; };
+    const seg = (R, t, g, k1, k2) => { const Ri = R - t / Math.cos(22.5 * D); const po = vtx(R, k1), dO = sub(vtx(R, k2), po), pi = vtx(Ri, k1), dI = sub(vtx(Ri, k2), pi); const [c1, u1] = cut(k1, k2, g), [c2, u2] = cut(k2, k1, g); return [hit(po, dO, c1, u1), hit(po, dO, c2, u2), hit(pi, dI, c2, u2), hit(pi, dI, c1, u1)]; };
+    const E = [[3, 4], [4, 5], [5, 6], [6, 7], [7, 0], [0, 1]];
+    const RO = 99.5, TO = 8, Ri = RO - TO / Math.cos(22.5 * D);
+    const oc = hit(vtx(RO, 2), sub(vtx(RO, 3), vtx(RO, 2)), [0, 97], [1, 0]);
+    const ic = hit(vtx(Ri, 2), sub(vtx(Ri, 3), vtx(Ri, 2)), [0, 108], [1, 0]);
+    const e23 = seg(RO, TO, 6, 2, 3);
+    this.G = {
+      bar: [[105, 97], oc, ic, [110, 108]], edge: [oc, e23[1], e23[2], ic],
+      outer: E.map(([a, b]) => seg(RO, TO, 6, a, b)), mid: E.map(([a, b]) => seg(69, 6, 5, a, b)), inner: E.map(([a, b]) => seg(35.5, 4, 4, a, b)), RO,
+    };
+  }
+  renderLoader(t) {
+    const h = React.createElement, G = this.G;
+    const cl = v => Math.max(0, Math.min(1, v));
+    const out = x => 1 - Math.pow(1 - x, 3), io = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const an = (s, e, f) => f(cl((t - s) / (e - s)));
+    const P = p => p.map(v => v[0].toFixed(2) + "," + v[1].toFixed(2)).join(" ");
+    const L = (p, q, k) => [p[0] + (q[0] - p[0]) * k, p[1] + (q[1] - p[1]) * k];
+    const grow = (p, a) => [p[0], L(p[0], p[1], a), L(p[3], p[2], a), p[3]];
+    const ring = (segs, color, a, from, key) => a <= 0 ? null : h("g", { key, opacity: cl(a * 1.5), transform: "translate(100 100) scale(" + (from + (1 - from) * a) + ") translate(-100 -100)" }, segs.map((p, i) => h("polygon", { key: i, points: P(p), fill: color })));
+    const ink = "#FFFFFF", gray = "#919191";
+    const innerA = an(0, .5, out), midA = an(.3, .9, out), outerA = an(.7, 1.2, out);
+    const rot1 = 90 - 90 * an(1.1, 2.2, io);
+    const barA = an(2.0, 2.25, io), edgeA = an(2.23, 2.48, out);
+    const f = an(this.FLY, this.END - .3, io);
+    const rot = t < this.FLY ? rot1 : 90 * f;
+    const vw = window.innerWidth, vh = window.innerHeight, S = Math.min(vw * .42, vh * .42, 260);
+    const tg = this.target || { x: vw / 2, y: vh / 2, w: S };
+    const dx = (tg.x - vw / 2) * f, dy = (tg.y - vh / 2) * f, k = 1 + (tg.w / S - 1) * f;
+    const bgOp = 1 - an(this.FLY + .1, this.END - .3, io);
+    const xf = an(this.END - .3, this.END, x => x);
+    const kids = [
+      ring(G.inner, gray, innerA, .15, "i"), ring(G.mid, gray, midA, 35.5 / 69, "m"), ring(G.outer, ink, outerA, 69 / G.RO, "o"),
+      barA > 0 ? h("polygon", { key: "b", points: P(grow(G.bar, barA)), fill: ink, stroke: ink, strokeWidth: .25 }) : null,
+      edgeA > 0 ? h("polygon", { key: "e", points: P(grow(G.edge, edgeA)), fill: ink, stroke: ink, strokeWidth: .25 }) : null,
+    ];
+    return h("div", { "aria-hidden": true, style: { position: "fixed", inset: 0, zIndex: 100, pointerEvents: bgOp > .2 ? "auto" : "none" } },
+      h("div", { style: { position: "absolute", inset: 0, background: "#0F1517", opacity: bgOp } }),
+      h("svg", { viewBox: "0 0 200 200", width: S, height: S, style: { position: "absolute", left: vw / 2 - S / 2, top: vh / 2 - S / 2, overflow: "visible", opacity: 1 - xf, willChange: "transform", transform: "translate(" + dx + "px," + dy + "px) scale(" + k + ")" } },
+        h("g", { transform: "rotate(" + rot + " 100 100)" }, kids)));
+  }
+  renderVals() {
+    const s = this.state;
+    const active = !s.done;
+    return {
+      logoRef: this.logoRef,
+      logoOp: active ? String(Math.max(0, Math.min(1, (s.t - (this.END - .3)) / .3))) : "1",
+      loader: active && this.G && s.t >= 0 ? this.renderLoader(s.t) : (active ? React.createElement("div", { style: { position: "fixed", inset: 0, zIndex: 100, background: "#0F1517" } }) : null),
+    };
+  }
+}
+</script>
+</body>
+</html>
