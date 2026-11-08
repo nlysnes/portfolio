@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#FFFFFF;color:#111827;font-family:"Schibsted Grotesk",-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#E11D48;text-decoration:none}
+a:hover{color:#9F1239}
+select,button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#FFFFFF;color:#111827">
+  <header style="position:sticky;top:0;z-index:10;background:#FFFFFF;border-bottom:1px solid rgba(17,24,39,.12)">
+    <div style="max-width:1240px;margin:0 auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div style="font-weight:900;font-size:28px;letter-spacing:-0.02em;display:flex;align-items:center;gap:14px"><img src="./assets/logo-color.webp" alt="" style="width:48px;height:48px;object-fit:contain"><span style="white-space:nowrap">News World<span style="color:#F59E0B">.</span>&nbsp;AI</span></div>
+      <select value="{{ lang }}" onChange="{{ onLang }}" aria-label="{{ t.language }}" style="appearance:none;background:#FFFFFF;color:#111827;border:1px solid rgba(17,24,39,.3);border-radius:0;padding:9px 16px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">
+        <option value="nb">Norsk</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </header>
+
+  <main style="max-width:1240px;margin:0 auto;padding:45px 32px 120px;display:flex;flex-direction:column;gap:45px">
+    <section style="display:flex;flex-direction:column;gap:18px">
+      <div style="font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">{{ t.filter }}</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:1px;background:rgba(17,24,39,.12);border:1px solid rgba(17,24,39,.12)">
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px">
+        <sc-for list="{{ countries }}" as="c" hint-placeholder-count="4">
+          <button onClick="{{ c.select }}" style="display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:132px;padding:18px;border:none;border-radius:0;background:{{ c.bg }};color:{{ c.fg }};text-align:left;cursor:pointer;transition:background 120ms cubic-bezier(.2,.7,.2,1)" style-hover="background:{{ c.hover }}">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%">
+              <span style="font-weight:800;font-size:18px;letter-spacing:-0.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.label }}</span>
+              <span style="flex:none;font-size:12px;font-weight:700;letter-spacing:.08em;color:{{ c.sub }}">{{ c.code }}</span>
+            </div>
+            <div style="display:flex;gap:10px;width:100%;align-items:flex-start">
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                <span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:{{ c.sub }}">{{ t.top }} · {{ c.topScore }}</span>
+                <div style="display:grid;grid-template-columns:8px minmax(0,1fr);gap:8px;align-items:start">
+                  <span style="width:8px;height:8px;background:{{ c.dot }};margin-top:5px"></span>
+                  <span style="font-size:13px;line-height:1.35;font-weight:500;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ c.topHead }}</span>
+                </div>
+              </div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+        <button onClick="{{ toggleAll }}" aria-label="{{ t.more }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:132px;border:none;border-radius:0;background:{{ filterBg }};color:{{ filterFg }};cursor:pointer;transition:background 120ms cubic-bezier(.2,.7,.2,1)" style-hover="background:{{ filterHover }}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"></path></svg>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase">{{ filterLabel }}</span>
+        </button>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:2px solid #111827">
+        <h1 style="margin:0;font-weight:900;font-size:clamp(28px,3.4vw,40px);line-height:1;letter-spacing:-0.02em">{{ heading }}<sc-if value="{{ showCountry }}" hint-placeholder-val="{{ true }}"> <span style="color:#F59E0B">·</span> {{ countryName }}</sc-if></h1>
+        <span style="flex:none;white-space:nowrap;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">{{ t.ranked }}</span>
+      </div>
+      <sc-if value="{{ showCats }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);gap:1px;background:rgba(17,24,39,.12);border:1px solid rgba(17,24,39,.12);margin-top:18px;overflow-x:auto;scrollbar-width:none">
+        <sc-for list="{{ cats }}" as="k" hint-placeholder-count="9">
+          <button onClick="{{ k.select }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-height:52px;padding:10px 12px;border:none;border-radius:0;background:{{ k.bg }};color:{{ k.fg }};text-align:left;cursor:pointer;transition:background 120ms cubic-bezier(.2,.7,.2,1)" style-hover="background:{{ k.hover }}">
+            <span style="font-weight:700;font-size:13px;white-space:nowrap">{{ k.label }}</span>
+            <span style="font-size:11px;font-weight:700;color:{{ k.sub }}">{{ k.count }}</span>
+          </button>
+        </sc-for>
+      </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66"><span style="color:#111827">{{ t.feeds }}</span><span style="white-space:nowrap">{{ followingLabel }}</span></div>
+        <div style="display:flex;gap:1px;background:rgba(17,24,39,.12);border:1px solid rgba(17,24,39,.12)">
+        <div style="flex:1;min-width:0;display:flex;gap:1px;overflow-x:auto;scrollbar-width:none">
+          <sc-for list="{{ feeds }}" as="fd" hint-placeholder-count="5">
+            <button onClick="{{ fd.select }}" style="flex:1 0 auto;display:flex;align-items:center;gap:10px;min-height:64px;padding:10px 18px 10px 12px;border:none;border-radius:0;background:{{ fd.bg }};color:{{ fd.fg }};text-align:left;cursor:pointer;transition:background 120ms cubic-bezier(.2,.7,.2,1)" style-hover="background:{{ fd.hover }}">
+              <span style="position:relative;flex:none;width:40px;height:40px;border-radius:50%;overflow:hidden;background:{{ fd.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">{{ fd.initials }}<sc-if value="{{ fd.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ fd.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span>
+              <span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:14px;white-space:nowrap">{{ fd.name }}</span><span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:10px;color:{{ fd.sub }};white-space:nowrap">{{ fd.kind }}</span></span>
+              <sc-if value="{{ fd.hasNew }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;background:#E11D48;align-self:flex-start;margin-top:4px"></span></sc-if>
+            </button>
+          </sc-for>
+        </div>
+<button onClick="{{ toggleDiscover }}" style="flex:none;display:flex;align-items:center;justify-content:center;gap:8px;min-height:64px;padding:0 18px;border:none;border-radius:0;background:{{ discoverBg }};color:#111827;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap" style-hover="background:#F4F4F6">+ {{ t.findFeeds }}</button>
+
+        </div>
+        <sc-if value="{{ discover }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:10px;padding:18px;background:#F4F4F6">
+            <span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">{{ t.suggested }}</span>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:1px;background:rgba(17,24,39,.12);border:1px solid rgba(17,24,39,.12)">
+              <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px;background:#fff">
+                  <span style="position:relative;flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden;background:{{ sg.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">{{ sg.initials }}<sc-if value="{{ sg.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ sg.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span>
+                  <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:15px">{{ sg.name }}</span><span style="font-size:12px;color:#5A5A66">{{ sg.kind }} · {{ sg.followers }}</span></span>
+                  <button onClick="{{ sg.toggle }}" style="flex:none;height:36px;padding:0 14px;border:1px solid #111827;border-radius:0;background:{{ sg.btnBg }};color:{{ sg.btnFg }};font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap">{{ sg.btn }}</button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasProfile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;padding:18px;background:#111827;color:#fff">
+            <span style="position:relative;flex:none;width:64px;height:64px;border-radius:50%;overflow:hidden;background:{{ profile.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px">{{ profile.initials }}<sc-if value="{{ profile.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ profile.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span>
+            <div style="flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B">{{ profile.kind }}</span>
+              <span style="font-weight:900;font-size:24px;letter-spacing:-0.01em">{{ profile.name }}</span>
+              <span style="font-size:14px;line-height:1.45;color:rgba(255,255,255,.8);text-wrap:pretty">{{ profile.bio }}</span>
+              <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6)">{{ profile.stats }}</span>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-if value="{{ profile.canFollow }}" hint-placeholder-val="{{ false }}"><button onClick="{{ profile.toggle }}" style="height:42px;padding:0 18px;border:1px solid #fff;border-radius:0;background:{{ profile.btnBg }};color:{{ profile.btnFg }};font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap">{{ profile.btn }}</button></sc-if>
+              <button onClick="{{ shareFeed }}" style="height:42px;padding:0 18px;border:none;border-radius:0;background:#E11D48;color:#fff;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap" style-hover="box-shadow:0 12px 40px rgba(225,29,72,.35)">{{ shareLabel }}</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:30px 18px;border:1px dashed rgba(17,24,39,.3);font-size:15px;color:#4A4A55;text-wrap:pretty">{{ t.emptyMe }}</div>
+        </sc-if>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ gridCols }};column-gap:30px">
+        <sc-for list="{{ stories }}" as="s" hint-placeholder-count="5">
+          <sc-if value="{{ s.big }}" hint-placeholder-val="{{ false }}">
+          <div style="grid-column:1/-1;margin:24px 0;display:flex;flex-direction:column;border-top:6px solid #E11D48;background:#111827;color:#fff">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 24px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.12)">
+              
+              <span style="display:flex;align-items:center;gap:8px;color:#fff;white-space:nowrap"><span style="width:8px;height:8px;background:#F59E0B"></span>{{ t.live }}</span>
+              <span style="white-space:nowrap">{{ s.cat }}</span><span style="white-space:nowrap">{{ s.sourcesLabel }}</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap">
+              <div style="position:relative;flex:1 1 560px;min-width:0;aspect-ratio:16/9;background:#1F2937;overflow:hidden">
+                <img src="{{ s.megaImg }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+                <div style="position:absolute;top:0;left:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:72px;height:72px;background:{{ s.color }};color:{{ s.scoreFg }}">
+                  <span style="font-weight:900;font-size:32px;line-height:1;letter-spacing:-0.02em">{{ s.rank }}</span><span style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:3px">Trend</span>
+                  
+                </div>
+              </div>
+              <div style="flex:1 1 360px;min-width:0;padding:24px;display:flex;flex-direction:column;gap:18px">
+                <h2 style="margin:0;font-weight:900;font-size:clamp(26px,3vw,38px);line-height:1.06;letter-spacing:-0.02em;text-wrap:pretty">{{ s.headline }}</h2>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ s.recap }}" as="p" hint-placeholder-count="4">
+                    <li style="display:grid;grid-template-columns:8px minmax(0,1fr);gap:12px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.86);text-wrap:pretty"><span style="width:6px;height:6px;background:#F59E0B;margin-top:8px"></span><span>{{ p }}</span></li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+            <div style="padding:24px;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;gap:14px">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B">{{ t.development }}</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12)">
+                <sc-for list="{{ s.updates }}" as="u" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;gap:6px;padding:14px;background:#111827">
+                    <div style="display:flex;gap:10px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)"><span style="color:{{ u.timeColor }};white-space:nowrap">{{ u.time }}</span><span style="white-space:nowrap">{{ u.type }}</span></div>
+                    <span style="font-size:15px;line-height:1.35;font-weight:600;text-wrap:pretty">{{ u.headline }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                <span style="font-size:13px;color:rgba(255,255,255,.7);white-space:nowrap">{{ s.updCount }}</span>
+                <a href="Megasak.dc.html" style="display:flex;align-items:center;height:42px;padding:0 18px;background:#E11D48;color:#fff;font-weight:700;font-size:14px;white-space:nowrap" style-hover="color:#fff;box-shadow:0 12px 40px rgba(225,29,72,.35)">{{ t.follow }} →</a>
+              </div>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ s.compact }}" hint-placeholder-val="{{ false }}">
+          <div style="grid-column:1/-1;margin:24px 0;display:flex;flex-direction:column;border-top:6px solid #E11D48;background:#111827;color:#fff">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 24px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.12)">
+              
+              <span style="display:flex;align-items:center;gap:8px;color:#fff;white-space:nowrap"><span style="width:8px;height:8px;background:#F59E0B"></span>{{ t.live }}</span>
+              <span style="white-space:nowrap">{{ s.cat }}</span><span style="white-space:nowrap">{{ s.sourcesLabel }}</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:24px;padding:18px 24px;background:#1F2937">
+              <div style="position:relative;flex:0 1 220px;align-self:flex-start;width:100%;aspect-ratio:3/2;background:#111827;overflow:hidden">
+                <img src="{{ s.megaImg }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+                <div style="position:absolute;top:0;left:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:52px;height:52px;background:{{ s.color }};color:{{ s.scoreFg }}">
+                  <span style="font-weight:900;font-size:22px;line-height:1;letter-spacing:-0.02em">{{ s.rank }}</span><span style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:3px">Trend</span>
+                  
+                </div>
+              </div>
+              <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:10px">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)">{{ t.mainStory }} · {{ s.time }}</div>
+                <h3 style="margin:0;font-weight:800;font-size:20px;line-height:1.2;letter-spacing:-0.01em;text-wrap:pretty">{{ s.headline }}</h3>
+                <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ s.recap }}" as="p" hint-placeholder-count="4">
+                    <li style="display:grid;grid-template-columns:8px minmax(0,1fr);gap:12px;font-size:14px;line-height:1.5;color:rgba(255,255,255,.86);text-wrap:pretty"><span style="width:6px;height:6px;background:#F59E0B;margin-top:8px"></span><span>{{ p }}</span></li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+            <div style="padding:24px;display:flex;flex-direction:column;gap:18px">
+              <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B">{{ t.development }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:24px">
+                <div style="flex:1 1 480px;min-width:0;aspect-ratio:16/9;background:#1F2937;overflow:hidden">
+                  <img src="{{ s.lead.img }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+                </div>
+                <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)">
+                    <span style="background:#F59E0B;color:#111827;padding:4px 8px">{{ t.latest }}</span>
+                    <span style="color:#F59E0B;font-size:18px;font-weight:900;letter-spacing:0">{{ s.lead.time }}</span><span>{{ s.lead.type }}</span>
+                  </div>
+                  <h2 style="margin:0;font-weight:900;font-size:clamp(26px,3vw,36px);line-height:1.08;letter-spacing:-0.02em;text-wrap:pretty">{{ s.lead.headline }}</h2>
+                  <p style="margin:0;font-size:16px;line-height:1.55;color:rgba(255,255,255,.86);text-wrap:pretty">{{ s.lead.text }}</p>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12)">
+                <sc-for list="{{ s.rest }}" as="u" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;gap:6px;padding:14px;background:#111827">
+                    <div style="display:flex;gap:10px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.6)"><span style="color:{{ u.timeColor }};white-space:nowrap">{{ u.time }}</span><span style="white-space:nowrap">{{ u.type }}</span></div>
+                    <span style="font-size:15px;line-height:1.35;font-weight:600;text-wrap:pretty">{{ u.headline }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                <span style="font-size:13px;color:rgba(255,255,255,.7);white-space:nowrap">{{ s.updCount }}</span>
+                <a href="Megasak.dc.html" style="display:flex;align-items:center;height:42px;padding:0 18px;background:#E11D48;color:#fff;font-weight:700;font-size:14px;white-space:nowrap" style-hover="color:#fff;box-shadow:0 12px 40px rgba(225,29,72,.35)">{{ t.follow }} →</a>
+              </div>
+            </div>
+          </div>
+          </sc-if>
+          
+          
+          <sc-if value="{{ s.isNormal }}" hint-placeholder-val="{{ true }}">
+          <article style="display:flex;flex-direction:column;padding:24px 0;border-bottom:1px solid rgba(17,24,39,.12)">
+            <div style="position:relative;width:100%;aspect-ratio:4/3;background:#F4F4F6;overflow:hidden">
+              <img src="{{ s.img }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+              <div style="position:absolute;top:0;left:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:56px;height:56px;background:{{ s.color }};color:{{ s.scoreFg }};pointer-events:none"><span style="font-weight:900;font-size:24px;line-height:1;letter-spacing:-0.02em">{{ s.rank }}</span><span style="font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:3px">Trend</span></div>
+              <div style="position:absolute;right:0;top:0;display:flex">
+                  <button onClick="{{ s.toggleSave }}" style="height:36px;padding:0 12px;border:none;border-radius:0;background:{{ s.saveBg }};color:{{ s.saveFg }};font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap">{{ s.saveLabel }}</button>
+                  <sc-if value="{{ s.canShare }}" hint-placeholder-val="{{ false }}"><button onClick="{{ s.openShare }}" style="height:36px;padding:0 12px;border:none;border-radius:0;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;background:{{ s.shareBg }};color:{{ s.shareFg }}">↗ {{ t.shareBtn }}</button></sc-if>
+                  <sc-if value="{{ s.canPin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ s.togglePin }}" style="height:36px;padding:0 12px;border:none;border-radius:0;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;background:{{ s.pinBg }};color:{{ s.pinFg }}">{{ s.pinLabel }}</button></sc-if>
+                  <button onClick="{{ s.prev }}" aria-label="Previous" style="width:36px;height:36px;border:none;border-radius:0;background:rgba(17,24,39,.85);color:#fff;font-size:18px;font-weight:700;cursor:pointer" style-hover="background:#111827">‹</button>
+                  <button onClick="{{ s.next }}" aria-label="Next" style="width:36px;height:36px;border:none;border-radius:0;background:rgba(17,24,39,.85);color:#fff;font-size:18px;font-weight:700;cursor:pointer" style-hover="background:#111827">›</button>
+                </div>
+            </div>
+            <div style="position:relative;margin:-72px 18px 0;background:#111827;color:#fff;padding:18px 20px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)"><sc-if value="{{ s.isPinned }}" hint-placeholder-val="{{ false }}"><span style="background:#F59E0B;color:#111827;padding:2px 7px">{{ t.pinned }}</span></sc-if><span style="color:#F59E0B">{{ s.cat }}</span><span>{{ s.time }}</span><span>{{ s.sourcesLabel }}</span></div>
+              <h2 style="margin:0;font-weight:800;font-size:clamp(22px,2.2vw,28px);line-height:1.12;letter-spacing:-0.015em;text-wrap:pretty">{{ s.headline }}</h2>
+            </div>
+            <sc-if value="{{ s.hasNote }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:14px 18px 0;display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:start">
+                <span style="position:relative;flex:none;width:36px;height:36px;border-radius:50%;overflow:hidden;background:{{ s.note.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">{{ s.note.initials }}<sc-if value="{{ s.note.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ s.note.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:10px;color:#5A5A66">{{ s.note.label }}</span><span style="font-size:15px;line-height:1.4;font-weight:600;color:#111827;text-wrap:pretty">{{ s.note.text }}</span></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.composing }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:14px 18px 0;display:flex;flex-direction:column;gap:10px;padding:14px;background:#F4F4F6;border-top:3px solid #111827">
+                <div style="display:flex;align-items:center;gap:10px"><span style="position:relative;flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;background:{{ me.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">{{ me.initials }}<sc-if value="{{ me.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ me.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span><span style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#111827">{{ t.shareTitle }}</span></div>
+                <textarea value="{{ noteDraft }}" onChange="{{ onNoteDraft }}" rows="3" placeholder="{{ t.notePh }}" style="width:100%;box-sizing:border-box;resize:vertical;padding:10px 12px;border:1px solid rgba(17,24,39,.25);border-radius:0;background:#fff;color:#111827;font-family:inherit;font-size:15px;line-height:1.45"></textarea>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+                  <button onClick="{{ closeShare }}" style="height:40px;padding:0 16px;border:1px solid rgba(17,24,39,.3);border-radius:0;background:#fff;color:#111827;font-weight:700;font-size:14px;cursor:pointer">{{ t.cancel }}</button>
+                  <button onClick="{{ s.submitShare }}" style="height:40px;padding:0 16px;border:none;border-radius:0;background:#E11D48;color:#fff;font-weight:700;font-size:14px;cursor:pointer" style-hover="box-shadow:0 12px 40px rgba(225,29,72,.35)">{{ submitLabel }}</button>
+                </div>
+              </div>
+            </sc-if>
+            <div style="padding:18px 18px 0"><ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ s.recap }}" as="p" hint-placeholder-count="4">
+                  <li style="display:grid;grid-template-columns:8px minmax(0,1fr);gap:12px;font-size:15px;line-height:1.5;color:#2A2A33;text-wrap:pretty"><span style="width:6px;height:6px;background:#E11D48;margin-top:8px"></span><span>{{ p }}</span></li>
+                </sc-for>
+              </ul></div>
+            <sc-if value="{{ s.hasDev }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:18px 18px 0;border-top:2px solid #111827;display:flex;flex-direction:column">
+                <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0 4px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase"><span style="color:#B45309">{{ t.development }}</span><span style="color:#5A5A66;white-space:nowrap">{{ s.devCount }}</span></div>
+                <sc-for list="{{ s.devUps }}" as="u" hint-placeholder-count="2">
+                  <div style="display:grid;grid-template-columns:{{ devCols }};gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(17,24,39,.08)">
+                    <span style="width:8px;height:8px;background:{{ u.marker }}"></span>
+                    <span style="font-weight:800;font-size:14px;color:{{ u.timeColor }}">{{ u.time }}</span>
+                    <span style="font-size:14px;line-height:1.4;font-weight:600;color:#111827;text-wrap:pretty">{{ u.headline }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.hasRx }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:18px 18px 0;border-top:2px solid #111827;display:flex;flex-direction:column">
+                <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0 4px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase"><span style="color:#E11D48">{{ t.reactions }}</span><span style="color:#5A5A66;white-space:nowrap">{{ s.rxCount }}</span></div>
+                <sc-for list="{{ s.rx }}" as="r" hint-placeholder-count="2">
+                  <a href="{{ r.url }}" target="_blank" rel="noopener" style="display:grid;grid-template-columns:{{ rxCols }};gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid rgba(17,24,39,.08);color:#111827" style-hover="color:#E11D48">
+                    <sc-if value="{{ showThumbs }}" hint-placeholder-val="{{ true }}"><img src="{{ r.thumb }}" alt="{{ r.who }}" style="display:block;width:56px;height:56px;border-radius:50%;object-fit:cover;background:#F4F4F6"></sc-if>
+                    <span style="font-weight:900;font-size:28px;line-height:.9;color:#E11D48">“</span>
+                    <span style="display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5A5A66">{{ r.stamp }}</span><span style="font-size:15px;line-height:1.4;font-weight:700;text-wrap:pretty">{{ r.quote }}</span><span style="font-size:12px;color:#5A5A66">{{ r.who }} · {{ r.outlet }} ↗</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+            
+            
+            
+            <sc-if value="{{ s.showComments }}" hint-placeholder-val="{{ false }}">
+              <div style="margin:18px 18px 0;border-top:2px solid #111827;display:flex;flex-direction:column">
+                <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0 4px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase"><span style="color:#111827">{{ t.comments }} · {{ s.cmCount }}</span><span style="color:#5A5A66;white-space:nowrap">{{ s.cmScope }}</span></div>
+                <sc-for list="{{ s.comments }}" as="cm" hint-placeholder-count="2">
+                  <div style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid rgba(17,24,39,.08)">
+                    <span style="position:relative;flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;background:{{ cm.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px">{{ cm.initials }}<sc-if value="{{ cm.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ cm.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span>
+                    <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><span style="font-weight:800;font-size:13px;color:#111827">{{ cm.name }}</span><span style="font-size:12px;color:#5A5A66">{{ cm.time }}</span></span><span style="font-size:14px;line-height:1.45;color:#2A2A33;text-wrap:pretty">{{ cm.text }}</span></div>
+                  </div>
+                </sc-for>
+                <div style="display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 0 0">
+                  <span style="position:relative;flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;background:{{ me.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px">{{ me.initials }}<sc-if value="{{ me.hasAv }}" hint-placeholder-val="{{ false }}"><img src="{{ me.av }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff"></sc-if></span>
+                  <input value="{{ s.draft }}" onChange="{{ s.onDraft }}" onKeyDown="{{ s.onKey }}" placeholder="{{ t.writeComment }}" style="min-width:0;height:40px;padding:0 12px;border:1px solid rgba(17,24,39,.25);border-radius:0;background:#fff;color:#111827;font-family:inherit;font-size:14px">
+                  <button onClick="{{ s.sendComment }}" style="height:40px;padding:0 16px;border:none;border-radius:0;background:#111827;color:#fff;font-weight:700;font-size:14px;cursor:pointer">{{ t.send }}</button>
+                </div>
+              </div>
+            </sc-if>
+          </article>
+          </sc-if>
+          
+        </sc-for>
+      </div>
+    </section>
+  </main>
+
+  <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeFull }}" style="position:fixed;inset:0;z-index:50;background:rgba(17,24,39,.7)"></div>
+    <aside style="position:fixed;top:0;right:0;bottom:0;z-index:51;width:min(640px,100%);background:#FFFFFF;overflow-y:auto;border-left:1px solid rgba(17,24,39,.12)">
+      <div style="position:relative;aspect-ratio:16/9;background:#F4F4F6">
+        <img src="{{ sel.img }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+        <button onClick="{{ closeFull }}" aria-label="Close" style="position:absolute;top:0;right:0;width:48px;height:48px;border:none;border-radius:0;background:#111827;color:#fff;font-size:22px;font-weight:700;cursor:pointer;line-height:1">×</button>
+      </div>
+      <div style="padding:30px 32px 60px;display:flex;flex-direction:column;gap:30px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5A5A66"><span style="color:#111827">{{ sel.cat }}</span><span>{{ sel.time }}</span><span>{{ sel.sourcesLabel }}</span></div>
+          <h2 style="margin:0;font-weight:900;font-size:32px;line-height:1.1;letter-spacing:-0.02em;text-wrap:balance">{{ sel.headline }}</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ sel.full }}" as="para" hint-placeholder-count="2">
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#2A2A33;text-wrap:pretty">{{ para }}</p>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66;padding-bottom:10px;border-bottom:1px solid rgba(17,24,39,.12)">{{ t.byCountry }}</div>
+          <sc-for list="{{ sel.breakdown }}" as="b" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:120px minmax(0,1fr) 32px;align-items:center;gap:14px;font-size:14px">
+              <span style="color:#4A4A55">{{ b.label }}</span>
+              <div style="height:6px;background:rgba(17,24,39,.12)"><div style="height:100%;width:{{ b.pct }};background:{{ b.color }}"></div></div>
+              <span style="font-weight:800;text-align:right">{{ b.score }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66;padding-bottom:10px;border-bottom:1px solid rgba(17,24,39,.12)">{{ t.coverage }}</div>
+          <sc-for list="{{ sel.sources }}" as="src" hint-placeholder-count="4">
+            <a href="{{ src.url }}" target="_blank" rel="noopener" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(17,24,39,.12);color:#111827" style-hover="color:#E11D48">
+              <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">{{ src.name }} · {{ src.country }}</div>
+                <div style="font-size:15px;font-weight:700;line-height:1.35;text-wrap:pretty">{{ src.title }}</div>
+              </div>
+              <span style="font-size:16px">↗</span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showThumbs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;list&quot;,&quot;grid&quot;],&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;'list'|'grid'&quot;},&quot;showRank&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;megaMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;big&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;'auto'|'big'|'compact'&quot;}}">
+const UI = {
+  nb: { language: 'Språk', ranked: 'Top 100\n', mega: 'Megasak', shareBtn: 'Del', pinBtn: 'Fest', pinned: 'Festet', pinnedBy: (n) => 'Festet av ' + n, pinnedYou: 'Festet av deg', comments: 'Kommentarer', onlyHere: (n) => 'Kun i feeden til ' + n, onlyMine: 'Kun i din feed', writeComment: 'Skriv en kommentar…', send: 'Send', notePh: 'Legg ved en kommentar…', shareToMine: 'Del i min feed', updateShare: 'Lagre og kopier lenke', cancel: 'Avbryt', shareTitle: 'Del saken', justNow: 'Nå', youName: 'Deg', feeds: 'Feeds', world: 'Verden', worldKind: 'Alle trender', myFeed: 'Min feed', findFeeds: 'Finn feeds', suggested: 'Forslag til deg', followFeed: 'Følg', followingBtn: 'Følger', share: 'Del feed', copied: 'Lenke kopiert', followers: 'følgere', storiesN: 'saker', kinds: { me: 'Din feed', friend: 'Venn', community: 'Community', public: 'Offentlig person' }, save: '+ Min feed', saved: '✓ I min feed', emptyMe: 'Feeden din er tom. Trykk «+ Min feed» på en sak for å legge den til, og del feeden med andre.', followingN: (n) => 'Følger ' + n, sharedBy: (n) => 'Delt av ' + n, yourNote: 'Ditt notat', myBio: 'Saker du har valgt ut. Andre kan følge feeden din.', reactions: 'Reaksjoner', support: 'Støtter', critical: 'Kritisk', rxCount: (n) => n + ' reaksjoner', rxNames: ['1 · Sitater', '2 · Kort', '3 · Stemmer', '4 · For og mot'], developing: 'I utvikling', devCount: (n) => '+' + n + ' oppdateringer', cardDesign: 'Kortdesign', styleNames: ['Bilde øverst', 'Score først', 'Tekstplate', 'Recap-boks'], live: 'Oppdateres løpende', development: 'Utvikling', follow: 'Følg saken', mainStory: 'Hovedsaken', latest: 'Siste', types: { news: 'Nytt', official: 'Offisielt', analysis: 'Analyse' }, updCount: (n) => n + ' oppdateringer siden i går', filter: 'Velg land', top: 'Topp', more: 'Flere land', less: 'Færre', dropImg: 'Slipp bilde her', trendingIn: 'Trender nå', hero: 'Det verden snakker om', sub: 'Alle verdens nyheter, kokt ned til essensen. Overskriften er saken.', cases: 'Saker', scoreLabel: 'Trend', byCountry: 'Engasjement per land', coverage: 'Dekning fra mediehus', sources: 'kilder', ago: (m) => m < 60 ? `${m} min siden` : `${Math.round(m/60)} t siden` },
+  en: { language: 'Language', ranked: 'Ranked by trend', mega: 'Mega story', shareBtn: 'Share', pinBtn: 'Pin', pinned: 'Pinned', pinnedBy: (n) => 'Pinned by ' + n, pinnedYou: 'Pinned by you', comments: 'Comments', onlyHere: (n) => 'Only in ' + n + '’s feed', onlyMine: 'Only in your feed', writeComment: 'Write a comment…', send: 'Send', notePh: 'Add a comment…', shareToMine: 'Share to my feed', updateShare: 'Save and copy link', cancel: 'Cancel', shareTitle: 'Share story', justNow: 'Now', youName: 'You', feeds: 'Feeds', world: 'World', worldKind: 'All trends', myFeed: 'My feed', findFeeds: 'Find feeds', suggested: 'Suggested for you', followFeed: 'Follow', followingBtn: 'Following', share: 'Share feed', copied: 'Link copied', followers: 'followers', storiesN: 'stories', kinds: { me: 'Your feed', friend: 'Friend', community: 'Community', public: 'Public figure' }, save: '+ My feed', saved: '✓ In my feed', emptyMe: 'Your feed is empty. Tap “+ My feed” on a story to add it, then share your feed with others.', followingN: (n) => 'Following ' + n, sharedBy: (n) => 'Shared by ' + n, yourNote: 'Your note', myBio: 'Stories you picked. Others can follow your feed.', reactions: 'Reactions', support: 'Support', critical: 'Critical', rxCount: (n) => n + ' reactions', rxNames: ['1 · Quotes', '2 · Cards', '3 · Voices', '4 · For and against'], developing: 'Developing', devCount: (n) => '+' + n + ' updates', cardDesign: 'Card design', styleNames: ['Image top', 'Score first', 'Text plate', 'Recap box'], live: 'Live updates', development: 'Development', follow: 'Follow story', mainStory: 'Main story', latest: 'Latest', types: { news: 'New', official: 'Official', analysis: 'Analysis' }, updCount: (n) => n + ' updates since yesterday', filter: 'Choose country', top: 'Top', more: 'More', less: 'Less', dropImg: 'Drop image here', trendingIn: 'Trending now', hero: 'What the world is talking about', sub: 'All the world\'s news, boiled down to the essence. The headline is the story.', cases: 'Stories', scoreLabel: 'Trend', byCountry: 'Engagement by country', coverage: 'Coverage from news outlets', sources: 'sources', ago: (m) => m < 60 ? `${m} min ago` : `${Math.round(m/60)}h ago` }
+};
+const COUNTRIES = [
+  ['global', 'Globalt', 'Global'], ['no', 'Norge', 'Norway'], ['us', 'USA', 'USA'], ['gb', 'Storbritannia', 'United Kingdom'],
+  ['de', 'Tyskland', 'Germany'], ['fr', 'Frankrike', 'France'], ['jp', 'Japan', 'Japan'], ['br', 'Brasil', 'Brazil'], ['in', 'India', 'India']
+];
+const CATS = { tech: ['Teknologi', 'Tech'], world: ['Verden', 'World'], energy: ['Energi', 'Energy'], econ: ['Økonomi', 'Economy'], climate: ['Klima', 'Climate'], space: ['Romfart', 'Space'], work: ['Arbeidsliv', 'Work'], health: ['Helse', 'Health'] };
+const STORIES = [
+  { id: 1, cat: 'world', min: 38, n: 214, s: { global: 91, no: 74, us: 80, gb: 77, de: 72, fr: 70, jp: 99, br: 58, in: 66 },
+    h: { nb: 'Jordskjelv på 7,4 utenfor Japan: tsunamivarselet er opphevet, ingen meldt omkommet', en: 'Magnitude 7.4 quake off Japan: tsunami warning lifted, no deaths reported' },
+    r: { nb: ['Skjelvet inntraff i havet øst for Honshu tidlig søndag lokal tid.', 'Tsunamivarselet ble opphevet etter fire timer; bølgene ble målt til under én meter.', 'Rundt 40 000 husstander var uten strøm i morgentimene.', 'Tog- og flytrafikk er gradvis i gang igjen.'],
+         en: ['The quake struck at sea east of Honshu early Sunday local time.', 'The tsunami warning was lifted after four hours; waves measured under one metre.', 'Around 40,000 households lost power in the early morning.', 'Rail and air traffic is gradually resuming.'] },
+    f: { nb: ['Japans meteorologiske byrå registrerte skjelvet på 7,4 cirka 80 kilometer fra kysten. Beboere i lavtliggende kystområder ble bedt om å evakuere, og flere tusen tilbrakte natten i tilfluktsrom.', 'Myndighetene melder om mindre skader på bygninger og veier, men ingen omkomne. Atomkraftverkene i regionen rapporterer normal drift. Seismologer advarer om etterskjelv de neste dagene.'],
+         en: ['The Japan Meteorological Agency recorded the 7.4 quake roughly 80 kilometres off the coast. Residents of low-lying coastal areas were told to evacuate, and thousands spent the night in shelters.', 'Authorities report minor damage to buildings and roads but no deaths. Nuclear plants in the region report normal operation. Seismologists warn of aftershocks over the coming days.'] },
+    src: [['NHK', 'JP', '東北沖でM7.4の地震 津波警報を解除', 'https://www3.nhk.or.jp'], ['Reuters', 'GB', 'Strong quake off Japan triggers brief tsunami alert', 'https://www.reuters.com'], ['NRK', 'NO', 'Kraftig jordskjelv utenfor Japan', 'https://www.nrk.no'], ['The Guardian', 'GB', 'Japan lifts tsunami warning after 7.4 earthquake', 'https://www.theguardian.com']] },
+  { id: 2, cat: 'tech', min: 95, n: 167, s: { global: 86, no: 71, us: 88, gb: 82, de: 90, fr: 87, jp: 61, br: 55, in: 70 },
+    h: { nb: 'EU krever at store AI-selskaper oppgir hvilke data modellene er trent på', en: 'EU requires large AI companies to disclose what data their models are trained on' },
+    r: { nb: ['Kravet gjelder modeller som tilbys til brukere i EU.', 'Selskapene må publisere et sammendrag av treningsdataene, inkludert opphavsrettsbeskyttet innhold.', 'Brudd kan gi bøter på opptil 3 prosent av global omsetning.', 'Flere amerikanske selskaper sier de vil etterleve reglene.'],
+         en: ['The rule applies to models offered to users in the EU.', 'Companies must publish a summary of training data, including copyrighted material.', 'Violations can lead to fines of up to 3 percent of global turnover.', 'Several US companies say they will comply.'] },
+    f: { nb: ['Kommisjonen begynte i dag å håndheve åpenhetskravene for generelle AI-modeller. Selskapene må dokumentere datakilder, testmetoder og energibruk.', 'Rettighetshavere og forlag har lenge presset på for kravet. Bransjeorganisasjoner advarer om at reglene kan forsinke lanseringer i Europa.'],
+         en: ['The Commission today began enforcing transparency requirements for general-purpose AI models. Companies must document data sources, testing methods and energy use.', 'Rights holders and publishers have long pushed for the rule. Industry groups warn it may delay launches in Europe.'] },
+    src: [['Der Spiegel', 'DE', 'KI-Konzerne müssen Trainingsdaten offenlegen', 'https://www.spiegel.de'], ['Le Monde', 'FR', 'IA : Bruxelles impose la transparence sur les données', 'https://www.lemonde.fr'], ['The New York Times', 'US', 'Europe forces AI giants to open their data books', 'https://www.nytimes.com'], ['Aftenposten', 'NO', 'Nå må AI-gigantene vise hva de har lært av', 'https://www.aftenposten.no']] },
+  { id: 3, cat: 'energy', min: 140, n: 42, s: { global: 34, no: 97, us: 12, gb: 41, de: 63, fr: 22, jp: 8, br: 6, in: 5 },
+    h: { nb: 'Regjeringen vil kunne begrense strømeksport når fyllingsgraden i magasinene er lav', en: 'Norwegian government seeks power to limit electricity exports when reservoir levels are low' },
+    r: { nb: ['Forslaget sendes på høring og skal behandles i Stortinget i vinter.', 'Grensen skal knyttes til fyllingsgraden i vannmagasinene.', 'Tyskland og Storbritannia har bedt om dialog.', 'Strømprisene i Sør-Norge har vært høye denne høsten.'],
+         en: ['The proposal goes to consultation and will be debated in parliament this winter.', 'The limit would be tied to hydro reservoir levels.', 'Germany and the UK have asked for talks.', 'Power prices in southern Norway have been high this autumn.'] },
+    f: { nb: ['Energidepartementet foreslår en ny hjemmel som lar myndighetene redusere kapasiteten på utenlandskablene i perioder med lav fyllingsgrad.', 'Opposisjonen er delt. Nettselskapene og flere økonomer mener tiltaket kan bryte med EØS-avtalen og svekke forsyningssikkerheten på sikt.'],
+         en: ['The Ministry of Energy proposes a new legal basis allowing authorities to reduce interconnector capacity during periods of low reservoir levels.', 'The opposition is divided. Grid operators and several economists say the measure may conflict with the EEA agreement and weaken long-term supply security.'] },
+    src: [['NRK', 'NO', 'Regjeringen vil kunne skru ned eksporten', 'https://www.nrk.no'], ['E24', 'NO', 'Dette betyr eksportgrensen for strømprisen din', 'https://e24.no'], ['Handelsblatt', 'DE', 'Norwegen erwägt Stromexport-Bremse', 'https://www.handelsblatt.com'], ['Financial Times', 'GB', 'Norway weighs curbs on power exports', 'https://www.ft.com']] },
+  { id: 4, cat: 'econ', min: 210, n: 131, s: { global: 78, no: 66, us: 92, gb: 74, de: 81, fr: 76, jp: 59, br: 62, in: 57 },
+    h: { nb: 'Sentralbankene i USA og eurosonen kutter renten med 0,25 prosentpoeng samme dag', en: 'US and eurozone central banks cut rates by 0.25 points on the same day' },
+    r: { nb: ['Begge peker på lavere inflasjon og svakere arbeidsmarked.', 'Aksjemarkedene steg i etterkant av kunngjøringene.', 'Det er første gang på flere år at kuttene kommer samtidig.', 'Norges Bank har neste rentemøte om tre uker.'],
+         en: ['Both cite lower inflation and a weaker labour market.', 'Stock markets rose after the announcements.', 'It is the first time in years the cuts have landed simultaneously.', 'Norges Bank holds its next rate meeting in three weeks.'] },
+    f: { nb: ['Den amerikanske sentralbanken og ECB kunngjorde rentekutt med få timers mellomrom. Begge signaliserer at videre kutt avhenger av inflasjonstallene fremover.', 'Analytikere tolker samtidigheten som et tegn på at sentralbankene ser den samme avkjølingen i økonomien på begge sider av Atlanterhavet.'],
+         en: ['The US Federal Reserve and the ECB announced cuts hours apart. Both signal that further cuts depend on upcoming inflation data.', 'Analysts read the timing as a sign that central banks see the same economic cooling on both sides of the Atlantic.'] },
+    src: [['The Wall Street Journal', 'US', 'Fed and ECB Cut Rates in Rare Tandem Move', 'https://www.wsj.com'], ['Reuters', 'GB', 'Fed, ECB both trim rates as inflation cools', 'https://www.reuters.com'], ['DN', 'NO', 'Rentekutt på begge sider av Atlanteren', 'https://www.dn.no'], ['Les Echos', 'FR', 'La Fed et la BCE baissent leurs taux', 'https://www.lesechos.fr']] },
+  { id: 5, cat: 'climate', min: 300, n: 88, s: { global: 69, no: 52, us: 48, gb: 55, de: 60, fr: 58, jp: 31, br: 95, in: 40 },
+    h: { nb: 'Avskogingen i Amazonas er den laveste som er målt på 15 år', en: 'Amazon deforestation falls to its lowest level in 15 years' },
+    r: { nb: ['Satellittdata viser en nedgang på 31 prosent fra året før.', 'Myndighetene viser til økt kontroll og nye straffer.', 'Miljøorganisasjoner advarer om at skogbranner fortsatt er et problem.', 'Norge er en av de største bidragsyterne til Amazonasfondet.'],
+         en: ['Satellite data show a 31 percent drop from the previous year.', 'Authorities credit stronger enforcement and new penalties.', 'Environmental groups warn that wildfires remain a problem.', 'Norway is one of the largest contributors to the Amazon Fund.'] },
+    f: { nb: ['Brasils romforskningsinstitutt publiserte de årlige tallene i dag. Det ryddede området er det minste siden 2011.', 'Regjeringen vil bruke tallene i forhandlinger om ny klimafinansiering. Forskere peker på at tørke og branner kan reversere trenden.'],
+         en: ['Brazil\'s space research institute published its annual figures today. The cleared area is the smallest since 2011.', 'The government plans to use the figures in talks on new climate finance. Researchers note that drought and fires could reverse the trend.'] },
+    src: [['Folha de S.Paulo', 'BR', 'Desmatamento na Amazônia é o menor em 15 anos', 'https://www.folha.uol.com.br'], ['O Globo', 'BR', 'Inpe: queda de 31% no desmate', 'https://oglobo.globo.com'], ['BBC', 'GB', 'Amazon forest loss hits 15-year low', 'https://www.bbc.com'], ['Aftenposten', 'NO', 'Laveste avskoging i Amazonas på 15 år', 'https://www.aftenposten.no']] },
+  { id: 6, cat: 'world', min: 75, n: 96, s: { global: 66, no: 28, us: 35, gb: 58, de: 33, fr: 30, jp: 29, br: 21, in: 98 },
+    h: { nb: 'Monsunflom i Nord-India: over to millioner mennesker er evakuert', en: 'Monsoon floods in northern India: more than two million people evacuated' },
+    r: { nb: ['Ekstremnedbør har rammet Uttar Pradesh og Bihar i fem døgn.', 'Hæren deltar i redningsarbeidet.', 'Over 300 landsbyer er isolert.', 'Mer regn er varslet de neste tre dagene.'],
+         en: ['Extreme rainfall has hit Uttar Pradesh and Bihar for five days.', 'The army is assisting rescue operations.', 'More than 300 villages are cut off.', 'More rain is forecast for the next three days.'] },
+    f: { nb: ['Elvene Ganges og Ghaghara har gått over sine bredder flere steder. Delstatsmyndighetene har åpnet flere tusen nødleirer.', 'Det er meldt om skader på jordbruksarealer i stor skala, noe som kan påvirke matprisene i regionen.'],
+         en: ['The Ganges and Ghaghara rivers have burst their banks in several places. State authorities have opened thousands of relief camps.', 'Large-scale damage to farmland has been reported, which may affect food prices in the region.'] },
+    src: [['The Hindu', 'IN', 'Floods displace over 2 million in U.P., Bihar', 'https://www.thehindu.com'], ['Times of India', 'IN', 'Army steps in as floodwaters rise', 'https://timesofindia.indiatimes.com'], ['Al Jazeera', 'QA', 'India monsoon floods force mass evacuations', 'https://www.aljazeera.com'], ['BBC', 'GB', 'Millions evacuated in India floods', 'https://www.bbc.com']] },
+  { id: 7, cat: 'work', min: 420, n: 54, s: { global: 51, no: 64, us: 30, gb: 47, de: 93, fr: 61, jp: 44, br: 18, in: 15 },
+    h: { nb: 'Tyskland tester firedagersuke for 200 000 ansatte i offentlig sektor', en: 'Germany trials a four-day week for 200,000 public sector employees' },
+    r: { nb: ['Prøveprosjektet starter i januar og varer i to år.', 'Lønnen beholdes, men oppgavene skal løses på fire dager.', 'Fagforeningene støtter forsøket.', 'Resultatene skal evalueres av uavhengige forskere.'],
+         en: ['The trial starts in January and runs for two years.', 'Pay stays the same, but work must be done in four days.', 'Unions back the trial.', 'Results will be evaluated by independent researchers.'] },
+    f: { nb: ['Forsøket omfatter etater i seks delstater og er det største i sitt slag i Europa. Målet er å se om redusert arbeidstid kan bedre rekruttering og redusere sykefravær.', 'Arbeidsgiverorganisasjoner er skeptiske og frykter at forsøket skal spre seg til privat sektor.'],
+         en: ['The trial covers agencies in six states and is the largest of its kind in Europe. The aim is to see whether shorter hours can improve recruitment and reduce sick leave.', 'Employer groups are sceptical and fear the trial will spread to the private sector.'] },
+    src: [['Die Zeit', 'DE', 'Vier-Tage-Woche für 200.000 Beschäftigte', 'https://www.zeit.de'], ['DW', 'DE', 'Germany launches major four-day week trial', 'https://www.dw.com'], ['E24', 'NO', 'Tyskland tester firedagersuke', 'https://e24.no'], ['Le Figaro', 'FR', 'L\'Allemagne teste la semaine de quatre jours', 'https://www.lefigaro.fr']] },
+  { id: 8, cat: 'space', min: 510, n: 73, s: { global: 58, no: 40, us: 81, gb: 49, de: 42, fr: 39, jp: 52, br: 33, in: 61 },
+    h: { nb: 'Den første kommersielle romstasjonen har tatt imot sitt første mannskap', en: 'The first commercial space station has welcomed its first crew' },
+    r: { nb: ['Fire astronauter dokket med stasjonen natt til søndag.', 'De skal bli om bord i to uker og gjennomføre forskningsforsøk.', 'Stasjonen eies og drives av et privat selskap.', 'Den internasjonale romstasjonen skal etter planen pensjoneres innen 2030.'],
+         en: ['Four astronauts docked with the station overnight into Sunday.', 'They will stay two weeks and run research experiments.', 'The station is privately owned and operated.', 'The International Space Station is scheduled to retire by 2030.'] },
+    f: { nb: ['Dokkingen markerer starten på en ny fase der private aktører overtar mer av virksomheten i lav jordbane. Mannskapet består av forskere fra tre land.', 'Selskapet planlegger fire besøk i året. Kritikere stiller spørsmål ved hvem som får tilgang og til hvilken pris.'],
+         en: ['The docking marks the start of a new phase in which private operators take over more activity in low Earth orbit. The crew includes researchers from three countries.', 'The company plans four visits a year. Critics question who will get access and at what price.'] },
+    src: [['AP', 'US', 'First crew arrives at commercial space station', 'https://apnews.com'], ['The Washington Post', 'US', 'A private space station opens for business', 'https://www.washingtonpost.com'], ['The Times of India', 'IN', 'Commercial space station gets first visitors', 'https://timesofindia.indiatimes.com'], ['Asahi Shimbun', 'JP', '民間宇宙ステーションに初の滞在クルー', 'https://www.asahi.com']] },
+  { id: 9, cat: 'health', min: 600, n: 47, s: { global: 44, no: 46, us: 38, gb: 90, de: 41, fr: 36, jp: 27, br: 20, in: 34 },
+    h: { nb: 'Storbritannia tar i bruk AI-støttet diagnostikk ved alle fastlegekontor', en: 'UK rolls out AI-assisted diagnostics to every GP practice' },
+    r: { nb: ['Verktøyet hjelper leger med å tolke blodprøver og hudbilder.', 'Legen tar fortsatt den endelige avgjørelsen.', 'Pilotprosjektet reduserte ventetiden på henvisninger.', 'Personvernorganisasjoner krever innsyn i hvordan data lagres.'],
+         en: ['The tool helps doctors interpret blood tests and skin images.', 'The doctor still makes the final decision.', 'The pilot reduced waiting times for referrals.', 'Privacy groups demand transparency on how data is stored.'] },
+    f: { nb: ['Helsemyndighetene ruller ut systemet over seks måneder etter et pilotprosjekt i 120 legekontor.', 'Legeforeningen støtter innføringen, men ber om tydelige regler for ansvar dersom systemet tar feil.'],
+         en: ['Health authorities will roll out the system over six months following a pilot in 120 practices.', 'The doctors\' association supports the rollout but calls for clear liability rules if the system gets it wrong.'] },
+    src: [['BBC', 'GB', 'AI diagnosis tool to reach every GP surgery', 'https://www.bbc.com'], ['The Guardian', 'GB', 'NHS bets on AI to cut waiting lists', 'https://www.theguardian.com'], ['Dagens Medisin', 'NO', 'Britene innfører AI hos alle fastleger', 'https://www.dagensmedisin.no'], ['Süddeutsche Zeitung', 'DE', 'Großbritannien setzt auf KI beim Hausarzt', 'https://www.sueddeutsche.de']] }
+];
+const IMG = { 1: 'earthquake,japan', 2: 'server,datacenter', 3: 'hydropower,dam', 4: 'bank,finance', 5: 'amazon,rainforest', 6: 'flood,monsoon', 7: 'office,berlin', 8: 'space,rocket', 9: 'doctor,hospital' };
+const NIMG = 4;
+const imgUrl = (id, k = 0, w = 1200) => 'https://picsum.photos/seed/' + IMG[id].replace(',', '-') + '-' + k + '/' + w + '/' + Math.round(w * 2 / 3);
+const RXU = { 'Le Monde': 'https://www.lemonde.fr', 'Der Spiegel': 'https://www.spiegel.de', 'The New York Times': 'https://www.nytimes.com', 'Folha de S.Paulo': 'https://www.folha.uol.com.br', 'O Globo': 'https://oglobo.globo.com', NRK: 'https://www.nrk.no', 'Die Zeit': 'https://www.zeit.de', Handelsblatt: 'https://www.handelsblatt.com', BBC: 'https://www.bbc.com', 'The Guardian': 'https://www.theguardian.com' };
+const REACT = {
+  2: [['pro', 'EK', 'Talsperson, EU-kommisjonen', 'Spokesperson, European Commission', 'Åpenhet er en forutsetning for tillit til AI', 'Transparency is a precondition for trust in AI', 'Le Monde'], ['pro', 'FF', 'Europeisk forleggerforbund', 'European publishers federation', 'Endelig får vi vite hva som er brukt', 'At last we will know what has been used', 'Der Spiegel'], ['con', 'TB', 'Teknologibransjens interesseorganisasjon', 'Tech industry association', 'Reglene vil forsinke lanseringer i Europa', 'The rules will delay launches in Europe', 'The New York Times']],
+  5: [['pro', 'MM', 'Brasils miljøminister', 'Brazil\'s environment minister', 'Tallene viser at kontrollen virker', 'The figures show enforcement works', 'Folha de S.Paulo'], ['con', 'KF', 'Klimaforsker, Universitetet i São Paulo', 'Climate scientist, University of São Paulo', 'Tørken kan snu trenden allerede neste år', 'Drought could reverse the trend as soon as next year', 'O Globo'], ['pro', 'KD', 'Klima- og miljødepartementet', 'Norwegian climate ministry', 'Viser at Amazonasfondet gir resultater', 'Shows the Amazon Fund is delivering', 'NRK']],
+  7: [['pro', 'FO', 'Fagforbund for offentlig ansatte', 'Public sector union', 'Et historisk steg for arbeidstakerne', 'A historic step for workers', 'Die Zeit'], ['con', 'AG', 'Arbeidsgiverforeningen', 'Employers association', 'Et dyrt eksperiment betalt av skattebetalerne', 'A costly experiment paid for by taxpayers', 'Handelsblatt']],
+  9: [['pro', 'LF', 'Britisk legeforening', 'British doctors association', 'Kan korte ned ventetiden betydelig', 'Could cut waiting times significantly', 'BBC'], ['con', 'PV', 'Personvernorganisasjon', 'Privacy group', 'Pasientene må få vite hvor dataene lagres', 'Patients must be told where their data is stored', 'The Guardian']]
+};
+const PR = (g, n) => 'https://randomuser.me/api/portraits/' + g + '/' + n + '.jpg';
+const FEEDS = [
+  { id: 'ingrid', kind: 'friend', name: 'Ingrid Solberg', av: PR('women', 44), followers: 312, isNew: true, picks: [3, 5, 7], bio: { nb: 'Energi, klima og litt arbeidsliv.', en: 'Energy, climate and some work life.' }, notes: { 3: { nb: 'Dette kommer til å merkes på strømregningen i vinter.', en: 'We will feel this on the power bill this winter.' }, 5: { nb: 'Endelig gode nyheter fra Amazonas.', en: 'Finally some good news from the Amazon.' } } },
+  { id: 'jonas', kind: 'friend', name: 'Jonas Berg', av: PR('men', 32), followers: 158, picks: [2, 8, 9], bio: { nb: 'Teknologi og romfart.', en: 'Tech and space.' }, notes: { 2: { nb: 'Viktigste AI-saken denne høsten.', en: 'The most important AI story this autumn.' } } },
+  { id: 'klima', kind: 'community', name: 'Klimaforum', initials: 'KF', avBg: '#065F46', followers: 24300, isNew: true, picks: [5, 6, 3], bio: { nb: 'Fellesskap som følger klima- og naturnyheter fra hele verden.', en: 'A community following climate and nature news worldwide.' }, notes: { 6: { nb: 'Ekstremvær følger samme mønster som i fjor.', en: 'Extreme weather follows the same pattern as last year.' } } },
+  { id: 'okonom', kind: 'public', name: 'Marte Lien', av: PR('women', 68), followers: 86400, picks: [4, 3, 7], bio: { nb: 'Sjeføkonom. Deler sakene som flytter markedene.', en: 'Chief economist. Shares the stories that move markets.' }, notes: { 4: { nb: 'Norges Bank følger nok etter i desember.', en: 'Norges Bank will likely follow in December.' } } },
+  { id: 'tech', kind: 'community', name: 'Tech i Norden', initials: 'TN', avBg: '#7C3AED', followers: 9800, picks: [2, 9, 8], bio: { nb: 'Nordisk teknologimiljø.', en: 'Nordic tech community.' }, notes: {} },
+  { id: 'emil', kind: 'friend', name: 'Emil Hagen', av: PR('men', 51), followers: 97, picks: [1, 6], bio: { nb: 'Verden og reise.', en: 'World and travel.' }, notes: {} }
+];
+const ME_AV = PR('men', 12);
+const PIN = { ingrid: 3, klima: 5, okonom: 4 };
+const CMT = {
+  'ingrid:3': [['Jonas Berg', PR('men', 32), '13:20', 'Enig. Hvem tar regningen hvis kablene strupes?', 'Agreed. Who pays if the cables are throttled?'], ['Sara Nilsen', PR('women', 21), '12:58', 'Lurer på hvordan Tyskland svarer.', 'Wonder how Germany will respond.']],
+  'ingrid:5': [['Emil Hagen', PR('men', 51), '11:04', 'Godt å se at fondet virker.', 'Good to see the fund working.']],
+  'jonas:2': [['Ingrid Solberg', PR('women', 44), '10:12', 'Endelig åpenhet!', 'Transparency at last!']],
+  'klima:5': [['Lars Moe', PR('men', 70), '09:40', 'Trenger tall for brannene også.', 'We need the wildfire numbers too.'], ['Anna Dahl', PR('women', 12), '09:15', 'Deler dette videre.', 'Sharing this.']],
+  'okonom:4': [['Per Aas', PR('men', 41), '14:02', 'Betyr dette lavere boligrente i januar?', 'Does this mean lower mortgage rates in January?']],
+  'me:2': [['Ingrid Solberg', PR('women', 44), '13:50', 'Takk for at du delte.', 'Thanks for sharing.']]
+};
+const fmtN = (n, lang) => n.toLocaleString(lang === 'nb' ? 'nb-NO' : 'en-GB');
+const DEV = {
+  2: { count: 3, ups: [['13:55', 'To amerikanske AI-selskaper har sendt inn dokumentasjon til Kommisjonen', 'Two US AI companies have filed documentation with the Commission'], ['11:20', 'Forlagsbransjen krever innsyn i hvilke bøker som er brukt', 'Publishers demand to know which books were used']] },
+  3: { count: 2, ups: [['14:05', 'Tysklands energiminister ber om krisemøte med Norge', 'German energy minister requests urgent talks with Norway'], ['12:40', 'Strømprisen i Sør-Norge falt etter kunngjøringen', 'Power prices in southern Norway fell after the announcement']] },
+  6: { count: 5, ups: [['14:30', 'Ganges stiger fortsatt; nye evakueringer i Patna', 'The Ganges is still rising; new evacuations in Patna'], ['12:10', 'Dødstallet er oppjustert til 38', 'Death toll revised up to 38']] },
+  7: { count: 2, ups: [['13:15', 'Tre nye delstater vil bli med i forsøket', 'Three more states want to join the trial'], ['10:45', 'Arbeidsgiverne varsler søksmål', 'Employers announce legal challenge']] }
+};
+const MEGAS = {
+  1: { count: 7, updates: [
+    { t: '13:40', type: 'news', img: 'quake-after', h: { nb: 'Etterskjelv på 6,1, ingen nye skader meldt', en: 'Magnitude 6.1 aftershock, no new damage reported' }, d: { nb: 'Etterskjelvet ble kjent i hele Tohoku-regionen. Myndighetene ber folk holde seg unna skadde bygninger.', en: 'The aftershock was felt across the Tohoku region. Authorities urge people to stay away from damaged buildings.' } },
+    { t: '12:15', type: 'official', img: 'quake-gov', h: { nb: 'Regjeringen setter av nødbudsjett og sender statsministeren til Miyagi', en: 'Government approves emergency budget and sends the prime minister to Miyagi' }, d: { nb: 'Pengene skal gå til midlertidige boliger og reparasjon av veier og havner.', en: 'The funds will cover temporary housing and repairs to roads and ports.' } },
+    { t: '10:30', type: 'analysis', img: 'quake-ocean', h: { nb: 'Derfor ble tsunamien langt mindre enn fryktet', en: 'Why the tsunami was far smaller than feared' }, d: { nb: 'Bruddet skjedde dypere enn ved 2011-skjelvet, og havbunnen forskjøv seg mindre.', en: 'The rupture was deeper than in 2011 and the seabed shifted less.' } },
+    { t: '09:05', type: 'official', img: 'quake-plant', h: { nb: 'Atomkraftverkene i regionen rapporterer normal drift', en: 'Nuclear plants in the region report normal operation' }, d: { nb: 'Tilsynsmyndigheten har ikke funnet avvik ved anleggene langs kysten.', en: 'The regulator has found no irregularities at the coastal facilities.' } }
+  ] },
+  4: { count: 5, updates: [
+    { t: '14:10', type: 'analysis', img: 'rate-house', h: { nb: 'Boligrenten i Norge kan falle før jul, mener økonomer', en: 'Norwegian mortgage rates could fall before Christmas, economists say' }, d: { nb: 'Flere storbanker venter at Norges Bank følger etter på neste møte. Et kutt vil gi lavere renter for boliglån fra januar.', en: 'Several major banks expect Norges Bank to follow at its next meeting. A cut would lower mortgage rates from January.' } },
+    { t: '12:30', type: 'news', img: 'rate-bank', h: { nb: 'Amerikanske banker senker utlånsrentene allerede i dag', en: 'US banks cut lending rates as of today' }, d: { nb: 'De største bankene justerer prime rate ned med 0,25 prosentpoeng.', en: 'The largest banks lower their prime rate by 0.25 points.' } },
+    { t: '11:05', type: 'official', img: 'rate-ecb', h: { nb: 'ECB-sjefen åpner for nytt kutt i desember', en: 'ECB chief opens the door to another cut in December' }, d: { nb: 'Uttalelsen kom i en høring i Europaparlamentet.', en: 'The remark came at a hearing in the European Parliament.' } },
+    { t: '09:20', type: 'news', img: 'rate-fx', h: { nb: 'Dollaren svekkes mot euro og kroner', en: 'Dollar weakens against the euro and krone' }, d: { nb: 'Kronen styrket seg med nesten én prosent mot dollar.', en: 'The krone gained almost one percent against the dollar.' } }
+  ] }
+};
+const MEGA_OLD = { id: 1, count: 7, updates: [['13:40', 'Etterskjelv på 6,1, ingen nye skader meldt', 'Magnitude 6.1 aftershock, no new damage reported'], ['12:15', 'Regjeringen setter av nødbudsjett og sender statsministeren til Miyagi', 'Government approves emergency budget and sends the prime minister to Miyagi'], ['10:30', 'Derfor ble tsunamien langt mindre enn fryktet', 'Why the tsunami was far smaller than feared']] };
+const tier = (v) => v >= 85 ? '#E11D48' : v >= 60 ? '#F59E0B' : '#111827';
+
+class Component extends DCLogic {
+  state = { comments: {}, drafts: {}, composer: null, noteDraft: '', myNotes: { 2: 'Viktig steg for opphavsretten. Følger denne tett.' }, myPin: 2, feed: 'world', following: { ingrid: true, jonas: true, klima: true, okonom: true }, mine: [1, 4, 2], copied: false, discover: false, rxStyle: 1, cardStyle: null, lang: 'nb', country: 'global', sel: null, showAll: false, cat: 'all', idx: {} };
+  setIdx(id, k) { this.setState(s => ({ idx: { ...s.idx, [id]: k } })); }
+  renderVals() {
+    const { lang, sel } = this.state, recap = {}, inFeed = this.state.feed !== 'world';
+    const country = inFeed ? 'global' : this.state.country;
+    const t = UI[lang], li = lang === 'nb' ? 1 : 2, ci = lang === 'nb' ? 0 : 1;
+    const layout = this.props.layout ?? 'grid';
+    const cname = (code) => (COUNTRIES.find(c => c[0] === code.toLowerCase()) || [code, code, code])[li];
+    const base = (st) => ({ cat: CATS[st.cat][ci], headline: st.h[lang], time: t.ago(st.min), sourcesLabel: `${st.n} ${t.sources}` });
+    const cat = inFeed ? 'all' : this.state.cat, idx = this.state.idx;
+    const megaMode = this.props.megaMode ?? 'auto';
+    const feedId = this.state.feed, fObj = FEEDS.find(x => x.id === feedId), mine = this.state.mine;
+    const picks = feedId === 'world' ? null : feedId === 'me' ? mine : fObj.picks;
+    const sorted = STORIES.filter(x => (cat === 'all' || x.cat === cat) && (!picks || picks.includes(x.id))).sort((a, b) => b.s[country] - a.s[country]);
+    const pinId = feedId === 'me' ? this.state.myPin : PIN[feedId];
+    if (feedId !== 'world') { const k = sorted.findIndex(x => x.id === pinId); if (k > 0) sorted.unshift(sorted.splice(k, 1)[0]); }
+    const meAv = { av: ME_AV, hasAv: true, initials: '', avBg: '#111827' };
+    const stories = sorted.map((st, i) => {
+      const v = st.s[country], open = !!recap[st.id], M = MEGAS[st.id];
+      const mode = M ? (megaMode === 'auto' ? (v >= 80 ? 'big' : 'compact') : megaMode) : null;
+      const upd = M ? M.updates.map((u, k) => ({ time: u.t, type: t.types[u.type], headline: u.h[lang], text: u.d[lang], img: 'https://picsum.photos/seed/' + u.img + '/1200/675', timeColor: k === 0 ? '#F59E0B' : 'rgba(255,255,255,.6)' })) : [];
+      const megaF = M && feedId === 'world' ? { isNormal: false, big: mode === 'big', compact: mode === 'compact', megaImg: imgUrl(st.id, 0), updates: upd.slice(0, 3), lead: upd[0], rest: upd.slice(1, 4), updCount: t.updCount(M.count) } : { isNormal: true, big: false, compact: false };
+      const cs = this.state.cardStyle ?? this.props.cardStyle ?? 'A', nm = megaF.isNormal;
+      const D = DEV[st.id], RX = REACT[st.id], rs = this.state.rxStyle;
+      const RXT = ['14:05', '12:48', '10:22'], RXD = [11, 11, 10];
+      const rx = RX ? RX.map((r, k) => ({ stamp: lang === 'nb' ? `${RXD[k]}. okt. kl. ${RXT[k]}` : `Oct ${RXD[k]}, ${RXT[k]}`, thumb: 'https://randomuser.me/api/portraits/' + ((st.id + k) % 2 ? 'women' : 'men') + '/' + ((st.id * 7 + k * 13) % 90) + '.jpg', stance: r[0], initials: r[1], who: lang === 'nb' ? r[2] : r[3], quote: lang === 'nb' ? r[4] : r[5], outlet: r[6], url: RXU[r[6]], stanceColor: r[0] === 'pro' ? '#111827' : '#E11D48', avBg: r[0] === 'pro' ? '#111827' : '#E11D48', avFg: '#fff' })) : [];
+      const rxF = { rx, hasRx: !!RX, rxCount: RX ? t.rxCount(RX.length) : '', rxFirst: rx[0] || {}, rxPro: rx.filter(r => r.stance === 'pro'), rxCon: rx.filter(r => r.stance === 'con') };
+      const inF = feedId !== 'world', isMe = feedId === 'me', key = feedId + ':' + st.id, isPinned = inF && pinId === st.id;
+      const myN = this.state.myNotes[st.id], NT0 = fObj && fObj.notes[st.id];
+      const NT = isMe ? (myN ? { [lang]: myN } : null) : NT0, isSaved = mine.includes(st.id);
+      const ownerName = isMe ? null : fObj && fObj.name;
+      const noteLabel = isMe ? (isPinned ? t.pinnedYou : t.yourNote) : ownerName ? (isPinned ? t.pinnedBy(ownerName) : t.sharedBy(ownerName)) : '';
+      const cms = [...(CMT[key] || []).map(c => ({ name: c[0], av: c[1], hasAv: true, initials: '', avBg: '#111827', time: c[2], text: lang === 'nb' ? c[3] : c[4] })), ...(this.state.comments[key] || [])];
+      const sendC = () => { const txt = (this.state.drafts[key] || '').trim(); if (!txt) return; this.setState(s => ({ comments: { ...s.comments, [key]: [...(s.comments[key] || []), { name: t.youName, ...meAv, time: t.justNow, text: txt }] }, drafts: { ...s.drafts, [key]: '' } })); };
+      const socialF = { isPinned, canShare: inF, canPin: isMe, shareBg: this.state.composer === st.id ? '#fff' : 'rgba(17,24,39,.85)', shareFg: this.state.composer === st.id ? '#111827' : '#fff',
+        pinLabel: isPinned ? t.pinned : t.pinBtn, pinBg: isPinned ? '#F59E0B' : 'rgba(17,24,39,.85)', pinFg: isPinned ? '#111827' : '#fff',
+        togglePin: () => this.setState(s => ({ myPin: s.myPin === st.id ? null : st.id })),
+        openShare: () => this.setState(s => ({ composer: s.composer === st.id ? null : st.id, noteDraft: s.myNotes[st.id] || '' })),
+        composing: this.state.composer === st.id,
+        submitShare: () => { if (isMe) { try { navigator.clipboard && navigator.clipboard.writeText(location.href.split('#')[0] + '#story=' + st.id); } catch (e) {} } this.setState(s => ({ mine: s.mine.includes(st.id) ? s.mine : [...s.mine, st.id], myNotes: { ...s.myNotes, [st.id]: s.noteDraft.trim() }, composer: null })); },
+        showComments: inF, comments: cms, cmCount: cms.length, cmScope: isMe ? t.onlyMine : t.onlyHere(ownerName || ''),
+        draft: this.state.drafts[key] || '', onDraft: (e) => { const v = e.target.value; this.setState(s => ({ drafts: { ...s.drafts, [key]: v } })); },
+        onKey: (e) => { if (e.key === 'Enter') sendC(); }, sendComment: sendC };
+      const saveF = { saveLabel: isSaved ? t.saved : t.save, saveBg: isSaved ? '#F59E0B' : 'rgba(17,24,39,.85)', saveFg: isSaved ? '#111827' : '#fff',
+        toggleSave: () => this.setState(s => ({ mine: s.mine.includes(st.id) ? s.mine.filter(x => x !== st.id) : [...s.mine, st.id] })),
+        hasNote: !!NT, note: NT ? (isMe ? { text: NT[lang], label: noteLabel, ...meAv } : { text: NT[lang], label: noteLabel, av: fObj.av || '', hasAv: !!fObj.av, initials: fObj.initials || '', avBg: fObj.avBg || '#111827' }) : {} };
+      return { ...base(st), ...megaF, ...rxF, ...saveF, ...socialF, hasDev: !!D, devCount: D ? t.devCount(D.count) : '', devUps: D ? D.ups.map((u, k) => ({ thumb: 'https://picsum.photos/seed/dev-' + st.id + '-' + k + '/240/180', time: u[0], headline: lang === 'nb' ? u[1] : u[2], marker: k === 0 ? '#F59E0B' : 'rgba(17,24,39,.25)', timeColor: k === 0 ? '#B45309' : '#111827' })) : [], vA: nm && cs === 'A', vB: nm && cs === 'B', vC: nm && cs === 'C', vD: nm && cs === 'D', rank: i + 1, img: imgUrl(st.id, idx[st.id] || 0), imgPos: ((idx[st.id] || 0) + 1) + ' / ' + NIMG,
+        thumbs: Array.from({ length: NIMG }, (_, k) => ({ src: imgUrl(st.id, k, 300), label: 'Image ' + (k + 1), ring: k === (idx[st.id] || 0) ? '#111827' : 'transparent', op: k === (idx[st.id] || 0) ? 1 : .6, select: () => this.setIdx(st.id, k) })),
+        prev: () => this.setIdx(st.id, ((idx[st.id] || 0) + NIMG - 1) % NIMG), next: () => this.setIdx(st.id, ((idx[st.id] || 0) + 1) % NIMG), imgId: 'story-img-' + st.id, scoreFg: v >= 60 && v < 85 ? '#111827' : '#fff', score: v, pct: v + '%', color: tier(v), recap: st.r[lang], recapOpen: open,
+        size: layout === 'grid' ? 'clamp(24px,2.4vw,30px)' : i === 0 ? 'clamp(26px,3vw,34px)' : '22px',
+        recapBg: open ? '#fff' : 'transparent', recapFg: open ? '#111827' : '#fff', recapBorder: open ? '#fff' : 'rgba(255,255,255,.3)', recapArrow: open ? '▲' : '▼',
+        toggleRecap: () => this.setState(s => ({ recap: { ...s.recap, [st.id]: !s.recap[st.id] } })),
+        openFull: () => this.setState({ sel: st.id }) };
+    });
+    if (layout === 'grid') {
+      const out = []; let pend = [], col = 0;
+      for (const s of stories) {
+        if (!s.isNormal) { if (col === 0) out.push(s); else pend.push(s); }
+        else { out.push(s); col = (col + 1) % 2; if (col === 0 && pend.length) { out.push(...pend); pend = []; } }
+      }
+      out.push(...pend);
+      stories.splice(0, stories.length, ...out);
+    }
+    stories.forEach((s, i) => { s.rank = i + 1; s.color = i < 10 ? '#E11D48' : i < 20 ? '#F59E0B' : '#111827'; s.scoreFg = i >= 10 && i < 20 ? '#111827' : '#fff'; });
+    const st = STORIES.find(x => x.id === sel);
+    const selV = st ? { ...base(st), img: imgUrl(st.id, idx[st.id] || 0), imgId: 'story-img-' + st.id, full: st.f[lang],
+      breakdown: COUNTRIES.filter(c => c[0] !== 'global').map(c => ({ label: c[li], score: st.s[c[0]], pct: st.s[c[0]] + '%', color: tier(st.s[c[0]]) })).sort((a, b) => b.score - a.score).slice(0, 5),
+      sources: st.src.map(([name, cc, title, url]) => ({ name, country: cname(cc), title, url })) } : {};
+    return {
+      showThumbs: this.props.showThumbs ?? true, devCols: (this.props.showThumbs ?? true) ? '12px 48px minmax(0,1fr)' : '12px 48px minmax(0,1fr)', rxCols: (this.props.showThumbs ?? true) ? '56px 22px minmax(0,1fr)' : '22px minmax(0,1fr)',
+      ...(() => {
+        const fol = this.state.following, me = { id: 'me', kind: 'me', name: t.myFeed, av: ME_AV, followers: 41 };
+        const card = (x) => ({ name: x.name, kind: t.kinds[x.kind], av: x.av || '', hasAv: !!x.av, initials: x.initials || '', avBg: x.avBg || '#111827' });
+        const world = { name: t.world, kind: t.worldKind, av: './assets/logo-color.webp', hasAv: true, initials: '', avBg: '#fff' };
+        const list = [{ id: 'me', ...card(me) }, ...FEEDS.filter(x => fol[x.id]).map(x => ({ id: x.id, ...card(x), hasNew: !!x.isNew }))];
+        const toggleF = (id) => this.setState(s => ({ following: { ...s.following, [id]: !s.following[id] } }));
+        const P = feedId === 'me' ? me : fObj;
+        return {
+          heading: feedId === 'world' ? t.trendingIn : (feedId === 'me' ? t.myFeed : P.name),
+          followingLabel: t.followingN(Object.values(fol).filter(Boolean).length),
+          feeds: list.map(x => { const on = x.id === feedId; return { ...x, hasNew: !!x.hasNew && !on, bg: on ? '#111827' : '#fff', fg: on ? '#fff' : '#111827', sub: on ? 'rgba(255,255,255,.65)' : '#5A5A66', hover: on ? '#111827' : '#F4F4F6', select: () => this.setState(s => ({ feed: s.feed === x.id ? 'world' : x.id, copied: false })) }; }),
+          discover: this.state.discover, discoverBg: this.state.discover ? '#F4F4F6' : '#fff', toggleDiscover: () => this.setState(s => ({ discover: !s.discover })),
+          suggestions: FEEDS.filter(x => !fol[x.id] || x.id === 'tech' || x.id === 'emil').map(x => ({ ...card(x), followers: fmtN(x.followers, lang) + ' ' + t.followers, btn: fol[x.id] ? t.followingBtn : t.followFeed, btnBg: fol[x.id] ? '#111827' : '#fff', btnFg: fol[x.id] ? '#fff' : '#111827', toggle: () => toggleF(x.id) })),
+          hasProfile: feedId !== 'world',
+          profile: P ? { ...card(P), kind: t.kinds[P.kind], bio: feedId === 'me' ? t.myBio : P.bio[lang], stats: fmtN(P.followers, lang) + ' ' + t.followers + ' · ' + (feedId === 'me' ? mine.length : P.picks.length) + ' ' + t.storiesN, canFollow: feedId !== 'me', btn: fol[feedId] ? t.followingBtn : t.followFeed, btnBg: fol[feedId] ? 'transparent' : '#fff', btnFg: fol[feedId] ? '#fff' : '#111827', toggle: () => toggleF(feedId) } : {},
+          shareLabel: this.state.copied ? t.copied : t.share,
+          shareFeed: () => { try { navigator.clipboard && navigator.clipboard.writeText(location.href.split('#')[0] + '#feed=' + feedId); } catch (e) {} this.setState({ copied: true }); clearTimeout(this._ct); this._ct = setTimeout(() => this.setState({ copied: false }), 2000); },
+          isEmpty: feedId === 'me' && stories.length === 0
+        };
+      })(),
+      showCountry: !inFeed, showCats: !inFeed, me: { av: ME_AV, hasAv: true, initials: '', avBg: '#111827' }, noteDraft: this.state.noteDraft, onNoteDraft: (e) => this.setState({ noteDraft: e.target.value }), closeShare: () => this.setState({ composer: null }), submitLabel: this.state.feed === 'me' ? t.updateShare : t.shareToMine,
+      t, lang, hasSel: !!st, sel: selV, stories, showRank: this.props.showRank ?? true,
+      gridCols: layout === 'grid' ? 'repeat(2,minmax(0,1fr))' : 'minmax(0,1fr)',
+      artDir: 'row', imgFlex: layout === 'grid' ? '0 0 46%' : '1 1 560px', textFlex: layout === 'grid' ? '1 1 0' : '1 1 300px', artWrap: layout === 'grid' ? 'nowrap' : 'wrap', artGap: layout === 'grid' ? '18px' : '24px',
+      countryName: cname(country),
+      filterLabel: this.state.showAll ? t.less : t.more, filterBg: this.state.showAll ? '#F4F4F6' : '#FFFFFF', filterHover: '#F4F4F6', filterFg: '#111827',
+      cats: [['all', 'Alle', 'All'], ...Object.entries(CATS).map(([k, v]) => [k, v[0], v[1]])].map(([k, nb, en]) => { const on = k === cat; return { label: lang === 'nb' ? nb : en, count: k === 'all' ? STORIES.length : STORIES.filter(x => x.cat === k).length, bg: on ? '#111827' : '#FFFFFF', hover: on ? '#111827' : '#F4F4F6', fg: on ? '#FFFFFF' : '#111827', sub: on ? 'rgba(255,255,255,.7)' : '#5A5A66', select: () => this.setState({ cat: k }) }; }),
+      toggleAll: () => this.setState(s => ({ showAll: !s.showAll })),
+      countries: (this.state.showAll ? COUNTRIES : (() => { const v = COUNTRIES.slice(0, 4); const i = COUNTRIES.findIndex(c => c[0] === country); if (i > 3) v[3] = COUNTRIES[i]; return v; })()).map(c => { const on = !inFeed && c[0] === country, top = STORIES.slice().sort((x, y) => y.s[c[0]] - x.s[c[0]])[0]; return { label: c[li], code: c[0] === 'global' ? 'ALL' : c[0].toUpperCase(), topScore: top.s[c[0]], topImg: imgUrl(top.id, 0, 200), dot: on ? '#E11D48' : '#F59E0B', topHead: top.h[lang], bg: on ? '#111827' : '#FFFFFF', hover: on ? '#111827' : '#F4F4F6', fg: on ? '#FFFFFF' : '#111827', sub: on ? 'rgba(255,255,255,.7)' : '#5A5A66', select: () => this.setState({ country: c[0], feed: 'world' }) }; }),
+      onLang: (e) => this.setState({ lang: e.target.value }),
+      closeFull: () => this.setState({ sel: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

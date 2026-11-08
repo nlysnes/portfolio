@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/retail-repair-design-system-019e3016-31a9-7011-8244-58871b7a2c9d/colors_and_type.css">
+  <link rel="stylesheet" href="_ds/retail-repair-design-system-019e3016-31a9-7011-8244-58871b7a2c9d/styles.css">
+  <script src="_ds/retail-repair-design-system-019e3016-31a9-7011-8244-58871b7a2c9d/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+  <style>
+    html, body { margin: 0; background: var(--bg); color: var(--fg-1); font-family: var(--font-body); }
+    * { box-sizing: border-box; }
+    a { color: var(--fg-link); }
+    a:hover { color: var(--rr-orange); }
+  </style>
+</helmet>
+<div style="min-height: 100vh; background: var(--bg); color: var(--fg-1); font-family: var(--font-body);">
+
+  <header style="--rr-orange: var(--rr-orange-dark); position: sticky; top: 0; z-index: 50; background: rgba(21, 22, 26, 0.94); backdrop-filter: saturate(120%) blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.10); color: #FFFFFF;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 18px 28px; display: flex; align-items: center; gap: clamp(10px, 1.4vw, 20px);">
+      <a href="#" style="display: inline-flex; align-items: center; text-decoration: none; flex: none;">
+        <img ref="{{ logoRefTop }}" src="assets/retail-repair-wordmark-white.png" alt="Retail Repair" style="height: 27.5px; width: auto; display: block;">
+      </a>
+      <nav style="display: flex; gap: clamp(6px, 1vw, 18px); flex: 1 1 auto; min-width: 0; justify-content: center; flex-wrap: wrap;">
+        <a href="#" style="color: #FFFFFF; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 13px; opacity: 0.92; white-space: nowrap;">Reservedeler</a>
+        <a href="#" style="color: #FFFFFF; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 13px; opacity: 0.92; white-space: nowrap;">Reparasjon</a>
+        <a href="#" style="color: #FFFFFF; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 13px; opacity: 0.92; white-space: nowrap;">Support</a>
+        <a href="#" style="color: #FFFFFF; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 13px; opacity: 0.92; white-space: nowrap;">Om oss</a>
+        <a href="#" style="color: #FFFFFF; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 13px; opacity: 0.92; white-space: nowrap;">Ledig stilling</a>
+        <a href="#" style="color: #FFFFFF; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 13px; opacity: 0.92; white-space: nowrap;">Kontakt</a>
+      </nav>
+      <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Button" variant="primary" size="sm" style="flex: none;" hint-size="130px,36px"><span style="white-space: nowrap; color: var(--fg-on-brand);">Registrer service</span></x-import>
+      <button aria-label="Handlekurv" style="position: relative; background: transparent; border: 0; cursor: pointer; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; flex: none;">
+        <i data-lucide="shopping-bag" width="22" height="22" style="stroke-width: 1.5;"></i>
+        <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+          <span style="position: absolute; top: 4px; right: 4px; min-width: 16px; height: 16px; padding: 0 4px; background: var(--rr-orange); color: var(--fg-on-brand); border-radius: 999px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">{{ cartCount }}</span>
+        </sc-if>
+      </button>
+    </div>
+  </header>
+
+  <section style="position: relative; min-height: 620px; background: radial-gradient(1200px 600px at 85% 20%, color-mix(in srgb, var(--rr-orange) 18%, transparent) 0%, transparent 60%), radial-gradient(900px 600px at 10% 110%, color-mix(in srgb, var(--rr-orange-bright) 10%, transparent) 0%, transparent 60%), linear-gradient(180deg, #2A2C2B 0%, #1F2024 70%, #15161A 100%); color: #FFFFFF; display: flex; flex-direction: column;">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 24px 24px; mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0) 80%); -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0) 80%); pointer-events: none;"></div>
+    <div aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none;">
+      <sc-if value="{{ heroMarkOn }}" hint-placeholder-val="{{ false }}">
+        <img ref="{{ heroMarkRef }}" alt="" style="position: absolute; left: -60px; bottom: -70px; width: 640px; height: auto; opacity: 0.07; filter: blur(1.5px) saturate(0.8);">
+      </sc-if>
+    </div>
+    <div style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 88px 40px 56px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 32px; flex: 1; width: 100%; box-sizing: border-box;">
+      <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(48px, 6.5vw, 84px); line-height: 1.02; letter-spacing: -0.02em; color: #FFFFFF; text-wrap: balance;"><span style="display: block;">Velkommen til</span><span style="display: block;">vårt delelager.</span></h1>
+      <p style="margin: 0 auto; max-width: 560px; font-family: var(--font-body); font-weight: 400; font-size: 18px; line-height: 1.55; color: rgba(255, 255, 255, 0.85);">Her finner du delene du trenger for å gjenopplive dine produkter — originale, på lager, og raskt levert fra vårt sentrallager i Norge.</p>
+      <div data-gsearch="1" style="position: relative; max-width: 640px; width: 100%;">
+        <form onSubmit="{{ onGqSubmit }}" style="display: flex; gap: 8px; width: 100%; align-items: center; background: #FFFFFF; padding: 8px; border-radius: var(--r-2); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); box-sizing: border-box;">
+          <div style="flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr);">
+            <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Input" name="q" icon="search" placeholder="Søk etter del, SKU eller modellnummer…" value="{{ gq }}" onChange="{{ onGq }}" onFocus="{{ onGqFocus }}" autoComplete="off" dc-props="{{ heroInput }}" hint-size="100%,52px"></x-import>
+          </div>
+          <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Button" size="lg" variant="primary" type="submit" dc-props="{{ heroBtn }}" style="flex: none;" hint-size="150px,52px"><span style="display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; color: var(--fg-on-brand);">Finn deler<i data-lucide="arrow-right" width="16" height="16" style="stroke-width: 2;"></i></span></x-import>
+        </form>
+        <sc-if value="{{ gShow }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 30; max-height: 440px; overflow-y: auto; background: #FFFFFF; border: 1px solid var(--border-subtle); border-radius: var(--r-3); box-shadow: var(--shadow-3); padding: 6px; display: flex; flex-direction: column; text-align: left; color: var(--fg-1);">
+            <sc-for list="{{ gResults }}" as="g" hint-placeholder-count="0">
+              <button type="button" onClick="{{ g.onClick }}" style="font: inherit; text-align: left; padding: 10px 12px; border-radius: var(--r-2); border: 0; background: transparent; color: var(--fg-1); cursor: pointer; display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; align-items: center; gap: 12px;" style-hover="background: var(--rr-orange-pale);">
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);">{{ g.kind }}</span>
+                <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                  <span style="font-family: var(--font-display); font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ g.title }}</span>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ g.sub }}</span>
+                </span>
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 13px; white-space: nowrap;">{{ g.price }}</span>
+              </button>
+            </sc-for>
+            <sc-if value="{{ gEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding: 20px 12px; font-size: 14px; color: var(--fg-3); text-align: center;">Ingen treff på «{{ gq }}».</div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+    <div style="position: relative; z-index: 1; border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgba(0, 0, 0, 0.18); padding: 18px 0;">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; box-sizing: border-box; display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; color: rgba(255, 255, 255, 0.85); font-size: 14px;">
+        <span style="display: inline-flex; align-items: center; gap: 10px;"><i data-lucide="check-circle-2" width="18" height="18" style="color: var(--rr-orange-bright); stroke-width: 1.5;"></i>Kun originale deler</span>
+        <span style="display: inline-flex; align-items: center; gap: 10px;"><i data-lucide="truck" width="18" height="18" style="color: var(--rr-orange-bright); stroke-width: 1.5;"></i>Rask levering direkte fra vårt lager</span>
+        <span style="display: inline-flex; align-items: center; gap: 10px;"><i data-lucide="headset" width="18" height="18" style="color: var(--rr-orange-bright); stroke-width: 1.5;"></i>Hjelp med å finne riktig del</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width: 1200px; margin: 0 auto; padding: 64px 40px 80px;">
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 32px;">
+      <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Eyebrow" color="var(--fg-brand)" style="align-items: center;" hint-size="120px,24px">Reservedeler</x-import>
+      <h2 style="margin: 10px 0 6px; font-family: var(--font-display); font-weight: 800; font-size: 44px; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;">Finn riktig del — <span style="color: var(--fg-brand);">raskt</span>.</h2>
+      <p style="margin: 0 auto; color: var(--fg-2); font-size: 16px; max-width: 56ch; text-wrap: pretty;">Velg merke, velg modell, finn delen. Klikk et nummer i sprengskissen for å se hvilken del det er.</p>
+    </div>
+
+
+    <div style="display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; justify-content: center; margin-bottom: 32px;">
+      <div style="position: relative; display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: {{ step1.labelColor }}; display: inline-flex; align-items: center; gap: 7px;">
+          <span style="width: 18px; height: 18px; border-radius: var(--r-pill); background: {{ step1.dotBg }}; color: {{ step1.dotColor }}; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">1</span>
+          Velg merke
+        </span>
+        <button onClick="{{ toggleBrand }}" style="font: inherit; font-family: var(--font-display); font-weight: 600; font-size: 15px; min-width: 240px; justify-content: space-between; padding: 14px 18px; border-radius: var(--r-pill); cursor: pointer; background: {{ step1.bg }}; color: {{ step1.color }}; border: 2px solid var(--rr-orange); display: inline-flex; align-items: center; gap: 10px; transition: all 120ms var(--ease-out);">
+          <span style="display: inline-flex; align-items: center; gap: 10px;"><i data-lucide="tag" width="18" height="18" style="stroke-width: 1.75;"></i><span>{{ step1.text }}</span></span>
+          <i data-lucide="chevron-down" width="16" height="16" style="stroke-width: 2; opacity: 0.8;"></i>
+        </button>
+        <sc-if value="{{ brandOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: calc(100% + 6px); left: 0; z-index: 25; min-width: 260px; background: #FFFFFF; border: 1px solid var(--border-subtle); border-radius: var(--r-3); box-shadow: var(--shadow-3); padding: 6px; display: flex; flex-direction: column;">
+            <sc-for list="{{ brandOptions }}" as="b" hint-placeholder-count="3">
+              <button onClick="{{ b.onClick }}" style="font: inherit; font-size: 15px; text-align: left; padding: 12px 14px; border-radius: var(--r-2); border: 0; background: {{ b.bg }}; color: var(--fg-1); cursor: pointer;">{{ b.name }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <i data-lucide="arrow-right" width="20" height="20" style="stroke-width: 2; color: var(--rr-n-300); margin-bottom: 16px; flex: none;"></i>
+
+      <div style="position: relative; display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: {{ step2.labelColor }}; display: inline-flex; align-items: center; gap: 7px;">
+          <span style="width: 18px; height: 18px; border-radius: var(--r-pill); background: {{ step2.dotBg }}; color: {{ step2.dotColor }}; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">2</span>
+          Velg modell
+        </span>
+        <button onClick="{{ toggleModel }}" style="font: inherit; font-family: var(--font-display); font-weight: 600; font-size: 15px; min-width: 240px; justify-content: space-between; padding: 14px 18px; border-radius: var(--r-pill); cursor: {{ step2.cursor }}; background: {{ step2.bg }}; color: {{ step2.color }}; border: 2px solid {{ step2.border }}; display: inline-flex; align-items: center; gap: 10px; transition: all 120ms var(--ease-out);">
+          <span style="display: inline-flex; align-items: center; gap: 10px;"><i data-lucide="settings-2" width="18" height="18" style="stroke-width: 1.75;"></i><span>{{ step2.text }}</span></span>
+          <i data-lucide="chevron-down" width="16" height="16" style="stroke-width: 2; opacity: 0.8;"></i>
+        </button>
+        <sc-if value="{{ modelOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; min-width: 280px; max-height: 420px; overflow-y: auto; background: #FFFFFF; border: 1px solid var(--border-subtle); border-radius: var(--r-3); box-shadow: var(--shadow-3); padding: 6px; display: flex; flex-direction: column;">
+            <sc-for list="{{ modelOptions }}" as="m" hint-placeholder-count="2">
+              <button onClick="{{ m.onClick }}" style="font: inherit; font-size: 15px; text-align: left; padding: 12px 14px; border-radius: var(--r-2); border: 0; background: {{ m.bg }}; color: var(--fg-1); cursor: pointer; display: flex; flex-direction: column; gap: 2px;">
+                <span>{{ m.name }}</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--fg-3);">{{ m.sub }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <sc-if value="{{ noProduct }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 72px 24px; text-align: center; border: 1px solid var(--border-default); border-radius: var(--r-3); display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <h3 style="margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em;">Velg modell for å se sprengskissen</h3>
+        <p style="margin: 0; color: var(--fg-2); font-size: 15px; max-width: 46ch; text-wrap: pretty;">Når du har valgt merke og modell, ser du tegningen og alle delene som passer.</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasProduct }}" hint-placeholder-val="{{ true }}">
+      <div style="background: var(--bg-elev); border: 1px solid var(--border-subtle); border-radius: var(--r-3); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 28px; padding: 24px 28px; border-bottom: 1px solid var(--border-subtle); background: var(--bg-elev);">
+          <sc-if value="{{ sheet.hasPhoto }}" hint-placeholder-val="{{ false }}">
+            <div style="width: 168px; height: 224px; flex: none; background: #FFFFFF; border: 1px solid var(--border-subtle); border-radius: var(--r-3); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img ref="{{ photoRef }}" alt="{{ sheet.title }}" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+            </div>
+          </sc-if>
+          <sc-if value="{{ sheet.noPhoto }}" hint-placeholder-val="{{ true }}">
+            <div style="width: 104px; height: 104px; flex: none; background: var(--rr-n-100); border-radius: var(--r-2); display: flex; align-items: center; justify-content: center;">
+              <i data-lucide="wrench" width="40" height="40" style="color: var(--rr-n-400); stroke-width: 1.25;"></i>
+            </div>
+          </sc-if>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+            <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Eyebrow" color="var(--fg-brand)" hint-size="140px,24px">{{ sheet.eyebrow }}</x-import>
+            <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1.1; letter-spacing: -0.02em;">{{ sheet.title }}</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; font-size: 13px; color: var(--fg-2);">
+              <sc-if value="{{ sheet.article }}" hint-placeholder-val="{{ false }}"><span style="font-family: var(--font-mono); font-size: 12px; color: var(--fg-3);">{{ sheet.article }}</span></sc-if>
+              <sc-if value="{{ sheet.serial }}" hint-placeholder-val="{{ false }}"><span>{{ sheet.serial }}</span></sc-if>
+              <span>{{ sheet.count }}</span>
+            </div>
+            <sc-if value="{{ hasVariants }}" hint-placeholder-val="{{ false }}">
+              <label style="display: flex; flex-direction: column; gap: 6px; max-width: 560px; margin-top: 6px;">
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);">Utførelse · {{ variantCount }} reservedelslister</span>
+                <select value="{{ varValue }}" onChange="{{ onVariant }}" style="font: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid var(--border-default); border-radius: var(--r-2); background: #FFFFFF; color: var(--fg-1); cursor: pointer; max-width: 100%;">
+                  <sc-for list="{{ variantOptions }}" as="v" hint-placeholder-count="0">
+                    <option value="{{ v.value }}">{{ v.label }}</option>
+                  </sc-for>
+                </select>
+              </label>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 1px; background: var(--border-subtle);">
+          <div style="flex: 3 1 520px; min-width: 0; padding: 28px; background: var(--bg-elev); display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+              <div style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);">Sprengskisse</div>
+              <sc-if value="{{ hasSheets }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                  <sc-for list="{{ sheetTabs }}" as="t" hint-placeholder-count="0">
+                    <button onClick="{{ t.onClick }}" style="font: inherit; font-family: var(--font-display); font-weight: 600; font-size: 12px; padding: 6px 12px; border-radius: var(--r-pill); cursor: pointer; border: 1px solid {{ t.border }}; background: {{ t.bg }}; color: {{ t.color }};">{{ t.label }}</button>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+            <div ref="{{ vpRef }}" onPointerDown="{{ onVpDown }}" style="position: relative; overflow: hidden; height: 560px; background: var(--bg-elev); border: 1px solid var(--border-subtle); border-radius: var(--r-3); cursor: {{ vpCursor }}; touch-action: none; user-select: none;">
+              <sc-if value="{{ hasImage }}" hint-placeholder-val="{{ false }}">
+                <div ref="{{ stageRef }}" style="position: absolute; left: 0; top: 0; width: {{ stage.w }}; height: {{ stage.h }}; transform: {{ stage.transform }}; transform-origin: 0 0; transition: {{ stage.transition }};">
+                  <img ref="{{ imgRef }}" alt="Sprengskisse" draggable="false" style="display: block; width: 100%; height: 100%; pointer-events: none;">
+                  <sc-for list="{{ hotspots }}" as="h" hint-placeholder-count="0">
+                    <div onClick="{{ h.onClick }}" onMouseEnter="{{ h.onEnter }}" onMouseLeave="{{ h.onLeave }}" style="position: absolute; left: {{ h.left }}; top: {{ h.top }}; min-width: 28px; height: 28px; padding: 0 7px; white-space: nowrap; transform: {{ h.transform }}; box-sizing: border-box; border-radius: var(--r-pill); border: 2px solid var(--rr-orange); background: {{ h.bg }}; color: {{ h.color }}; box-shadow: {{ h.shadow }}; z-index: {{ h.z }}; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; line-height: 1; transition: background 120ms var(--ease-out), color 120ms var(--ease-out);">
+                      {{ h.label }}
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="position: absolute; top: 12px; right: 12px; display: flex; flex-direction: row; gap: 6px;">
+                  <button onClick="{{ zoomOut }}" onPointerDown="{{ stop }}" aria-label="Zoom ut" style="width: 36px; height: 36px; border-radius: var(--r-2); border: 1px solid var(--border-default); background: var(--bg-elev); color: var(--fg-1); cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 18px; display: inline-flex; align-items: center; justify-content: center;">−</button>
+                  <button onClick="{{ zoomIn }}" onPointerDown="{{ stop }}" aria-label="Zoom inn" style="width: 36px; height: 36px; border-radius: var(--r-2); border: 1px solid var(--border-default); background: var(--bg-elev); color: var(--fg-1); cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 18px; display: inline-flex; align-items: center; justify-content: center;">+</button>
+                  <button onClick="{{ zoomReset }}" onPointerDown="{{ stop }}" aria-label="Tilpass" style="width: 36px; height: 36px; border-radius: var(--r-2); border: 1px solid var(--border-default); background: var(--bg-elev); color: var(--fg-1); cursor: pointer; font-family: var(--font-display); font-weight: 600; font-size: 11px; display: inline-flex; align-items: center; justify-content: center;">Fit</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ noImage }}" hint-placeholder-val="{{ true }}">
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 0 22%; background: var(--bg-sunken); color: var(--fg-3); text-align: center;">
+                  <span style="font-size: 13px; max-width: 28ch; line-height: 1.45;">{{ emptyText }}</span>
+                </div>
+              </sc-if>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: var(--fg-3); line-height: 1.5;">Klikk et nummer for å markere delen i listen. Scroll for å zoome, dra for å flytte.</p>
+          </div>
+
+          <div style="flex: 2 1 340px; min-width: 0; padding: 28px; background: var(--bg-elev); display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <div style="font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);">Deler til denne modellen</div>
+            </div>
+            <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Input" placeholder="Søk i delelisten" value="{{ query }}" onChange="{{ onQuery }}" hint-size="100%,44px"></x-import>
+            <div ref="{{ listRef }}" style="position: relative; border: 1px solid var(--border-subtle); border-radius: var(--r-3); overflow-y: auto; overflow-x: hidden; background: var(--bg-elev); max-height: 470px;">
+              <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+                <div data-part="{{ r.id }}" onClick="{{ r.onClick }}" onMouseEnter="{{ r.onEnter }}" onMouseLeave="{{ r.onLeave }}" style="display: grid; grid-template-columns: minmax(28px, auto) minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border-top: {{ r.borderTop }}; background: {{ r.bg }}; cursor: pointer; transition: background 120ms var(--ease-out);">
+                  <span style="min-width: 24px; height: 24px; padding: 0 6px; white-space: nowrap; box-sizing: border-box; border-radius: var(--r-pill); border: 2px solid {{ r.badgeBorder }}; background: {{ r.badgeBg }}; color: {{ r.badgeColor }}; font-family: var(--font-display); font-weight: 700; font-size: 12px; display: inline-flex; align-items: center; justify-content: center;">{{ r.label }}</span>
+                  <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                    <span style="font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--fg-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ r.desc }}</span>
+                    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--fg-3);">{{ r.sub }}</span>
+                  </span>
+                  <span style="font-family: var(--font-display); font-weight: 700; font-size: 14px; white-space: nowrap; color: var(--fg-1);">{{ r.price }}</span>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+                <div style="padding: 32px 16px; font-size: 14px; color: var(--fg-3); text-align: center;">{{ noRowsText }}</div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 20px 28px 28px; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 14px;">
+          <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+              <span style="width: 28px; height: 28px; flex: none; border-radius: var(--r-pill); background: var(--rr-orange); color: var(--fg-on-brand); font-family: var(--font-display); font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; justify-content: center;">{{ sel.label }}</span>
+              <span style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+                <span style="font-family: var(--font-display); font-weight: 600; font-size: 15px;">{{ sel.desc }}</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--fg-3);">{{ sel.sub }}</span>
+              </span>
+              <span style="font-family: var(--font-display); font-weight: 800; font-size: 22px; white-space: nowrap;">{{ sel.price }}</span>
+            </div>
+          </sc-if>
+          <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Button" variant="primary" size="lg" onClick="{{ sel.onAdd }}" disabled="{{ addDisabled }}" dc-props="{{ btnFull }}" style="display: block; width: 100%;" hint-size="100%,50px"><span style="white-space: nowrap; color: var(--fg-on-brand);">{{ addLabel }}</span></x-import>
+        </div>
+      </div>
+    </sc-if>
+  </section>
+
+  <footer style="--rr-orange: var(--rr-orange-dark); background: var(--rr-ink); color: #FFFFFF; padding: 64px 0 32px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 48px; text-align: center; justify-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 18px; align-items: center;">
+        <img ref="{{ logoRefBottom }}" src="assets/retail-repair-wordmark-white.png" alt="Retail Repair" style="height: 27.5px; width: auto; display: block;">
+        <p style="margin: 0 auto; color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.6; max-width: 36ch;">Nordisk aftersales-partner. Vi reparerer, refurbisher og leverer originale deler — slik at produkter får leve lenger.</p>
+        <div style="display: flex; gap: 12px; margin-top: 6px; justify-content: center;">
+          <a href="#" aria-label="Del" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.20); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="share-2" width="16" height="16" style="stroke-width: 1.5;"></i></a>
+          <a href="#" aria-label="Instagram" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.20); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="camera" width="16" height="16" style="stroke-width: 1.5;"></i></a>
+          <a href="#" aria-label="YouTube" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.20); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center;"><i data-lucide="play" width="16" height="16" style="stroke-width: 1.5;"></i></a>
+        </div>
+      </div>
+      <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
+          <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.Eyebrow" style="align-items: center;" hint-size="100px,24px">{{ col.title }}</x-import>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <sc-for list="{{ col.items }}" as="it" hint-placeholder-count="4">
+              <a href="#" style="color: rgba(255, 255, 255, 0.82); text-decoration: none; font-size: 14px; line-height: 1.5;">{{ it }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="max-width: 1200px; margin: 48px auto 0; padding: 24px 40px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; color: rgba(255, 255, 255, 0.55); font-size: 12px; text-align: center;">
+      <span>© 2026 Retail Repair AS · Alle rettigheter</span>
+      <span style="font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase;">Nordisk aftersales-partner</span>
+    </div>
+  </footer>
+
+  <sc-if value="{{ tip.show }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; left: {{ tip.left }}; top: {{ tip.top }}; transform: {{ tip.transform }}; z-index: 60; max-width: min(420px, calc(100vw - 32px)); background: var(--rr-ink); color: #FFFFFF; border-radius: var(--r-2); padding: 8px 10px; pointer-events: none; box-shadow: var(--shadow-3); display: flex; flex-direction: column; gap: 3px; text-align: left;">
+      <span style="font-family: var(--font-body); font-weight: 600; font-size: 13px; line-height: 1.35; text-wrap: pretty;">{{ tip.title }}</span>
+      <span style="font-family: var(--font-mono); font-weight: 400; font-size: 11px; color: var(--rr-n-300);">{{ tip.sub }}</span>
+    </div>
+  </sc-if>
+
+  <x-import component-from-global-scope="RetailRepairDesignSystem_019e30.ChatLauncher" title="Kundeservice" greeting="Hei. Trenger du hjelp med å finne riktig del? Skriv modellnummeret, så hjelper vi deg." suggestions="{{ chatSuggestions }}" hint-size="0px,0px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  static KEY = 'rr-sprengskisse-v1';
+  static STATUS = { lager: 'på lager', bestilling: 'bestillingsvare', utgatt: 'utgått' };
+  static THEMES = { Milwaukee: { hex: '#C92A28', slug: 'milwaukee', mark: 'assets/brand/milwaukee-mark.webp' }, Ryobi: { hex: '#CEDC00', slug: 'ryobi', mark: 'assets/brand/ryobi-mark.png' }, Ava: { hex: '#AEDE00', dark: '#B7FF00', slug: 'ava', mark: 'assets/brand/ava-mark.png' }, Scheppach: { hex: '#035388', slug: 'scheppach', mark: 'assets/brand/scheppach-mark.png' }, 'AL-KO': { hex: '#E30613', slug: 'alko' } };
+  static DEFAULTS = { '--rr-orange': '#EB6703', '--rr-orange-dark': '#EB6703', '--rr-orange-logo': '#EC6324', '--rr-orange-deep': '#C24E00', '--rr-orange-bright': '#FF7A1A', '--rr-orange-tint': '#FDE4CC', '--rr-orange-pale': '#FFF4EA', '--fg-on-brand': '#FFFFFF', '--fg-brand': '#C24E00', '--fg-link': '#C24E00', '--shadow-brand': '0 8px 24px rgba(235,103,3,0.28)' };
+  static AVA = [{"id":"ava-easy-p40","rev":5,"brand":"Ava","name":"Easy P40","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/easy-p40-skisse.webp?v=3","photo":"assets/ava/easy-p40-foto.png","imgW":1700,"imgH":1180,"parts":[{"id":"ava-easy-p40-ea01","pos":"EA 01","desc":"Easy chassi, excluding wheels, handle and reel","qty":1,"sku":"903-101-01","price":"44.50","status":"lager","x":90.59,"y":95.59},{"id":"ava-easy-p40-ea02","pos":"EA 02","desc":"Easy hose reel including frame","qty":1,"sku":"903-102-01","price":"48.00","status":"lager","x":74.71,"y":57.37},{"id":"ava-easy-p40-ea03","pos":"EA 03","desc":"Easy wheels and reel knob","qty":1,"sku":"903-103-01","price":"20.50","status":"lager","x":70.53,"y":95.59},{"id":"ava-easy-p40-ea04","pos":"EA 04","desc":"Easy top handle","qty":1,"sku":"903-104-01","price":"28.00","status":"lager","x":22.35,"y":38.31},{"id":"ava-easy-p40-ea05","pos":"EA 05","desc":"Easy foam cannon holder on handle","qty":1,"sku":"903-105-01","price":"8.50","status":"lager","x":35.94,"y":38.73},{"id":"ava-easy-p40-ea06","pos":"EA 06","desc":"Easy inlet, outlet with swivel and frost plug","qty":1,"sku":"903-106-01","price":"21.50","status":"lager","x":83.76,"y":29.07},{"id":"ava-easy-p40-ea07","pos":"EA 07","desc":"Flexi hose 12m for Easy","qty":1,"sku":"903-107-01","price":"44.90","status":"lager","x":57.35,"y":38.98},{"id":"ava-easy-p40-rp01","pos":"RP 01","desc":"V3 replacement kit motor/pump P30/P40/P45","qty":1,"sku":"960-101-01","price":"36.00","status":"lager","x":52.24,"y":95.59},{"id":"ava-easy-p40-v301","pos":"V3 01","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P40-P57","qty":1,"sku":"963-101-01","price":"22.00","status":"lager","x":29.29,"y":95.59}]},{"id":"ava-easy-p50","rev":5,"brand":"Ava","name":"Easy P50","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/easy-p50-skisse.jpg","photo":"assets/ava/easy-p40-foto.png","imgW":1700,"imgH":1179,"parts":[{"id":"ava-easy-p50-ea01","pos":"EA 01","desc":"Easy chassi, excluding wheels, handle and reel","qty":1,"sku":"903-101-01","price":"44.50","status":"lager","x":90.59,"y":95.67},{"id":"ava-easy-p50-ea02","pos":"EA 02","desc":"Easy hose reel including frame","qty":1,"sku":"903-102-01","price":"48.00","status":"lager","x":74.71,"y":57.42},{"id":"ava-easy-p50-ea03","pos":"EA 03","desc":"Easy wheels and reel knob","qty":1,"sku":"903-103-01","price":"20.50","status":"lager","x":70.53,"y":95.67},{"id":"ava-easy-p50-ea04","pos":"EA 04","desc":"Easy top handle","qty":1,"sku":"903-104-01","price":"28.00","status":"lager","x":22.35,"y":38.34},{"id":"ava-easy-p50-ea05","pos":"EA 05","desc":"Easy foam cannon holder on handle","qty":1,"sku":"903-105-01","price":"8.50","status":"lager","x":35.94,"y":38.76},{"id":"ava-easy-p50-ea06","pos":"EA 06","desc":"Easy inlet, outlet with swivel and frost plug","qty":1,"sku":"903-106-01","price":"21.50","status":"lager","x":83.76,"y":29.09},{"id":"ava-easy-p50-ea07","pos":"EA 07","desc":"Flexi hose 12m for Easy","qty":1,"sku":"903-107-01","price":"44.90","status":"lager","x":57.35,"y":39.02},{"id":"ava-easy-p50-rp02","pos":"RP 02","desc":"V3 replacement kit motor/pump P50/P55/P57","qty":1,"sku":"960-102-01","price":"42.50","status":"lager","x":52.24,"y":95.67},{"id":"ava-easy-p50-v301","pos":"V3 01","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P40-P57","qty":1,"sku":"963-101-01","price":"22.00","status":"lager","x":29.29,"y":95.67}]},{"id":"ava-easy-p57","rev":5,"brand":"Ava","name":"Easy P57","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/easy-p57-skisse.jpg","photo":"assets/ava/easy-p40-foto.png","imgW":1700,"imgH":1179,"parts":[{"id":"ava-easy-p57-ea01","pos":"EA 01","desc":"Easy chassi, excluding wheels, handle and reel","qty":1,"sku":"903-101-01","price":"44.50","status":"lager","x":90.59,"y":95.67},{"id":"ava-easy-p57-ea02","pos":"EA 02","desc":"Easy hose reel including frame","qty":1,"sku":"903-102-01","price":"48.00","status":"lager","x":74.71,"y":57.42},{"id":"ava-easy-p57-ea03","pos":"EA 03","desc":"Easy wheels and reel knob","qty":1,"sku":"903-103-01","price":"20.50","status":"lager","x":70.53,"y":95.67},{"id":"ava-easy-p57-ea04","pos":"EA 04","desc":"Easy top handle","qty":1,"sku":"903-104-01","price":"28.00","status":"lager","x":22.35,"y":38.34},{"id":"ava-easy-p57-ea05","pos":"EA 05","desc":"Easy foam cannon holder on handle","qty":1,"sku":"903-105-01","price":"8.50","status":"lager","x":35.94,"y":38.76},{"id":"ava-easy-p57-ea06","pos":"EA 06","desc":"Easy inlet, outlet with swivel and frost plug","qty":1,"sku":"903-106-01","price":"21.50","status":"lager","x":83.76,"y":29.09},{"id":"ava-easy-p57-ea07","pos":"EA 07","desc":"Flexi hose 12m for Easy","qty":1,"sku":"903-107-01","price":"44.90","status":"lager","x":57.35,"y":39.02},{"id":"ava-easy-p57-rp02","pos":"RP 02","desc":"V3 replacement kit motor/pump P50/P55/P57","qty":1,"sku":"960-102-01","price":"42.50","status":"lager","x":52.24,"y":95.67},{"id":"ava-easy-p57-v301","pos":"V3 01","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P40-P57","qty":1,"sku":"963-101-01","price":"22.00","status":"lager","x":29.29,"y":95.67}]},{"id":"ava-easy-p60","rev":5,"brand":"Ava","name":"Easy P60","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/easy-p60-skisse.jpg","photo":"assets/ava/easy-p40-foto.png","imgW":1700,"imgH":1179,"parts":[{"id":"ava-easy-p60-ea01","pos":"EA 01","desc":"Easy chassi, excluding wheels, handle and reel","qty":1,"sku":"903-101-01","price":"44.50","status":"lager","x":90.59,"y":95.67},{"id":"ava-easy-p60-ea02","pos":"EA 02","desc":"Easy hose reel including frame","qty":1,"sku":"903-102-01","price":"48.00","status":"lager","x":74.71,"y":57.42},{"id":"ava-easy-p60-ea03","pos":"EA 03","desc":"Easy wheels and reel knob","qty":1,"sku":"903-103-01","price":"20.50","status":"lager","x":70.53,"y":95.67},{"id":"ava-easy-p60-ea04","pos":"EA 04","desc":"Easy top handle","qty":1,"sku":"903-104-01","price":"28.00","status":"lager","x":22.35,"y":38.34},{"id":"ava-easy-p60-ea05","pos":"EA 05","desc":"Easy foam cannon holder on handle","qty":1,"sku":"903-105-01","price":"8.50","status":"lager","x":35.94,"y":38.76},{"id":"ava-easy-p60-ea06","pos":"EA 06","desc":"Easy inlet, outlet with swivel and frost plug","qty":1,"sku":"903-106-01","price":"21.50","status":"lager","x":83.76,"y":29.09},{"id":"ava-easy-p60-ea07","pos":"EA 07","desc":"Flexi hose 12m for Easy","qty":1,"sku":"903-107-01","price":"44.90","status":"lager","x":57.35,"y":39.02},{"id":"ava-easy-p60-el15","pos":"EL 15","desc":"Switchbox V3 series with cable P60 (UK)","qty":1,"sku":"950-115-01","price":"30.50","status":"lager","x":7.65,"y":95.67},{"id":"ava-easy-p60-rp03","pos":"RP 03","desc":"V3 replacement kit motor/pump P60","qty":1,"sku":"960-103-01","price":"49.00","status":"lager","x":52.24,"y":95.67},{"id":"ava-easy-p60-v302","pos":"V3 02","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P60","qty":1,"sku":"963-102-01","price":"22.00","status":"lager","x":29.29,"y":95.67}]},{"id":"ava-evolution-p60","rev":5,"brand":"Ava","name":"Evolution P60","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/evolution-p60-skisse.jpg","photo":"assets/ava/foto-evo.jpg","imgW":1700,"imgH":1179,"parts":[{"id":"ava-evolution-p60-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":19.94,"y":62},{"id":"ava-evolution-p60-el04","pos":"EL 04","desc":"Capacitor-35 uF P60/P70 Master/Evolution/V6","qty":1,"sku":"950-104-01","price":"10.00","status":"lager","x":8.65,"y":61.75},{"id":"ava-evolution-p60-el06","pos":"EL 06","desc":"Motor P60","qty":1,"sku":"950-106-01","price":"77.00","status":"lager","x":30.71,"y":61.75},{"id":"ava-evolution-p60-ev01","pos":"EV 01","desc":"Evolution hose reel, including crank and swivel","qty":1,"sku":"902-101-01","price":"41.00","status":"lager","x":24.59,"y":27.74},{"id":"ava-evolution-p60-ev02","pos":"EV 02","desc":"Evolution crank handle for hose reel","qty":1,"sku":"902-102-01","price":"11.00","status":"lager","x":38.59,"y":17.05},{"id":"ava-evolution-p60-ev03","pos":"EV 03","desc":"Evolution swivel complete, including O-rings, lock pins and E-clip","qty":1,"sku":"902-103-01","price":"13.50","status":"lager","x":73.65,"y":26.55},{"id":"ava-evolution-p60-ev04","pos":"EV 04","desc":"Evolution internal hose pump to reel","qty":1,"sku":"902-104-01","price":"10.50","status":"lager","x":71.65,"y":43},{"id":"ava-evolution-p60-ev05","pos":"EV 05","desc":"Evolution top handle complete, Including pipe","qty":1,"sku":"902-105-01","price":"30.50","status":"lager","x":90.88,"y":36.22},{"id":"ava-evolution-p60-ev06","pos":"EV 06","desc":"Evolution electric cable reel, including knob","qty":1,"sku":"902-106-01","price":"21.00","status":"lager","x":8.59,"y":32.74},{"id":"ava-evolution-p60-ev07","pos":"EV 07","desc":"Evolution front cover + switch knob","qty":1,"sku":"902-107-01","price":"48.00","status":"lager","x":85.24,"y":96.78},{"id":"ava-evolution-p60-ev08","pos":"EV 08","desc":"Evolution back cover P60, P70 and P80","qty":1,"sku":"902-108-01","price":"46.00","status":"lager","x":62.76,"y":96.78},{"id":"ava-evolution-p60-ev10","pos":"EV 10","desc":"Evolution wheel kit","qty":1,"sku":"902-110-01","price":"26.50","status":"lager","x":88.53,"y":60.47},{"id":"ava-evolution-p60-v422","pos":"V4 22","desc":"Warranty and repair kit V4, 10 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-122-01","price":"49.00","status":"lager","x":40.59,"y":96.78},{"id":"ava-evolution-p60-v453","pos":"V4 53","desc":"Warranty and repair kit V4, 5 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-153-01","price":"36.50","status":"lager","x":15.59,"y":96.78}]},{"id":"ava-evolution-p70","rev":5,"brand":"Ava","name":"Evolution P70","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/evolution-p70-skisse.jpg","photo":"assets/ava/foto-evo.jpg","imgW":1700,"imgH":1179,"parts":[{"id":"ava-evolution-p70-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":19.94,"y":62},{"id":"ava-evolution-p70-el04","pos":"EL 04","desc":"Capacitor-35 uF P60/P70 Master/Evolution/V6","qty":1,"sku":"950-104-01","price":"10.00","status":"lager","x":8.65,"y":61.75},{"id":"ava-evolution-p70-el07","pos":"EL 07","desc":"Motor P70","qty":1,"sku":"950-107-01","price":"85.00","status":"lager","x":30.71,"y":61.75},{"id":"ava-evolution-p70-ev01","pos":"EV 01","desc":"Evolution hose reel, including crank and swivel","qty":1,"sku":"902-101-01","price":"41.00","status":"lager","x":24.59,"y":27.74},{"id":"ava-evolution-p70-ev02","pos":"EV 02","desc":"Evolution crank handle for hose reel","qty":1,"sku":"902-102-01","price":"11.00","status":"lager","x":38.59,"y":17.05},{"id":"ava-evolution-p70-ev03","pos":"EV 03","desc":"Evolution swivel complete, including O-rings, lock pins and E-clip","qty":1,"sku":"902-103-01","price":"13.50","status":"lager","x":73.65,"y":26.55},{"id":"ava-evolution-p70-ev04","pos":"EV 04","desc":"Evolution internal hose pump to reel","qty":1,"sku":"902-104-01","price":"10.50","status":"lager","x":71.65,"y":43},{"id":"ava-evolution-p70-ev05","pos":"EV 05","desc":"Evolution top handle complete, Including pipe","qty":1,"sku":"902-105-01","price":"30.50","status":"lager","x":90.88,"y":36.22},{"id":"ava-evolution-p70-ev06","pos":"EV 06","desc":"Evolution electric cable reel, including knob","qty":1,"sku":"902-106-01","price":"21.00","status":"lager","x":8.59,"y":32.74},{"id":"ava-evolution-p70-ev07","pos":"EV 07","desc":"Evolution front cover + switch knob","qty":1,"sku":"902-107-01","price":"48.00","status":"lager","x":85.24,"y":96.78},{"id":"ava-evolution-p70-ev08","pos":"EV 08","desc":"Evolution back cover P60, P70 and P80","qty":1,"sku":"902-108-01","price":"46.00","status":"lager","x":62.76,"y":96.78},{"id":"ava-evolution-p70-ev10","pos":"EV 10","desc":"Evolution wheel kit","qty":1,"sku":"902-110-01","price":"26.50","status":"lager","x":88.53,"y":60.47},{"id":"ava-evolution-p70-v422","pos":"V4 22","desc":"Warranty and repair kit V4, 10 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-122-01","price":"49.00","status":"lager","x":40.59,"y":96.78},{"id":"ava-evolution-p70-v453","pos":"V4 53","desc":"Warranty and repair kit V4, 5 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-153-01","price":"36.50","status":"lager","x":15.59,"y":96.78}]},{"id":"ava-evolution-p80","rev":5,"brand":"Ava","name":"Evolution P80","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/evolution-p80-skisse.jpg","photo":"assets/ava/foto-evo.jpg","imgW":1700,"imgH":1179,"parts":[{"id":"ava-evolution-p80-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":19.94,"y":62},{"id":"ava-evolution-p80-el05","pos":"EL 05","desc":"Capacitor-50 uF P80/P90 +V6P70","qty":1,"sku":"950-105-01","price":"10.00","status":"lager","x":8.65,"y":61.75},{"id":"ava-evolution-p80-el08","pos":"EL 08","desc":"Motor P80","qty":1,"sku":"950-108-01","price":"101.00","status":"lager","x":30.71,"y":61.75},{"id":"ava-evolution-p80-ev01","pos":"EV 01","desc":"Evolution hose reel, including crank and swivel","qty":1,"sku":"902-101-01","price":"41.00","status":"lager","x":24.59,"y":27.74},{"id":"ava-evolution-p80-ev02","pos":"EV 02","desc":"Evolution crank handle for hose reel","qty":1,"sku":"902-102-01","price":"11.00","status":"lager","x":38.59,"y":17.05},{"id":"ava-evolution-p80-ev03","pos":"EV 03","desc":"Evolution swivel complete, including O-rings, lock pins and E-clip","qty":1,"sku":"902-103-01","price":"13.50","status":"lager","x":73.65,"y":26.55},{"id":"ava-evolution-p80-ev04","pos":"EV 04","desc":"Evolution internal hose pump to reel","qty":1,"sku":"902-104-01","price":"10.50","status":"lager","x":71.65,"y":43},{"id":"ava-evolution-p80-ev05","pos":"EV 05","desc":"Evolution top handle complete, Including pipe","qty":1,"sku":"902-105-01","price":"30.50","status":"lager","x":90.88,"y":36.22},{"id":"ava-evolution-p80-ev06","pos":"EV 06","desc":"Evolution electric cable reel, including knob","qty":1,"sku":"902-106-01","price":"21.00","status":"lager","x":8.59,"y":32.74},{"id":"ava-evolution-p80-ev07","pos":"EV 07","desc":"Evolution front cover + switch knob","qty":1,"sku":"902-107-01","price":"48.00","status":"lager","x":85.24,"y":96.78},{"id":"ava-evolution-p80-ev08","pos":"EV 08","desc":"Evolution back cover P60, P70 and P80","qty":1,"sku":"902-108-01","price":"46.00","status":"lager","x":62.76,"y":96.78},{"id":"ava-evolution-p80-ev10","pos":"EV 10","desc":"Evolution wheel kit","qty":1,"sku":"902-110-01","price":"26.50","status":"lager","x":88.53,"y":60.47},{"id":"ava-evolution-p80-v426","pos":"V4 26","desc":"Warranty and repair kit V4, 10 year, P80 (Master/Evolution -UK)","qty":1,"sku":"964-126-01","price":"49.00","status":"lager","x":40.59,"y":96.78},{"id":"ava-evolution-p80-v455","pos":"V4 55","desc":"Warranty and repair kit V4, 5 year, P80 (Master/Evolution -UK)","qty":1,"sku":"964-155-01","price":"36.50","status":"lager","x":15.59,"y":96.78}]},{"id":"ava-go-p40","rev":5,"brand":"Ava","name":"Go P40","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/go-p40-skisse.jpg","photo":"assets/ava/foto-go40.jpg","imgW":1700,"imgH":1179,"parts":[{"id":"ava-go-p40-el12","pos":"EL 12","desc":"Switchbox V3 series with cable P30-57 (UK)","qty":1,"sku":"950-112-01","price":"27.00","status":"lager","x":10.47,"y":43.6},{"id":"ava-go-p40-go01","pos":"GO 01","desc":"Go complete exterior plastic parts set","qty":1,"sku":"904-101-01","price":"36.50","status":"lager","x":74.59,"y":95.25},{"id":"ava-go-p40-go02","pos":"GO 02","desc":"Go inlet and outlet pipe plus frost plug","qty":1,"sku":"904-102-01","price":"12.00","status":"lager","x":84.53,"y":41.48},{"id":"ava-go-p40-rp01","pos":"RP 01","desc":"V3 replacement kit motor/pump P30/P40/P45","qty":1,"sku":"960-101-01","price":"36.00","status":"lager","x":25.41,"y":43.6},{"id":"ava-go-p40-v301","pos":"V3 01","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P40-P57","qty":1,"sku":"963-101-01","price":"22.00","status":"lager","x":17.53,"y":95.25}]},{"id":"ava-go-p55","rev":5,"brand":"Ava","name":"Go P55","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/go-p55-skisse.jpg","photo":"assets/ava/foto-go55.jpg","imgW":1700,"imgH":1183,"parts":[{"id":"ava-go-p55-el12","pos":"EL 12","desc":"Switchbox V3 series with cable P30-57 (UK)","qty":1,"sku":"950-112-01","price":"27.00","status":"lager","x":10.47,"y":43.45},{"id":"ava-go-p55-go01","pos":"GO 01","desc":"Go complete exterior plastic parts set","qty":1,"sku":"904-101-01","price":"36.50","status":"lager","x":74.59,"y":94.93},{"id":"ava-go-p55-go02","pos":"GO 02","desc":"Go inlet and outlet pipe plus frost plug","qty":1,"sku":"904-102-01","price":"12.00","status":"lager","x":84.53,"y":41.34},{"id":"ava-go-p55-rp02","pos":"RP 02","desc":"V3 replacement kit motor/pump P50/P55/P57","qty":1,"sku":"960-102-01","price":"42.50","status":"lager","x":25.41,"y":43.45},{"id":"ava-go-p55-v301","pos":"V3 01","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P40-P57","qty":1,"sku":"963-101-01","price":"22.00","status":"lager","x":17.53,"y":94.93}]},{"id":"ava-master-p60","rev":5,"brand":"Ava","name":"Master P60","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/master-p60-skisse.jpg","photo":"assets/ava/foto-m1.jpg?v=2","imgW":1700,"imgH":1179,"parts":[{"id":"ava-master-p60-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":17.71,"y":62},{"id":"ava-master-p60-el04","pos":"EL 04","desc":"Capacitor-35 uF P60/P70 Master/Evolution/V6","qty":1,"sku":"950-104-01","price":"10.00","status":"lager","x":5.47,"y":61.07},{"id":"ava-master-p60-el06","pos":"EL 06","desc":"Motor P60","qty":1,"sku":"950-106-01","price":"77.00","status":"lager","x":27.94,"y":61.07},{"id":"ava-master-p60-ma01","pos":"MA 01","desc":"Master front cover complete","qty":1,"sku":"901-101-01","price":"45.50","status":"lager","x":66.29,"y":96.44},{"id":"ava-master-p60-ma02","pos":"MA 02","desc":"Master back cover","qty":1,"sku":"901-102-01","price":"49.00","status":"lager","x":90.35,"y":95.25},{"id":"ava-master-p60-ma03","pos":"MA 03","desc":"Master top handle complete","qty":1,"sku":"901-103-01","price":"30.00","status":"lager","x":89.88,"y":32.49},{"id":"ava-master-p60-ma04","pos":"MA 04","desc":"Master 1.0 hose reel, not including hose","qty":1,"sku":"901-104-01","price":"49.00","status":"lager","x":31.24,"y":24.85},{"id":"ava-master-p60-ma06","pos":"MA 06","desc":"Master hose reel pipe","qty":1,"sku":"901-106-01","price":"11.00","status":"lager","x":17.59,"y":35.79},{"id":"ava-master-p60-ma08","pos":"MA 08","desc":"Master motor holder P60/P70","qty":1,"sku":"901-108-01","price":"23.00","status":"lager","x":38.29,"y":60.9},{"id":"ava-master-p60-ma10","pos":"MA 10","desc":"Master internal hose pump to reel","qty":1,"sku":"901-110-01","price":"10.50","status":"lager","x":90.47,"y":55.39},{"id":"ava-master-p60-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":41.24,"y":34.69},{"id":"ava-master-p60-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":73.35,"y":28.75},{"id":"ava-master-p60-v422","pos":"V4 22","desc":"Warranty and repair kit V4, 10 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-122-01","price":"49.00","status":"lager","x":41.18,"y":96.27},{"id":"ava-master-p60-v453","pos":"V4 53","desc":"Warranty and repair kit V4, 5 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-153-01","price":"36.50","status":"lager","x":15.59,"y":96.27}]},{"id":"ava-master-p70","rev":5,"brand":"Ava","name":"Master P70","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/master-p70-skisse.jpg","photo":"assets/ava/foto-m1.jpg?v=2","imgW":871,"imgH":604,"parts":[{"id":"ava-master-p70-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":17.68,"y":62.09},{"id":"ava-master-p70-el04","pos":"EL 04","desc":"Capacitor-35 uF P60/P70 Master/Evolution/V6","qty":1,"sku":"950-104-01","price":"10.00","status":"lager","x":5.4,"y":61.09},{"id":"ava-master-p70-el06","pos":"EL 06","desc":"Motor P60","qty":1,"sku":"950-106-01","price":"77.00","status":"lager","x":null,"y":null},{"id":"ava-master-p70-el07","pos":"EL 07","desc":"Motor P70","qty":1,"sku":"950-107-01","price":"85.00","status":"lager","x":28.01,"y":61.09},{"id":"ava-master-p70-ma01","pos":"MA 01","desc":"Master front cover complete","qty":1,"sku":"901-101-01","price":"45.50","status":"lager","x":66.36,"y":96.36},{"id":"ava-master-p70-ma02","pos":"MA 02","desc":"Master back cover","qty":1,"sku":"901-102-01","price":"49.00","status":"lager","x":90.24,"y":95.2},{"id":"ava-master-p70-ma03","pos":"MA 03","desc":"Master top handle complete","qty":1,"sku":"901-103-01","price":"30.00","status":"lager","x":89.78,"y":32.45},{"id":"ava-master-p70-ma04","pos":"MA 04","desc":"Master 1.0 hose reel, not including hose","qty":1,"sku":"901-104-01","price":"49.00","status":"lager","x":31.11,"y":25},{"id":"ava-master-p70-ma06","pos":"MA 06","desc":"Master hose reel pipe","qty":1,"sku":"901-106-01","price":"11.00","status":"lager","x":17.57,"y":35.76},{"id":"ava-master-p70-ma08","pos":"MA 08","desc":"Master motor holder P60/P70","qty":1,"sku":"901-108-01","price":"23.00","status":"lager","x":38.23,"y":60.76},{"id":"ava-master-p70-ma10","pos":"MA 10","desc":"Master internal hose pump to reel","qty":1,"sku":"901-110-01","price":"10.50","status":"lager","x":90.47,"y":55.3},{"id":"ava-master-p70-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":41.1,"y":34.77},{"id":"ava-master-p70-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":73.48,"y":28.64},{"id":"ava-master-p70-v422","pos":"V4 22","desc":"Warranty and repair kit V4, 10 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-122-01","price":"49.00","status":"lager","x":41.91,"y":96.19},{"id":"ava-master-p70-v453","pos":"V4 53","desc":"Warranty and repair kit V4, 5 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-153-01","price":"36.50","status":"lager","x":16.07,"y":96.19}]},{"id":"ava-master-p80","rev":5,"brand":"Ava","name":"Master P80","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/master-p80-skisse.jpg","photo":"assets/ava/foto-m1.jpg?v=2","imgW":1700,"imgH":1179,"parts":[{"id":"ava-master-p80-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":17.71,"y":62},{"id":"ava-master-p80-el05","pos":"EL 05","desc":"Capacitor-50 uF P80/P90 +V6P70","qty":1,"sku":"950-105-01","price":"10.00","status":"lager","x":5.47,"y":61.07},{"id":"ava-master-p80-el08","pos":"EL 08","desc":"Motor P80","qty":1,"sku":"950-108-01","price":"101.00","status":"lager","x":27.94,"y":61.07},{"id":"ava-master-p80-ma01","pos":"MA 01","desc":"Master front cover complete","qty":1,"sku":"901-101-01","price":"45.50","status":"lager","x":66.29,"y":96.44},{"id":"ava-master-p80-ma02","pos":"MA 02","desc":"Master back cover","qty":1,"sku":"901-102-01","price":"49.00","status":"lager","x":90.35,"y":95.25},{"id":"ava-master-p80-ma03","pos":"MA 03","desc":"Master top handle complete","qty":1,"sku":"901-103-01","price":"30.00","status":"lager","x":89.88,"y":32.49},{"id":"ava-master-p80-ma04","pos":"MA 04","desc":"Master 1.0 hose reel, not including hose","qty":1,"sku":"901-104-01","price":"49.00","status":"lager","x":31.24,"y":24.85},{"id":"ava-master-p80-ma06","pos":"MA 06","desc":"Master hose reel pipe","qty":1,"sku":"901-106-01","price":"11.00","status":"lager","x":17.59,"y":35.79},{"id":"ava-master-p80-ma09","pos":"MA 09","desc":"Master motor holder P80","qty":1,"sku":"901-109-01","price":"23.00","status":"lager","x":38.29,"y":60.9},{"id":"ava-master-p80-ma10","pos":"MA 10","desc":"Master internal hose pump to reel","qty":1,"sku":"901-110-01","price":"10.50","status":"lager","x":90.47,"y":55.39},{"id":"ava-master-p80-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":41.24,"y":34.69},{"id":"ava-master-p80-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":73.35,"y":28.75},{"id":"ava-master-p80-v426","pos":"V4 26","desc":"Warranty and repair kit V4, 10 year, P80 (Master/Evolution -UK)","qty":1,"sku":"964-126-01","price":"49.00","status":"lager","x":41.18,"y":96.27},{"id":"ava-master-p80-v455","pos":"V4 55","desc":"Warranty and repair kit V4, 5 year, P80 (Master/Evolution -UK)","qty":1,"sku":"964-155-01","price":"36.50","status":"lager","x":15.59,"y":96.27}]},{"id":"ava-master-2-0-p60","rev":5,"brand":"Ava","name":"Master 2.0 P60","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/master-2-0-p60-skisse.jpg","photo":"assets/ava/foto-m2.jpg","imgW":871,"imgH":604,"parts":[{"id":"ava-master-2-0-p60-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":17.68,"y":62.09},{"id":"ava-master-2-0-p60-el04","pos":"EL 04","desc":"Capacitor-35 uF P60/P70 Master/Evolution/V6","qty":1,"sku":"950-104-01","price":"10.00","status":"lager","x":5.4,"y":61.09},{"id":"ava-master-2-0-p60-el06","pos":"EL 06","desc":"Motor P60","qty":1,"sku":"950-106-01","price":"77.00","status":"lager","x":28.01,"y":61.09},{"id":"ava-master-2-0-p60-ma01","pos":"MA 01","desc":"Master front cover complete","qty":1,"sku":"901-101-01","price":"45.50","status":"lager","x":66.36,"y":96.36},{"id":"ava-master-2-0-p60-ma02","pos":"MA 02","desc":"Master back cover","qty":1,"sku":"901-102-01","price":"49.00","status":"lager","x":90.24,"y":95.2},{"id":"ava-master-2-0-p60-ma03","pos":"MA 03","desc":"Master top handle complete","qty":1,"sku":"901-103-01","price":"30.00","status":"lager","x":89.78,"y":32.45},{"id":"ava-master-2-0-p60-ma05","pos":"MA 05","desc":"Master 2.0 hose reel, not including hose","qty":1,"sku":"901-105-01","price":"45.50","status":"lager","x":31.11,"y":22.68},{"id":"ava-master-2-0-p60-ma06","pos":"MA 06","desc":"Master hose reel pipe","qty":1,"sku":"901-106-01","price":"11.00","status":"lager","x":17.57,"y":35.76},{"id":"ava-master-2-0-p60-ma07","pos":"MA 07","desc":"Master 2.0 kit;  2x cable clip + nozzle holder","qty":1,"sku":"901-107-01","price":"12.00","status":"lager","x":89.78,"y":53.31},{"id":"ava-master-2-0-p60-ma08","pos":"MA 08","desc":"Master motor holder P60/P70","qty":1,"sku":"901-108-01","price":"23.00","status":"lager","x":38.23,"y":60.76},{"id":"ava-master-2-0-p60-ma10","pos":"MA 10","desc":"Master internal hose pump to reel","qty":1,"sku":"901-110-01","price":"10.50","status":"lager","x":75.77,"y":53.48},{"id":"ava-master-2-0-p60-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":41.1,"y":34.77},{"id":"ava-master-2-0-p60-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":73.48,"y":28.64},{"id":"ava-master-2-0-p60-v422","pos":"V4 22","desc":"Warranty and repair kit V4, 10 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-122-01","price":"49.00","status":"lager","x":41.91,"y":96.19},{"id":"ava-master-2-0-p60-v453","pos":"V4 53","desc":"Warranty and repair kit V4, 5 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-153-01","price":"36.50","status":"lager","x":16.07,"y":96.19}]},{"id":"ava-master-2-0-p70","rev":5,"brand":"Ava","name":"Master 2.0 P70","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/master-2-0-p70-skisse.jpg","photo":"assets/ava/foto-m2.jpg","imgW":871,"imgH":604,"parts":[{"id":"ava-master-2-0-p70-el02","pos":"EL 02","desc":"Switchbox Master and Evolution P60-90 complete with cable and plug (UK)","qty":1,"sku":"950-102-01","price":"32.50","status":"lager","x":17.68,"y":62.09},{"id":"ava-master-2-0-p70-el04","pos":"EL 04","desc":"Capacitor-35 uF P60/P70 Master/Evolution/V6","qty":1,"sku":"950-104-01","price":"10.00","status":"lager","x":5.4,"y":61.09},{"id":"ava-master-2-0-p70-el06","pos":"EL 06","desc":"Motor P60","qty":1,"sku":"950-106-01","price":"77.00","status":"lager","x":28.01,"y":61.09},{"id":"ava-master-2-0-p70-ma01","pos":"MA 01","desc":"Master front cover complete","qty":1,"sku":"901-101-01","price":"45.50","status":"lager","x":66.36,"y":96.36},{"id":"ava-master-2-0-p70-ma02","pos":"MA 02","desc":"Master back cover","qty":1,"sku":"901-102-01","price":"49.00","status":"lager","x":90.24,"y":95.2},{"id":"ava-master-2-0-p70-ma03","pos":"MA 03","desc":"Master top handle complete","qty":1,"sku":"901-103-01","price":"30.00","status":"lager","x":89.78,"y":32.45},{"id":"ava-master-2-0-p70-ma05","pos":"MA 05","desc":"Master 2.0 hose reel, not including hose","qty":1,"sku":"901-105-01","price":"45.50","status":"lager","x":31.11,"y":22.68},{"id":"ava-master-2-0-p70-ma06","pos":"MA 06","desc":"Master hose reel pipe","qty":1,"sku":"901-106-01","price":"11.00","status":"lager","x":17.57,"y":35.76},{"id":"ava-master-2-0-p70-ma07","pos":"MA 07","desc":"Master 2.0 kit;  2x cable clip + nozzle holder","qty":1,"sku":"901-107-01","price":"12.00","status":"lager","x":89.78,"y":53.31},{"id":"ava-master-2-0-p70-ma08","pos":"MA 08","desc":"Master motor holder P60/P70","qty":1,"sku":"901-108-01","price":"23.00","status":"lager","x":38.23,"y":60.76},{"id":"ava-master-2-0-p70-ma10","pos":"MA 10","desc":"Master internal hose pump to reel","qty":1,"sku":"901-110-01","price":"10.50","status":"lager","x":75.77,"y":53.48},{"id":"ava-master-2-0-p70-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":41.1,"y":34.77},{"id":"ava-master-2-0-p70-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":73.48,"y":28.64},{"id":"ava-master-2-0-p70-v422","pos":"V4 22","desc":"Warranty and repair kit V4, 10 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-122-01","price":"49.00","status":"lager","x":41.91,"y":96.19},{"id":"ava-master-2-0-p70-v453","pos":"V4 53","desc":"Warranty and repair kit V4, 5 year, P60-P70 (Master/Evolution -UK)","qty":1,"sku":"964-153-01","price":"36.50","status":"lager","x":16.07,"y":96.19}]},{"id":"ava-smart-p50","rev":5,"brand":"Ava","name":"Smart P50","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/smart-p50-skisse.jpg","photo":"assets/ava/foto-smart.jpg?v=2","imgW":871,"imgH":604,"parts":[{"id":"ava-smart-p50-el12","pos":"EL 12","desc":"Switchbox V3 series with cable P30-57 (UK)","qty":1,"sku":"950-112-01","price":"27.00","status":"lager","x":43.63,"y":95.53},{"id":"ava-smart-p50-rp02","pos":"RP 02","desc":"V3 replacement kit motor/pump P50/P55/P57","qty":1,"sku":"960-102-01","price":"42.50","status":"lager","x":60.51,"y":95.53},{"id":"ava-smart-p50-sm01","pos":"SM 01","desc":"Smart chassi ex handle and reel","qty":1,"sku":"905-101-01","price":"41.00","status":"lager","x":86.91,"y":95.53},{"id":"ava-smart-p50-sm02","pos":"SM 02","desc":"Smart internal hose pump to reel","qty":1,"sku":"905-102-01","price":"11.00","status":"lager","x":39.84,"y":17.38},{"id":"ava-smart-p50-sm03","pos":"SM 03","desc":"Smart complete handle with pipe and hose reel","qty":1,"sku":"905-103-01","price":"42.00","status":"lager","x":89.09,"y":42.22},{"id":"ava-smart-p50-sm04","pos":"SM 04","desc":"Smart inlet, outlet and frost plug","qty":1,"sku":"905-104-01","price":"19.00","status":"lager","x":14.24,"y":50.17},{"id":"ava-smart-p50-sm05","pos":"SM 05","desc":"Smart wheel kit + support feet in front","qty":1,"sku":"905-105-01","price":"21.00","status":"lager","x":89.78,"y":63.25},{"id":"ava-smart-p50-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":71.41,"y":36.42},{"id":"ava-smart-p50-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":36.74,"y":34.93},{"id":"ava-smart-p50-v301","pos":"V3 01","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P40-P57","qty":1,"sku":"963-101-01","price":"22.00","status":"lager","x":16.99,"y":95.53}]},{"id":"ava-smart-p60","rev":5,"brand":"Ava","name":"Smart P60","matident":"","serident":"","currency":"GBP","source":"https://avaofnorway.com/pages/spare-parts-inner","image":"assets/ava/smart-p60-skisse.jpg","photo":"assets/ava/foto-smart.jpg?v=2","imgW":871,"imgH":604,"parts":[{"id":"ava-smart-p60-el15","pos":"EL 15","desc":"Switchbox V3 series with cable P60 (UK)","qty":1,"sku":"950-115-01","price":"30.50","status":"lager","x":43.63,"y":95.53},{"id":"ava-smart-p60-rp03","pos":"RP 03","desc":"V3 replacement kit motor/pump P60","qty":1,"sku":"960-103-01","price":"49.00","status":"lager","x":60.51,"y":95.53},{"id":"ava-smart-p60-sm01","pos":"SM 01","desc":"Smart chassi ex handle and reel","qty":1,"sku":"905-101-01","price":"41.00","status":"lager","x":86.91,"y":95.53},{"id":"ava-smart-p60-sm02","pos":"SM 02","desc":"Smart internal hose pump to reel","qty":1,"sku":"905-102-01","price":"11.00","status":"lager","x":39.84,"y":17.38},{"id":"ava-smart-p60-sm03","pos":"SM 03","desc":"Smart complete handle with pipe and hose reel","qty":1,"sku":"905-103-01","price":"42.00","status":"lager","x":89.78,"y":44.54},{"id":"ava-smart-p60-sm04","pos":"SM 04","desc":"Smart inlet, outlet and frost plug","qty":1,"sku":"905-104-01","price":"19.00","status":"lager","x":14.24,"y":50.17},{"id":"ava-smart-p60-sm05","pos":"SM 05","desc":"Smart wheel kit + support feet in front","qty":1,"sku":"905-105-01","price":"21.00","status":"lager","x":90.7,"y":65.23},{"id":"ava-smart-p60-un01","pos":"UN 01","desc":"Universal crank complete, fits all Master and Smart","qty":1,"sku":"949-101-01","price":"9.00","status":"lager","x":71.41,"y":36.42},{"id":"ava-smart-p60-un02","pos":"UN 02","desc":"Universal swivel fits all Master and Smart series","qty":1,"sku":"949-102-01","price":"14.00","status":"lager","x":36.74,"y":34.93},{"id":"ava-smart-p60-v302","pos":"V3 02","desc":"Warranty and repair kit V3, 5 year, Easy/Go/Smart P60","qty":1,"sku":"963-102-01","price":"22.00","status":"lager","x":16.99,"y":95.53}]}];
+  static seed() {
+    const parts = [
+      ['0004', 'COVER', 1, '4931452607', '', 'utgatt'],
+      ['0005', 'AC/DC ADAPTOR GB2', 1, '4931452608', '', 'utgatt'],
+      ['0006', 'AC/DC ADAPTOR IN2', 1, '4931452609', '644.60', 'lager'],
+      ['0007', 'RATING PLATE', 1, '4931452610', '', 'utgatt'],
+    ].map(([pos, desc, qty, sku, price, status]) => ({ id: 'pt' + pos, pos, desc, qty, sku, price, status, x: null, y: null }));
+    const p = { id: 'm18af', brand: 'Milwaukee', name: 'M18AF-0 Vifte', matident: '4933451022', serident: '4000452167',
+      image: 'https://webservice.ttigroup.eu/s3/local/uploaded/catalog/4926452169.gif', imgW: 0, imgH: 0, parts };
+    return { activeId: p.id, products: [p, ...JSON.parse(JSON.stringify(Component.AVA))] };
+  }
+
+  state = { db: null, brand: null, productId: null, selId: null, hoverId: null, zoom: 1, panX: 0, panY: 0, vw: 0, vh: 0,
+    animate: false, dragging: false, query: '', cart: {}, varIdx: 0, sheetIdx: 0, brandOpen: false, modelOpen: false, gq: '', gOpen: false };
+  vpRef = React.createRef(); stageRef = React.createRef(); imgRef = React.createRef(); listRef = React.createRef();
+  logoRefTop = React.createRef(); logoRefBottom = React.createRef(); photoRef = React.createRef(); heroMarkRef = React.createRef();
+
+  componentDidMount() {
+    if (!this.state.db) {
+      let db = null;
+      try { db = JSON.parse(localStorage.getItem(Component.KEY)); } catch (e) {}
+      if (!db || !Array.isArray(db.products) || !db.products.length) db = Component.seed();
+      else { const seed = Component.seed().products, ids = new Set(db.products.map(x => x.id)); db = { ...db, products: [...db.products.map(x => { const n = seed.find(q => q.id === x.id); return n && (n.rev || 0) > (x.rev || 0) ? n : x; }), ...seed.filter(x => !ids.has(x.id))] }; }
+      this.setState({ db, brand: null, productId: null });
+      this.applyTheme(null);
+    }
+    if (!this.schLoaded) { this.schLoaded = true; fetch('assets/scheppach/data.json').then(r => r.json()).then(data => this.setState(s => s.db ? { db: { ...s.db, products: [...s.db.products.filter(x => !String(x.id).startsWith('sch-')), ...data] } } : null)).catch(() => {}); }
+    setTimeout(this.ensureDims, 0);
+    this.icons();
+    if (!this.iconT) this.iconT = setTimeout(this.icons, 600);
+    const vp = this.vpRef.current;
+    if (vp && !this.ro) {
+      this.ro = new ResizeObserver(() => this.measure()); this.ro.observe(vp);
+      vp.addEventListener('wheel', this.onWheel, { passive: false });
+      this.measure();
+    }
+    window.addEventListener('pointermove', this.onMove);
+    window.addEventListener('pointerup', this.onUp);
+    window.addEventListener('keydown', this.onKey);
+    document.addEventListener('pointerdown', this.onDocDown);
+    window.addEventListener('scroll', this.onScroll, true);
+    if (!this.mo) { this.mo = new MutationObserver(this.fixOnBrand); this.mo.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] }); this.fixOnBrand(); }
+  }
+  onScroll = () => { if (this.hoverEl) this.forceUpdate(); };
+  fixOnBrand = () => {
+    document.querySelectorAll('[style*="--rr-orange)"]').forEach(el => {
+      const st = el.getAttribute('style') || '';
+      if (/background(-color)?:\s*var\(--rr-orange\)/.test(st) && /(^|;)\s*color:\s*(#fff|#ffffff|rgb\(255, 255, 255\))/i.test(st)) el.style.color = 'var(--fg-on-brand)';
+    });
+  };
+  componentWillUnmount() {
+    this.mo && this.mo.disconnect(); this.mo = null;
+    window.removeEventListener('scroll', this.onScroll, true);
+    this.ro && this.ro.disconnect(); this.ro = null;
+    window.removeEventListener('pointermove', this.onMove);
+    window.removeEventListener('pointerup', this.onUp);
+    window.removeEventListener('keydown', this.onKey);
+    document.removeEventListener('pointerdown', this.onDocDown);
+    this.applyTheme(null);
+  }
+  componentDidUpdate() {
+    const img = this.imgRef.current, p = this.product();
+    if (img && p && p.image && img.getAttribute('src') !== p.image) img.setAttribute('src', p.image);
+    const ph = this.photoRef.current;
+    if (ph && p && p.photo && ph.getAttribute('src') !== p.photo) ph.setAttribute('src', p.photo);
+    const logo = this.logoSrc(this.state.brand);
+    [this.logoRefTop.current, this.logoRefBottom.current].forEach(el => { if (el && el.getAttribute('src') !== logo) el.setAttribute('src', logo); });
+    const mk = (Component.THEMES[this.state.brand] || {}).mark, me = this.heroMarkRef.current;
+    if (me && mk && me.getAttribute('src') !== mk) me.setAttribute('src', mk);
+    if (this.pendingFocus && this.geo()) {
+      const p2 = this.product(), part = p2 && p2.parts.find(q => q.id === this.pendingFocus);
+      this.pendingFocus = null;
+      if (part) setTimeout(() => { this.focusPart(part); this.scrollToRow(part.id); }, 0);
+    }
+    const vk = this.state.productId + '|' + this.state.varIdx + '|' + this.state.sheetIdx;
+    if (this.prevVK !== vk) {
+      this.prevVK = vk; this.prevProductId = this.state.productId;
+      setTimeout(() => { this.ensureDims(); this.measure(); this.icons(); }, 0);
+    }
+  }
+  icons = () => { if (window.lucide) window.lucide.createIcons(); };
+
+  applyTheme(brand) {
+    const root = document.documentElement, t = Component.THEMES[brand];
+    if (!t) { Object.entries(Component.DEFAULTS).forEach(([k, v]) => root.style.setProperty(k, v)); return; }
+    const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const hex = c => '#' + c.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+    const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
+    const lum = c => { const f = c.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2]; };
+    const contrast = (a, b) => { const l1 = lum(a), l2 = lum(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+    const base = rgb(t.hex), W = [255, 255, 255], K = [0, 0, 0];
+    let ink = base, step = 0;
+    while (contrast(ink, W) < 4.5 && step < 24) { step++; ink = mix(base, K, step * 0.04); }
+    const set = (k, v) => root.style.setProperty(k, v);
+    set('--rr-orange', t.hex); set('--rr-orange-logo', t.hex); set('--rr-orange-dark', t.dark || t.hex);
+    set('--rr-orange-deep', hex(mix(base, K, 0.22))); set('--rr-orange-bright', hex(mix(base, W, 0.14)));
+    set('--rr-orange-tint', hex(mix(base, W, 0.80))); set('--rr-orange-pale', hex(mix(base, W, 0.93)));
+    set('--fg-on-brand', contrast(base, W) >= 3.2 ? '#FFFFFF' : 'var(--rr-ink)');
+    set('--fg-brand', hex(ink)); set('--fg-link', hex(ink));
+    set('--shadow-brand', '0 8px 24px rgba(' + base.join(',') + ',0.30)');
+  }
+  logoSrc(brand) { const t = Component.THEMES[brand]; return t ? 'assets/brand/' + t.slug + '-white.png' : 'assets/retail-repair-wordmark-white.png'; }
+
+  dims = {};
+  partsOf(p) { return p.parts || (p.variants ? p.variants.flatMap(v => v.parts) : []); }
+  product() {
+    const s = this.state; if (!s.db || !s.productId) return null;
+    const raw = s.db.products.find(p => p.id === s.productId); if (!raw) return null;
+    if (!raw.variants) return raw;
+    const v = raw.variants[Math.min(s.varIdx || 0, raw.variants.length - 1)];
+    if (!v) return { ...raw, parts: [], image: '', imgW: 0, imgH: 0 };
+    const sh = v.sheets[Math.min(s.sheetIdx || 0, v.sheets.length - 1)] || null;
+    const d = sh ? (this.dims[sh.image] || (sh.w ? { w: sh.w, h: sh.h } : null)) : null;
+    const key = raw.id + '|' + v.id + '|' + (sh ? sh.letter : '') + '|' + (d ? d.w : 0);
+    if (this._pv && this._pv.key === key && this._pv.raw === raw) return this._pv.p;
+    const parts = v.parts.filter(x => !sh || v.sheets.length < 2 || !x.sheet || x.sheet === sh.letter);
+    const p = { ...raw, image: sh ? sh.image : '', imgW: d ? d.w : 0, imgH: d ? d.h : 0, parts, variant: v, sheetInfo: sh };
+    this._pv = { key, raw, p }; return p;
+  }
+  sorted(parts) { return [...parts].sort((a, b) => (parseInt(a.pos, 10) || 0) - (parseInt(b.pos, 10) || 0)); }
+
+  ensureDims = () => {
+    const p = this.product(); if (!p || !p.image || p.imgW) return;
+    if (p.variants) { const src = p.image, im = new Image(); im.onload = () => { this.dims[src] = { w: im.naturalWidth, h: im.naturalHeight }; this.forceUpdate(); setTimeout(this.measure, 0); }; im.src = src; return; }
+    const id = p.id, img = new Image();
+    img.onload = () => this.setState(s => ({ db: { ...s.db, products: s.db.products.map(q => q.id === id ? { ...q, imgW: img.naturalWidth, imgH: img.naturalHeight } : q) } }));
+    img.src = p.image;
+  };
+  measure = () => {
+    const vp = this.vpRef.current; if (!vp) return;
+    const r = vp.getBoundingClientRect();
+    this.setState({ vw: r.width, vh: r.height });
+    this.setState(s => this.clampPan(s.zoom, s.panX, s.panY));
+  };
+  geo() {
+    const s = this.state, p = this.product();
+    if (!p || !p.image || !p.imgW || !s.vw) return null;
+    const base = Math.min((s.vw - 48) / p.imgW, (s.vh - 48) / p.imgH);
+    const sw = p.imgW * base, sh = p.imgH * base;
+    return { sw, sh, ox: (s.vw - sw) / 2, oy: (s.vh - sh) / 2, vw: s.vw, vh: s.vh };
+  }
+  clampPan(z, px, py) {
+    const g = this.geo(); if (!g) return { zoom: z, panX: 0, panY: 0 };
+    const ax = (S, v, o, p) => S <= v - 48 ? (v - S) / 2 - o : Math.min(24, Math.max(v - S - 24, o + p)) - o;
+    return { zoom: z, panX: ax(g.sw * z, g.vw, g.ox, px), panY: ax(g.sh * z, g.vh, g.oy, py) };
+  }
+  animateOnce() { clearTimeout(this.animT); this.animT = setTimeout(() => this.setState({ animate: false }), 360); }
+  zoomAt(cx, cy, nz, anim) {
+    const s = this.state, g = this.geo(); if (!g) return;
+    nz = Math.min(6, Math.max(1, nz));
+    const k = nz / s.zoom;
+    const px = cx - (cx - (g.ox + s.panX)) * k - g.ox, py = cy - (cy - (g.oy + s.panY)) * k - g.oy;
+    this.setState({ ...this.clampPan(nz, px, py), animate: !!anim });
+    if (anim) this.animateOnce();
+  }
+  zoomCenter(f) { const s = this.state; this.zoomAt(s.vw / 2, s.vh / 2, s.zoom * f, true); }
+  focusPart(part) {
+    const g = this.geo(); if (!g || part.x == null) return;
+    const nz = Math.max(this.state.zoom, 2.2);
+    const px = g.vw / 2 - (part.x / 100) * g.sw * nz - g.ox, py = g.vh / 2 - (part.y / 100) * g.sh * nz - g.oy;
+    this.setState({ ...this.clampPan(nz, px, py), animate: true }); this.animateOnce();
+  }
+
+  onWheel = e => {
+    if (!this.geo()) return; e.preventDefault();
+    const r = this.vpRef.current.getBoundingClientRect();
+    this.zoomAt(e.clientX - r.left, e.clientY - r.top, this.state.zoom * Math.exp(-e.deltaY * 0.0015));
+  };
+  onVpDown = e => {
+    if (e.button !== 0 || !this.geo()) return;
+    this.drag = { sx: e.clientX, sy: e.clientY, px: this.state.panX, py: this.state.panY, moved: false };
+  };
+  onMove = e => {
+    const d = this.drag; if (!d) return;
+    const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+    if (!d.moved && Math.hypot(dx, dy) > 4) { d.moved = true; this.setState({ dragging: true, animate: false }); }
+    if (d.moved) this.setState(this.clampPan(this.state.zoom, d.px + dx, d.py + dy));
+  };
+  onUp = () => {
+    const d = this.drag; if (!d) return;
+    this.drag = null; this.lastMoved = d.moved;
+    if (d.moved) this.setState({ dragging: false });
+  };
+  onKey = e => {
+    if (e.key === 'Escape') this.setState({ selId: null, brandOpen: false, modelOpen: false, gOpen: false });
+  };
+  onDocDown = e => {
+    if (this.state.gOpen && !(e.target.closest && e.target.closest('[data-gsearch]'))) this.setState({ gOpen: false });
+    if ((this.state.brandOpen || this.state.modelOpen) && !(e.target.closest && e.target.closest('button'))) this.setState({ brandOpen: false, modelOpen: false });
+  };
+
+  selectPart(id, opts = {}) {
+    this.setState({ selId: id });
+    const p = this.product(), part = p && p.parts.find(q => q.id === id);
+    if (opts.focus && part) this.focusPart(part);
+    if (opts.scroll) this.scrollToRow(id);
+  }
+  scrollToRow(id) {
+    requestAnimationFrame(() => {
+      const L = this.listRef.current; if (!L) return;
+      const el = L.querySelector('[data-part="' + id + '"]'); if (!el) return;
+      const top = el.offsetTop;
+      if (top < L.scrollTop || top + el.offsetHeight > L.scrollTop + L.clientHeight)
+        L.scrollTo({ top: top - L.clientHeight / 2 + el.offsetHeight / 2, behavior: 'smooth' });
+    });
+  }
+  addToCart(ids) { this.setState(s => { const cart = { ...s.cart }; ids.forEach(id => { cart[id] = (cart[id] || 0) + 1; }); return { cart }; }); }
+  pickBrand(b) {
+    this.applyTheme(b);
+    this.setState({ varIdx: 0, sheetIdx: 0, brand: b, productId: null, selId: null, brandOpen: false, modelOpen: false, zoom: 1, panX: 0, panY: 0, query: '' });
+  }
+  goTo(pid, partId) {
+    const p = this.state.db.products.find(x => x.id === pid); if (!p) return;
+    let vi = 0, si = 0;
+    if (p.variants && partId) p.variants.forEach((v, i) => { const x = v.parts.find(q => q.id === partId); if (x) { vi = i; si = Math.max(0, v.sheets.findIndex(h => h.letter === x.sheet)); } });
+    this.applyTheme(p.brand); this.pendingFocus = partId || null;
+    this.setState({ varIdx: vi, sheetIdx: si, brand: p.brand, productId: pid, selId: partId || null, hoverId: null, brandOpen: false, modelOpen: false, zoom: 1, panX: 0, panY: 0, query: '', gq: '', gOpen: false });
+  }
+  globalSearch(raw) {
+    const db = this.state.db, q = raw.trim().toLowerCase(); if (!db || q.length < 2) return [];
+    const flat = v => String(v || '').toLowerCase().replace(/[\s\-.]/g, ''), qf = flat(q), words = q.split(/\s+/).filter(Boolean);
+    const hit = hay => words.every(w => hay.includes(w)) || (qf.length >= 3 && flat(hay).includes(qf));
+    const money = (p, v) => { const n = parseFloat(String(v || '').replace(',', '.')); return isNaN(n) ? '' : ((p.currency || 'NOK') + ' ' + n.toLocaleString('nb-NO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); };
+    const models = [], parts = new Map();
+    db.products.forEach(p => {
+      const label = [p.brand, p.name].filter(Boolean).join(' ');
+      if (hit([label, p.matident, p.fullName].join(' ').toLowerCase())) models.push({ key: 'm' + p.id, kind: 'Modell', title: label, sub: [p.matident, this.partsOf(p).length + ' deler'].filter(Boolean).join(' · '), price: '', onClick: () => this.goTo(p.id) });
+      this.partsOf(p).forEach(x => {
+        if (!hit([x.desc, x.sku, x.pos].join(' ').toLowerCase())) return;
+        const k = (x.sku || '') + '|' + x.desc;
+        if (!parts.has(k)) parts.set(k, { x, p, models: [] });
+        parts.get(k).models.push(p.name);
+      });
+    });
+    const out = models.slice(0, 5);
+    [...parts.values()].slice(0, 12).forEach(({ x, p, models: ms }) => out.push({ key: 'p' + x.id, kind: 'Reservedel', title: [x.pos, x.desc].filter(Boolean).join(' · '),
+      sub: [x.sku, p.brand + ' ' + ms.slice(0, 2).join(', ') + (ms.length > 2 ? ' +' + (ms.length - 2) : '')].filter(Boolean).join(' · '),
+      price: x.status === 'utgatt' ? 'Utgått' : money(p, x.price), onClick: () => this.goTo(p.id, x.id) }));
+    return out;
+  }
+  pickProduct(id) {
+    this.setState({ varIdx: 0, sheetIdx: 0, productId: id, selId: null, hoverId: null, modelOpen: false, zoom: 1, panX: 0, panY: 0, query: '' });
+  }
+
+  renderVals() {
+    const s = this.state, p = this.product(), S = Component.STATUS;
+    const parts = p ? this.sorted(p.parts) : [];
+    const q = s.query.trim().toLowerCase();
+    const match = x => !q || [x.desc, x.sku, x.pos, String(parseInt(x.pos, 10))].some(v => String(v || '').toLowerCase().includes(q));
+    const label = x => String(parseInt(x.pos, 10) || x.pos || '–');
+    const num = v => { const n = parseFloat(String(v || '').replace(',', '.')); return isNaN(n) ? null : n; };
+    const cur = (p && p.currency) || 'NOK';
+    const nok = n => cur + ' ' + n.toLocaleString('nb-NO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const priceOf = x => x.status === 'utgatt' ? '' : (num(x.price) != null ? nok(num(x.price)) : 'Pris på forespørsel');
+    const buyable = x => x.status !== 'utgatt' && num(x.price) != null;
+    const g = this.geo();
+    const sel = parts.find(x => x.id === s.selId) || null;
+    const brands = s.db ? [...new Set(s.db.products.map(x => x.brand).filter(Boolean))] : [];
+    const models = s.db ? s.db.products.filter(x => x.brand === s.brand) : [];
+    const cartCount = Object.values(s.cart).reduce((a, b) => a + b, 0);
+    const onLeave = id => () => this.setState(t => t.hoverId === id ? { hoverId: null } : null);
+    const inStock = parts.filter(x => x.status === 'lager' && num(x.price) != null);
+
+    const hotspots = g ? parts.filter(x => x.x != null).map(x => {
+      const isSel = x.id === s.selId, hov = x.id === s.hoverId;
+      return {
+        id: x.id, label: label(x), left: x.x + '%', top: x.y + '%',
+        transform: 'translate(-50%, -50%) scale(' + (1 / s.zoom) + ')',
+        bg: isSel ? 'var(--rr-orange)' : 'var(--bg-elev)', color: isSel ? 'var(--fg-on-brand)' : 'var(--fg-1)',
+        shadow: isSel ? 'var(--shadow-brand)' : 'var(--shadow-1)', z: isSel ? 3 : hov ? 2 : 1,
+        showTip: hov && !s.dragging, tipTitle: x.desc, tipSub: [x.sku, priceOf(x)].filter(Boolean).join(' · '),
+        onClick: () => { if (!this.lastMoved) this.selectPart(x.id, { scroll: true }); },
+        onEnter: e => { this.hoverEl = e.currentTarget; this.setState({ hoverId: x.id }); }, onLeave: e => { this.hoverEl = null; onLeave(x.id)(e); },
+      };
+    }) : [];
+    const hovPart = g && s.hoverId && !s.dragging && this.hoverEl && this.hoverEl.isConnected ? parts.find(x => x.id === s.hoverId && x.x != null) : null;
+    let tip = { show: false };
+    if (hovPart) {
+      const r = this.hoverEl.getBoundingClientRect(), right = r.right + 10 + 320 < window.innerWidth;
+      tip = { show: true, title: hovPart.desc, sub: [hovPart.sku, priceOf(hovPart)].filter(Boolean).join(' · '),
+        left: (right ? r.right + 10 : r.left - 10) + 'px', top: (r.top + r.height / 2) + 'px', transform: right ? 'translateY(-50%)' : 'translate(-100%, -50%)' };
+    }
+
+    const rows = parts.filter(match).map((x, i) => {
+      const isSel = x.id === s.selId, hov = x.id === s.hoverId, placed = x.x != null;
+      return {
+        id: x.id, label: label(x), desc: x.desc || 'Uten navn',
+        sub: [x.sku, S[x.status] || S.lager].filter(Boolean).join(' · '),
+        price: priceOf(x), borderTop: i === 0 ? '0' : '1px solid var(--border-subtle)',
+        bg: isSel || hov ? 'var(--rr-orange-pale)' : 'transparent',
+        badgeBorder: isSel || placed ? 'var(--rr-orange)' : 'var(--border-default)',
+        badgeBg: isSel ? 'var(--rr-orange)' : 'transparent',
+        badgeColor: isSel ? 'var(--fg-on-brand)' : 'var(--fg-1)',
+        disabled: !buyable(x), addCursor: buyable(x) ? 'pointer' : 'not-allowed', addOpacity: buyable(x) ? 1 : 0.4,
+        addAria: 'Legg til ' + x.desc,
+        onAdd: e => { e.stopPropagation(); if (buyable(x)) this.addToCart([x.id]); },
+        onClick: () => this.selectPart(x.id, { focus: true }),
+        onEnter: () => this.setState({ hoverId: x.id }), onLeave: onLeave(x.id),
+      };
+    });
+
+    const gRes = s.gOpen ? this.globalSearch(s.gq) : [];
+    const hasBrand = !!s.brand, hasModel = !!p;
+    return {
+      logoRefTop: this.logoRefTop, logoRefBottom: this.logoRefBottom,
+      heroMarkRef: this.heroMarkRef, heroMarkOn: !!(Component.THEMES[s.brand] || {}).mark, heroSevenOn: !(Component.THEMES[s.brand] || {}).mark,
+      vpRef: this.vpRef, stageRef: this.stageRef, imgRef: this.imgRef, listRef: this.listRef,
+      hasCart: cartCount > 0, cartCount,
+      step1: { text: s.brand || 'Velg merke', bg: hasBrand ? 'var(--rr-orange)' : '#FFFFFF', color: hasBrand ? 'var(--fg-on-brand)' : 'var(--fg-1)',
+        labelColor: hasBrand ? 'var(--fg-3)' : 'var(--fg-brand)', dotBg: hasBrand ? 'var(--rr-n-300)' : 'var(--rr-orange)', dotColor: hasBrand ? '#FFFFFF' : 'var(--fg-on-brand)' },
+      step2: { text: p ? p.name : 'Velg modell', bg: hasModel ? 'var(--rr-orange)' : '#FFFFFF',
+        color: hasModel ? 'var(--fg-on-brand)' : hasBrand ? 'var(--fg-1)' : 'var(--fg-3)',
+        border: hasBrand ? 'var(--rr-orange)' : 'var(--border-default)', cursor: hasBrand ? 'pointer' : 'not-allowed',
+        labelColor: hasBrand && !hasModel ? 'var(--fg-brand)' : 'var(--fg-3)',
+        dotBg: hasBrand && !hasModel ? 'var(--rr-orange)' : 'var(--rr-n-300)', dotColor: hasBrand && !hasModel ? 'var(--fg-on-brand)' : '#FFFFFF' },
+      toggleBrand: () => this.setState(t => ({ brandOpen: !t.brandOpen, modelOpen: false })),
+      toggleModel: () => { if (hasBrand) this.setState(t => ({ modelOpen: !t.modelOpen, brandOpen: false })); },
+      brandOpen: s.brandOpen, modelOpen: s.modelOpen && hasBrand,
+      brandOptions: brands.map(b => ({ name: b, bg: b === s.brand ? 'var(--rr-orange-pale)' : 'transparent', onClick: () => this.pickBrand(b) })),
+      modelOptions: models.map(m => ({ name: m.name || 'Uten navn', sub: [m.fullName, this.partsOf(m).length + ' deler'].filter(Boolean).join(' · '),
+        bg: m.id === s.productId ? 'var(--rr-orange-pale)' : 'transparent', onClick: () => this.pickProduct(m.id) })),
+      noProduct: !p, hasProduct: !!p,
+      sheet: p ? {
+        eyebrow: (p.brand || '') + ' · Verktøy', title: [p.brand, p.name].filter(Boolean).join(' '),
+        article: p.matident ? 'ARTIKKELNR. ' + p.matident : '', serial: p.serident ? 'Serienr ' + p.serident : (p.fullName || ''),
+        count: parts.length + ' deler i sprengskissen', hasPhoto: !!p.photo, noPhoto: !p.photo,
+      } : {},
+      onVpDown: this.onVpDown, stop: e => e.stopPropagation(),
+      vpCursor: s.dragging ? 'grabbing' : g ? 'grab' : 'default',
+      hasImage: !!g, noImage: !g,
+      emptyText: p ? (p.image && !p.imgW ? 'Laster sprengskisse …' : 'Sprengskisse for ' + [p.brand, p.name].join(' ') + ' — venter på tegning fra produsent') : '',
+      stage: g ? { w: g.sw + 'px', h: g.sh + 'px', transform: 'translate(' + (g.ox + s.panX) + 'px, ' + (g.oy + s.panY) + 'px) scale(' + s.zoom + ')', transition: s.animate ? 'transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1)' : 'none' } : {},
+      hotspots, tip, photoRef: this.photoRef,
+      hasVariants: !!(p && p.variants && p.variants.length > 1), variantCount: p && p.variants ? p.variants.length : 0,
+      varValue: String(Math.min(s.varIdx, p && p.variants ? p.variants.length - 1 : 0)),
+      variantOptions: p && p.variants ? p.variants.map((v, i) => ({ value: String(i), label: v.label + ' · ' + v.parts.length + ' deler' })) : [],
+      onVariant: e => this.setState({ varIdx: parseInt(e.target.value, 10) || 0, sheetIdx: 0, selId: null, hoverId: null, zoom: 1, panX: 0, panY: 0, query: '' }),
+      hasSheets: !!(p && p.variant && p.variant.sheets.length > 1),
+      sheetTabs: p && p.variant ? p.variant.sheets.map((h, i) => { const on = p.sheetInfo === h; return { label: 'Tegning ' + h.letter, bg: on ? 'var(--rr-orange)' : '#FFFFFF', color: on ? 'var(--fg-on-brand)' : 'var(--fg-1)', border: on ? 'var(--rr-orange)' : 'var(--border-default)', onClick: () => this.setState({ sheetIdx: i, selId: null, hoverId: null, zoom: 1, panX: 0, panY: 0 }) }; }) : [],
+      zoomIn: () => this.zoomCenter(1.4), zoomOut: () => this.zoomCenter(1 / 1.4),
+      zoomReset: () => { this.setState({ zoom: 1, panX: 0, panY: 0, animate: true }); this.animateOnce(); },
+      hasSel: !!sel, noSel: !sel,
+      btnFull: { style: { width: '100%', justifyContent: 'center', color: 'var(--fg-on-brand)' } },
+      addDisabled: !sel || !buyable(sel),
+      addLabel: !sel ? 'Velg en del for å legge den i handlekurven' : !buyable(sel) ? (sel.status === 'utgatt' ? 'Utgått – kontakt oss for erstatning' : 'Kontakt oss for pris') : s.cart[sel.id] ? 'I handlekurven · ' + s.cart[sel.id] : 'Legg i handlekurv',
+      sel: sel ? {
+        label: label(sel), desc: sel.desc, sub: [sel.sku, S[sel.status] || S.lager, 'antall ' + sel.qty].filter(Boolean).join(' · '),
+        price: priceOf(sel) || 'Utgått', disabled: !buyable(sel),
+        addLabel: !buyable(sel) ? (sel.status === 'utgatt' ? 'Utgått' : 'Kontakt oss') : s.cart[sel.id] ? 'I handlekurven · ' + s.cart[sel.id] : 'Legg i handlekurv',
+        onAdd: () => { if (buyable(sel)) this.addToCart([sel.id]); },
+      } : {},
+      query: s.query, onQuery: e => this.setState({ query: e.target.value }),
+      gq: s.gq, onGq: e => this.setState({ gq: e.target.value, gOpen: true }), onGqFocus: () => this.setState({ gOpen: true }),
+      onGqSubmit: e => { e.preventDefault(); const r = this.globalSearch(s.gq); if (r.length === 1) r[0].onClick(); else this.setState({ gOpen: true }); },
+      heroInput: { style: { border: 0, padding: '0 16px 0 40px', height: 52, lineHeight: '52px' } }, heroBtn: { style: { borderRadius: 'var(--r-2)' } },
+      gResults: gRes, gShow: s.gOpen && s.gq.trim().length >= 2, gEmpty: gRes.length === 0,
+      rows, noRows: rows.length === 0, noRowsText: parts.length ? 'Ingen deler matcher søket.' : 'Ingen deler registrert for denne modellen.',
+      totalText: nok(inStock.reduce((a, x) => a + num(x.price), 0)),
+      addAll: () => this.addToCart(inStock.map(x => x.id)), addAllDisabled: inStock.length === 0,
+      footerCols: [
+        { title: 'Tjenester', items: ['Reservedeler', 'Verksted', 'Refurbished', 'Hentetjeneste', 'B2B-løsninger'] },
+        { title: 'Selskapet', items: ['Om oss', 'Bærekraft', 'Karriere', 'Presse', 'Drift & service rapport'] },
+        { title: 'Kontakt', items: ['+47 22 00 00 00', 'hei@retailrepair.no', 'Industriveien 4, 0667 Oslo', 'Org. nr 920 113 552'] },
+      ],
+      chatSuggestions: ['Finn riktig del', 'Hvor finner jeg modellnummeret?', 'Leveringstid'],
+    };
+  }
+}
+</script>
+</body>
+</html>

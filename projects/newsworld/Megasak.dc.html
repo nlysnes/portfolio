@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF;color:#111827;font-family:"Schibsted Grotesk",-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#E11D48;text-decoration:none}
+a:hover{color:#9F1239}
+select,button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#FFFFFF;color:#111827">
+  <header style="position:sticky;top:0;z-index:10;background:#FFFFFF;border-bottom:1px solid rgba(17,24,39,.12)">
+    <div style="max-width:1240px;margin:0 auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="Nyheter v3 lys.dc.html" style="font-weight:900;font-size:28px;letter-spacing:-0.02em;display:flex;align-items:center;gap:14px;color:#111827"><img src="./assets/logo-color.webp" alt="" style="width:48px;height:48px;object-fit:contain"><span style="white-space:nowrap">News World<span style="color:#F59E0B">.</span>&nbsp;AI</span></a>
+      <select value="{{ lang }}" onChange="{{ onLang }}" aria-label="{{ t.language }}" style="appearance:none;background:#FFFFFF;color:#111827;border:1px solid rgba(17,24,39,.3);border-radius:0;padding:9px 16px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">
+        <option value="nb">Norsk</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </header>
+
+  <main style="max-width:1240px;margin:0 auto;padding:30px 32px 120px;display:flex;flex-direction:column;gap:45px">
+    <a href="Nyheter v3 lys.dc.html" style="align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66" style-hover="color:#111827">← {{ t.back }}</a>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5A5A66">
+        <span style="background:#E11D48;color:#fff;padding:6px 10px;letter-spacing:.14em">{{ t.mega }}</span>
+        <span style="display:flex;align-items:center;gap:8px;color:#E11D48"><span style="width:8px;height:8px;background:#E11D48"></span>{{ t.live }}</span>
+        <span style="color:#111827">{{ t.cat }}</span><span>{{ t.started }}</span><span>{{ totalSources }} {{ t.sources }}</span>
+      </div>
+      <h1 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,64px);line-height:1.02;letter-spacing:-0.025em;text-wrap:balance;max-width:1100px">{{ t.headline }}</h1>
+      <div style="display:flex;flex-wrap:wrap;gap:30px">
+        <div style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:6px">
+          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#F4F4F6;overflow:hidden">
+            <img src="{{ heroImg }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+            <button onClick="{{ prev }}" aria-label="Previous" style="position:absolute;left:0;top:50%;transform:translateY(-50%);width:44px;height:56px;border:none;border-radius:0;background:rgba(17,24,39,.8);color:#fff;font-size:20px;font-weight:700;cursor:pointer" style-hover="background:#111827">‹</button>
+            <button onClick="{{ next }}" aria-label="Next" style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:44px;height:56px;border:none;border-radius:0;background:rgba(17,24,39,.8);color:#fff;font-size:20px;font-weight:700;cursor:pointer" style-hover="background:#111827">›</button>
+            <div style="position:absolute;right:0;bottom:0;padding:4px 8px;background:rgba(17,24,39,.8);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;pointer-events:none">{{ imgPos }}</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px">
+            <sc-for list="{{ thumbs }}" as="th" hint-placeholder-count="5">
+              <button onClick="{{ th.select }}" aria-label="{{ th.label }}" style="padding:0;border:none;border-radius:0;aspect-ratio:3/2;background:#F4F4F6;cursor:pointer;overflow:hidden;outline:2px solid {{ th.ring }};outline-offset:-2px;opacity:{{ th.op }}" style-hover="opacity:1">
+                <img src="{{ th.src }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;align-items:center;gap:18px;padding-bottom:18px;border-bottom:1px solid rgba(17,24,39,.12)">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:84px;height:84px;background:#E11D48;color:#fff;flex:none">
+              <span style="font-weight:900;font-size:38px;line-height:1;letter-spacing:-0.02em">91</span>
+              <span style="font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:4px">Trend</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <span style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">{{ t.globalTrend }}</span>
+              <span style="font-size:15px;line-height:1.4;font-weight:500">{{ t.trendNote }}</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">Recap</div>
+            <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ recap }}" as="p" hint-placeholder-count="4">
+                <li style="display:grid;grid-template-columns:8px minmax(0,1fr);gap:12px;font-size:16px;line-height:1.5;color:#2A2A33;text-wrap:pretty">
+                  <span style="width:6px;height:6px;background:#E11D48;margin-top:9px"></span><span>{{ p }}</span>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+          <a href="#utvikling" style="display:flex;flex-direction:column;gap:6px;padding:18px;background:#111827;color:#fff;margin-top:auto" style-hover="background:#1F2937">
+            <span style="display:flex;justify-content:space-between;gap:12px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#F59E0B"><span>{{ t.latest }} · {{ latest.time }}</span><span>↓</span></span>
+            <span style="font-size:17px;font-weight:700;line-height:1.3;text-wrap:pretty">{{ latest.headline }}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="utvikling" style="display:flex;flex-wrap:wrap;gap:45px;align-items:flex-start">
+      <div style="flex:1 1 620px;min-width:0;display:flex;flex-direction:column">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:2px solid #111827">
+          <h2 style="margin:0;font-weight:900;font-size:clamp(28px,3.4vw,40px);line-height:1;letter-spacing:-0.02em">{{ t.development }}</h2>
+          <span style="flex:none;white-space:nowrap;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">{{ entryCount }} {{ t.updates }}</span>
+        </div>
+        <sc-if value="{{ hasPending }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ reveal }}" style="display:flex;align-items:center;justify-content:center;gap:10px;height:48px;margin-top:18px;border:none;border-radius:0;background:#F59E0B;color:#111827;font-weight:800;font-size:14px;letter-spacing:.04em;cursor:pointer" style-hover="background:#FBBF24" style-active="transform:scale(.99)">↑ {{ pendingLabel }}</button>
+        </sc-if>
+        <div style="position:relative;display:flex;flex-direction:column">
+          <sc-for list="{{ entries }}" as="e" hint-placeholder-count="6">
+            <sc-if value="{{ e.dayBreak }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:0;padding-top:24px">
+                <span></span>
+                <span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#111827;padding:0 0 4px 30px">{{ e.day }}</span>
+              </div>
+            </sc-if>
+            <article style="display:grid;grid-template-columns:88px minmax(0,1fr);gap:0">
+              <div style="display:flex;flex-direction:column;gap:2px;padding:24px 0;text-align:right;padding-right:18px">
+                <span style="font-weight:900;font-size:20px;letter-spacing:-0.01em;color:{{ e.timeColor }}">{{ e.time }}</span>
+                <span style="font-size:12px;color:#5A5A66">{{ e.ago }}</span>
+              </div>
+              <div style="position:relative;padding:24px 0 24px 30px;border-left:2px solid rgba(17,24,39,.12);border-bottom:1px solid rgba(17,24,39,.08);display:flex;flex-wrap:wrap;gap:18px">
+                <span style="position:absolute;left:-7px;top:31px;width:12px;height:12px;background:{{ e.marker }}"></span>
+                <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66">
+                    <sc-if value="{{ e.isLatest }}" hint-placeholder-val="{{ false }}"><span style="background:#E11D48;color:#fff;padding:3px 7px">{{ t.latest }}</span></sc-if>
+                    <span style="white-space:nowrap;color:{{ e.typeColor }}">{{ e.type }}</span><span style="white-space:nowrap">{{ e.n }} {{ t.sources }}</span>
+                  </div>
+                  <h3 style="margin:0;font-weight:800;font-size:{{ e.size }};line-height:1.2;letter-spacing:-0.01em;text-wrap:pretty">{{ e.headline }}</h3>
+                  <p style="margin:0;font-size:15px;line-height:1.55;color:#2A2A33;text-wrap:pretty">{{ e.text }}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+                    <sc-for list="{{ e.src }}" as="o" hint-placeholder-count="3">
+                      <a href="{{ o.url }}" target="_blank" rel="noopener" style="padding:5px 9px;border:1px solid rgba(17,24,39,.18);font-size:12px;font-weight:700;color:#111827" style-hover="border-color:#111827">{{ o.name }} ↗</a>
+                    </sc-for>
+                  </div>
+                </div>
+                <sc-if value="{{ e.hasImg }}" hint-placeholder-val="{{ false }}">
+                  <div style="flex:0 1 220px;align-self:flex-start;width:100%;aspect-ratio:3/2;background:#F4F4F6;overflow:hidden">
+                    <img src="{{ e.img }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover">
+                  </div>
+                </sc-if>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+
+      <aside style="flex:1 1 300px;min-width:0;position:sticky;top:110px;display:flex;flex-direction:column;gap:30px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66;padding-bottom:10px;border-bottom:1px solid rgba(17,24,39,.12)">{{ t.byCountry }}</div>
+          <sc-for list="{{ breakdown }}" as="b" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:110px minmax(0,1fr) 28px;align-items:center;gap:12px;font-size:14px">
+              <span style="color:#4A4A55">{{ b.label }}</span>
+              <div style="height:6px;background:rgba(17,24,39,.08)"><div style="height:100%;width:{{ b.pct }};background:{{ b.color }}"></div></div>
+              <span style="font-weight:800;text-align:right">{{ b.score }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A5A66;padding-bottom:10px;border-bottom:1px solid rgba(17,24,39,.12)">{{ t.mostCovered }}</div>
+          <sc-for list="{{ outlets }}" as="o" hint-placeholder-count="5">
+            <a href="{{ o.url }}" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(17,24,39,.08);font-size:14px;font-weight:700;color:#111827" style-hover="color:#E11D48">
+              <span>{{ o.name }}</span><span style="color:#5A5A66;font-weight:500">{{ o.count }} {{ t.articles }}</span>
+            </a>
+          </sc-for>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const UI = {
+  nb: { language: 'Språk', back: 'Alle saker', mega: 'Megasak', live: 'Oppdateres løpende', cat: 'Verden', started: 'Startet i går 23:12', sources: 'kilder', globalTrend: 'Global trend', trendNote: 'Høyeste score i dag. Toppet med 99 i Japan.', latest: 'Siste', development: 'Utvikling', updates: 'oppdateringer', newUpdates: (n) => `${n} nye oppdateringer`, byCountry: 'Engasjement per land', mostCovered: 'Mest dekket av', articles: 'saker', today: 'I dag', yesterday: 'I går', ago: (m) => m < 60 ? `${m} min siden` : `${Math.floor(m / 60)} t siden`,
+    headline: 'Jordskjelv på 7,4 utenfor Japan: tsunamivarselet er opphevet, ingen meldt omkommet',
+    types: { start: 'Sakens start', news: 'Nytt', official: 'Offisielt', analysis: 'Analyse' },
+    recap: ['Skjelvet inntraff i havet øst for Honshu kl. 07:12 lokal tid.', 'Tsunamivarselet ble opphevet etter fire timer; bølgene var under én meter.', 'Rundt 40 000 husstander mistet strømmen. De fleste har fått den tilbake.', 'Atomkraftverkene i regionen rapporterer normal drift.'] },
+  en: { language: 'Language', back: 'All stories', mega: 'Mega story', live: 'Live updates', cat: 'World', started: 'Started yesterday 23:12', sources: 'sources', globalTrend: 'Global trend', trendNote: 'Highest score today. Peaked at 99 in Japan.', latest: 'Latest', development: 'Development', updates: 'updates', newUpdates: (n) => `${n} new updates`, byCountry: 'Engagement by country', mostCovered: 'Most covered by', articles: 'stories', today: 'Today', yesterday: 'Yesterday', ago: (m) => m < 60 ? `${m} min ago` : `${Math.floor(m / 60)}h ago`,
+    headline: 'Magnitude 7.4 quake off Japan: tsunami warning lifted, no deaths reported',
+    types: { start: 'Story begins', news: 'New', official: 'Official', analysis: 'Analysis' },
+    recap: ['The quake struck at sea east of Honshu at 07:12 local time.', 'The tsunami warning was lifted after four hours; waves stayed under one metre.', 'Around 40,000 households lost power. Most have it back.', 'Nuclear plants in the region report normal operation.'] }
+};
+const NOW = 14 * 60 + 40;
+const OUT = { NHK: 'https://www3.nhk.or.jp', Reuters: 'https://www.reuters.com', NRK: 'https://www.nrk.no', 'The Guardian': 'https://www.theguardian.com', 'Asahi Shimbun': 'https://www.asahi.com', 'Japan Times': 'https://www.japantimes.co.jp', AP: 'https://apnews.com', BBC: 'https://www.bbc.com', Aftenposten: 'https://www.aftenposten.no', 'Kyodo News': 'https://english.kyodonews.net' };
+const PENDING = [
+  { t: '14:32', type: 'official', n: 22, src: ['Kyodo News', 'NHK'], h: { nb: 'Japan takker for internasjonal støtte, men trenger foreløpig ikke hjelp utenfra', en: 'Japan thanks the world for support but needs no outside help for now' }, d: { nb: 'Utenriksdepartementet sier landets egne beredskapsressurser er tilstrekkelige.', en: 'The foreign ministry says domestic emergency resources are sufficient.' } },
+  { t: '14:25', type: 'news', n: 31, img: 'train', src: ['NHK', 'Japan Times'], h: { nb: 'Lyntogtrafikken nord for Tokyo er i gang igjen', en: 'Bullet trains north of Tokyo are running again' }, d: { nb: 'Tohoku Shinkansen kjører med redusert fart mens sporene inspiseres.', en: 'The Tohoku Shinkansen runs at reduced speed while tracks are inspected.' } }
+];
+const ENTRIES = [
+  { t: '13:40', type: 'news', n: 48, src: ['NHK', 'Reuters', 'AP'], h: { nb: 'Etterskjelv på 6,1, ingen nye skader meldt', en: 'Magnitude 6.1 aftershock, no new damage reported' }, d: { nb: 'Etterskjelvet ble kjent i hele Tohoku-regionen. Myndighetene ber folk holde seg unna skadde bygninger.', en: 'The aftershock was felt across the Tohoku region. Authorities urge people to stay away from damaged buildings.' } },
+  { t: '12:15', type: 'official', n: 64, img: 'government', src: ['Asahi Shimbun', 'Kyodo News', 'BBC'], h: { nb: 'Regjeringen setter av nødbudsjett og sender statsministeren til Miyagi', en: 'Government approves emergency budget and sends the prime minister to Miyagi' }, d: { nb: 'Pengene skal gå til midlertidige boliger og reparasjon av veier og havner.', en: 'The funds will cover temporary housing and repairs to roads and ports.' } },
+  { t: '10:30', type: 'analysis', n: 19, img: 'ocean', src: ['The Guardian', 'Japan Times'], h: { nb: 'Derfor ble tsunamien langt mindre enn fryktet', en: 'Why the tsunami was far smaller than feared' }, d: { nb: 'Seismologer peker på at bruddet skjedde dypere enn ved 2011-skjelvet, og at havbunnen forskjøv seg mindre.', en: 'Seismologists note the rupture was deeper than in 2011 and the seabed shifted less.' } },
+  { t: '09:05', type: 'official', n: 37, src: ['NHK', 'Reuters'], h: { nb: 'Atomkraftverkene i regionen rapporterer normal drift', en: 'Nuclear plants in the region report normal operation' }, d: { nb: 'Tilsynsmyndigheten har ikke funnet avvik ved noen av anleggene langs kysten.', en: 'The regulator has found no irregularities at any of the coastal facilities.' } },
+  { t: '08:20', type: 'news', n: 112, img: 'coast', src: ['NHK', 'NRK', 'AP', 'BBC'], h: { nb: 'Tsunamivarselet er opphevet etter fire timer', en: 'Tsunami warning lifted after four hours' }, d: { nb: 'Bølgene ble målt til under én meter. Evakuerte kan gradvis vende hjem.', en: 'Waves measured under one metre. Evacuees can gradually return home.' } },
+  { t: '06:40', type: 'news', n: 86, src: ['Kyodo News', 'Reuters', 'Aftenposten'], h: { nb: '40 000 husstander uten strøm, togtrafikken er stanset', en: '40,000 households without power, trains halted' }, d: { nb: 'Flyplassene i Sendai og Hanamaki er midlertidig stengt.', en: 'Sendai and Hanamaki airports are temporarily closed.' } },
+  { t: '23:12', day: 'yesterday', type: 'start', n: 154, img: 'city', src: ['NHK', 'Reuters', 'NRK', 'The Guardian'], h: { nb: 'Jordskjelv på 7,4 utenfor Honshu, tsunamivarsel utstedt', en: 'Magnitude 7.4 quake off Honshu, tsunami warning issued' }, d: { nb: 'Beboere i lavtliggende kystområder blir bedt om å evakuere umiddelbart.', en: 'Residents of low-lying coastal areas are told to evacuate immediately.' } }
+];
+const BREAK = [['Japan', 'Japan', 99], ['USA', 'USA', 80], ['Storbritannia', 'United Kingdom', 77], ['Norge', 'Norway', 74], ['Tyskland', 'Germany', 72], ['Frankrike', 'France', 70]];
+const tier = (v) => v >= 85 ? '#E11D48' : v >= 60 ? '#F59E0B' : '#111827';
+const pic = (seed, w = 1200) => `https://picsum.photos/seed/quake-${seed}/${w}/${Math.round(w * 2 / 3)}`;
+const HERO = ['city', 'coast', 'ocean', 'government', 'rescue'];
+const toMin = (s) => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+
+class Component extends DCLogic {
+  state = { lang: 'nb', idx: 0, revealed: false };
+  setIdx(k) { this.setState({ idx: (k + HERO.length) % HERO.length }); }
+  renderVals() {
+    const { lang, idx, revealed } = this.state, t = UI[lang];
+    const list = revealed ? [...PENDING, ...ENTRIES] : ENTRIES;
+    let prevDay = 'today';
+    const entries = list.map((e, i) => {
+      const day = e.day || 'today', mins = day === 'yesterday' ? NOW + 24 * 60 - toMin(e.t) : NOW - toMin(e.t);
+      const dayBreak = day !== prevDay; prevDay = day;
+      return { time: e.t, ago: t.ago(mins), dayBreak, day: t[day], isLatest: i === 0, type: t.types[e.type], n: e.n,
+        typeColor: e.type === 'analysis' ? '#B45309' : e.type === 'start' ? '#111827' : '#5A5A66',
+        marker: i === 0 ? '#E11D48' : e.type === 'start' ? '#111827' : '#F59E0B', timeColor: i === 0 ? '#E11D48' : '#111827',
+        size: i === 0 ? '24px' : '20px', headline: e.h[lang], text: e.d[lang], hasImg: !!e.img, img: e.img ? pic(e.img, 440) : '',
+        src: e.src.map(name => ({ name, url: OUT[name] })) };
+    });
+    const counts = {};
+    list.forEach(e => e.src.forEach(s => counts[s] = (counts[s] || 0) + 1));
+    return {
+      t: { ...t }, lang, recap: t.recap, entries, entryCount: list.length,
+      totalSources: list.reduce((a, e) => a + e.n, 0), latest: entries[0],
+      hasPending: !revealed, pendingLabel: t.newUpdates(PENDING.length), reveal: () => this.setState({ revealed: true }),
+      heroImg: pic(HERO[idx]), imgPos: `${idx + 1} / ${HERO.length}`,
+      thumbs: HERO.map((s, k) => ({ src: pic(s, 300), label: 'Image ' + (k + 1), ring: k === idx ? '#111827' : 'transparent', op: k === idx ? 1 : .6, select: () => this.setIdx(k) })),
+      prev: () => this.setIdx(idx - 1), next: () => this.setIdx(idx + 1),
+      breakdown: BREAK.map(([nb, en, v]) => ({ label: lang === 'nb' ? nb : en, score: v, pct: v + '%', color: tier(v) })),
+      outlets: Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count, url: OUT[name] })),
+      onLang: (e) => this.setState({ lang: e.target.value })
+    };
+  }
+}
+</script>
+</body>
+</html>
