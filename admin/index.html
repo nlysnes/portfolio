@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Statistikk – Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#F3F2EE;color:#161615;font-family:"Hanken Grotesk",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#161615}a:hover{color:#B4462A}
+input:focus{outline:none}
+</style>
+</helmet>
+<div data-screen-label="Statistikk" style="max-width:1100px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,4vw,48px) 96px;display:flex;flex-direction:column;gap:clamp(36px,5vw,56px)">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#5F5E5A">Kun for eier</div>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,6vw,64px);line-height:.95;letter-spacing:-.035em">Statistikk</h1>
+    </div>
+    <sc-if value="{{ authed }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <button onClick="{{ reload }}" style="height:40px;padding:0 16px;border-radius:999px;border:1.5px solid #161615;background:transparent;color:#161615;font:600 14px 'Hanken Grotesk',sans-serif;cursor:pointer">Oppdater</button>
+        <button onClick="{{ signOut }}" style="height:40px;padding:0 16px;border-radius:999px;border:1px solid #CFCDC5;background:transparent;color:#161615;font:600 14px 'Hanken Grotesk',sans-serif;cursor:pointer">Logg ut</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ notConfigured }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:24px;border-radius:18px;background:#fff;border:1px solid #DEDCD5;display:flex;flex-direction:column;gap:10px;max-width:680px">
+      <div style="font-weight:700;font-size:18px">Supabase er ikke koblet til</div>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#3E3D3A">Fyll inn Supabase URL og nøkkel under Tweaks.</p>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ false }}">
+    <form onSubmit="{{ sendLink }}" style="display:flex;flex-direction:column;gap:12px;max-width:480px">
+      <label for="pw" style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#5F5E5A">Passord</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="pw" type="password" autocomplete="current-password" value="{{ pw }}" onChange="{{ onPw }}" style="flex:1 1 220px;min-width:0;height:52px;padding:0 18px;border-radius:999px;border:1.5px solid #161615;background:#fff;font:500 17px 'Hanken Grotesk',sans-serif;color:#161615">
+        <button type="submit" style="height:52px;padding:0 22px;border-radius:999px;border:0;background:#161615;color:#F3F2EE;font:700 16px 'Hanken Grotesk',sans-serif;cursor:pointer" style-hover="background:#B4462A">{{ loginLabel }}</button>
+      </div>
+      <div style="font-size:15px;color:#A33A20">{{ loginMsg }}</div>
+    </form>
+  </sc-if>
+
+  <sc-if value="{{ authed }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><div style="font-size:15px;color:#A33A20">{{ error }}</div></sc-if>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+        <div style="padding:22px;border-radius:18px;background:#fff;border:1px solid #DEDCD5;display:flex;flex-direction:column;gap:8px">
+          <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#5F5E5A">{{ k.label }}</div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:44px;line-height:1;letter-spacing:-.03em">{{ k.value }}</div>
+          <div style="font-size:14px;color:#5F5E5A">{{ k.sub }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(24px,4vw,48px)">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em">Sidevisninger</h2>
+        <div style="display:flex;flex-direction:column;border-top:1px solid #DEDCD5">
+          <sc-for list="{{ pages }}" as="r" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;padding:14px 0;border-bottom:1px solid #DEDCD5;align-items:baseline">
+              <span style="font-size:17px">{{ r.name }}</span><span style="font:500 14px 'JetBrains Mono',monospace;color:#5F5E5A">{{ r.unique }} unike</span><span style="font:500 17px 'JetBrains Mono',monospace;min-width:48px;text-align:right">{{ r.count }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em">Åpnede prosjekter</h2>
+        <div style="display:flex;flex-direction:column;border-top:1px solid #DEDCD5">
+          <sc-for list="{{ projects }}" as="r" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;padding:14px 0;border-bottom:1px solid #DEDCD5;align-items:baseline">
+              <span style="font-size:17px">{{ r.name }}</span><span style="font:500 14px 'JetBrains Mono',monospace;color:#5F5E5A">{{ r.unique }} unike</span><span style="font:500 17px 'JetBrains Mono',monospace;min-width:48px;text-align:right">{{ r.count }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em">NDA-signaturer</h2>
+      <sc-if value="{{ noSigs }}" hint-placeholder-val="{{ false }}"><div style="font-size:16px;color:#5F5E5A">Ingen har signert ennå.</div></sc-if>
+      <div style="display:flex;flex-direction:column;border-top:1px solid #DEDCD5;overflow-x:auto">
+        <sc-for list="{{ sigs }}" as="g" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:minmax(140px,1fr) minmax(180px,1.3fr) minmax(120px,1fr) auto;gap:16px;padding:14px 0;border-bottom:1px solid #DEDCD5;align-items:baseline;min-width:620px">
+            <span style="font-size:17px;font-weight:600">{{ g.name }}</span><a href="{{ g.mailto }}" style="font-size:16px">{{ g.email }}</a><span style="font-size:15px;color:#3E3D3A">{{ g.project }}</span><span style="font:500 14px 'JetBrains Mono',monospace;color:#5F5E5A">{{ g.at }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;supabaseUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://kmczwaxlugmdkzakdkzi.supabase.co&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Supabase&quot;},&quot;supabaseKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sb_publishable_EolY-RobOFZ4HioIo3tuzw_RugTEzd7&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Supabase&quot;}}">
+class Component extends DCLogic {
+  state = { authed: false, pw: "", loginMsg: "", busy: false, events: [], sigs: [], error: "", ready: false };
+  NAMES = { home: "Forside", projects: "Prosjekter", cv: "CV", about: "Om meg", ha: "Happens v1", h2: "Happens v2", wa: "Workability", sh: "Shitodo", aw: "AI without AI", dm: "Datomaten", nw: "News World", gb: "Geometria Borealis", nh: "Reservedeler", np: "Reservedeler – prototype" };
+  url() { return this.props.supabaseUrl || "https://kmczwaxlugmdkzakdkzi.supabase.co"; }
+  key() { return this.props.supabaseKey || "sb_publishable_EolY-RobOFZ4HioIo3tuzw_RugTEzd7"; }
+  configured() { return !!(this.url() && this.key()); }
+  async componentDidMount() {
+    if (!this.configured()) return this.setState({ ready: true });
+    if (!window.supabase) await new Promise((res, rej) => { const sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+    this.sb = window.supabase.createClient(this.url(), this.key(), { auth: { persistSession: false } });
+    this.setState({ ready: true });
+    let saved = null; try { saved = sessionStorage.getItem("nl-admin-pw"); } catch (e) {}
+    if (saved) this.login(saved, true);
+  }
+  async login(pw, silent) {
+    this.setState({ busy: true, loginMsg: "" });
+    const { data, error } = await this.sb.rpc("admin_stats", { pw });
+    if (error) {
+      try { sessionStorage.removeItem("nl-admin-pw"); } catch (e) {}
+      return this.setState({ busy: false, authed: false, loginMsg: silent ? "" : (/passord/i.test(error.message) ? "Feil passord." : "Noe gikk galt: " + error.message) });
+    }
+    this.pwOk = pw;
+    try { sessionStorage.setItem("nl-admin-pw", pw); } catch (e) {}
+    this.setState({ busy: false, authed: true, pw: "", events: data.events || [], sigs: data.sigs || [], error: "" });
+  }
+  group(type) {
+    const m = {};
+    this.state.events.filter(e => e.type === type).forEach(e => { const k = e.target || "–"; (m[k] = m[k] || { count: 0, v: new Set() }).count++; m[k].v.add(e.visitor_id); });
+    return Object.entries(m).map(([k, o]) => ({ name: this.NAMES[k] || k, count: o.count, unique: o.v.size })).sort((a, b) => b.count - a.count);
+  }
+  renderVals() {
+    const s = this.state, ev = s.events;
+    const uniq = t => new Set(ev.filter(e => e.type === t).map(e => e.visitor_id)).size;
+    const cnt = t => ev.filter(e => e.type === t).length;
+    const fmt = iso => { try { return new Date(iso).toLocaleString("nb-NO", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }); } catch (e) { return iso; } };
+    return {
+      notConfigured: s.ready && !this.configured(),
+      showLogin: s.ready && this.configured() && !s.authed,
+      authed: s.authed,
+      pw: s.pw, onPw: e => this.setState({ pw: e.target.value }), loginMsg: s.loginMsg,
+      loginLabel: s.busy ? "Sjekker …" : "Logg inn",
+      sendLink: e => { e.preventDefault(); if (s.pw) this.login(s.pw); },
+      signOut: () => { try { sessionStorage.removeItem("nl-admin-pw"); } catch (e) {} this.pwOk = null; this.setState({ authed: false, events: [], sigs: [] }); },
+      reload: () => this.pwOk && this.login(this.pwOk),
+      hasError: !!s.error, error: s.error,
+      kpis: [
+        { label: "Unike besøkende", value: uniq("visit"), sub: cnt("visit") + " besøk totalt" },
+        { label: "Logget inn", value: uniq("login"), sub: cnt("login") + " innlogginger totalt" },
+        { label: "NDA signert", value: s.sigs.length, sub: "personer" },
+        { label: "Prosjekter åpnet", value: cnt("project"), sub: "ganger totalt" },
+      ],
+      pages: this.group("page"), projects: this.group("project"),
+      noSigs: s.sigs.length === 0,
+      sigs: s.sigs.map(g => ({ name: g.name || "–", email: g.email, mailto: "mailto:" + g.email, project: this.NAMES[g.project] || g.project || "–", at: fmt(g.accepted_at) })),
+    };
+  }
+}
+</script>
+</body>
+</html>
